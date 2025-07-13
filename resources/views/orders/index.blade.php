@@ -18,9 +18,8 @@
         <button 
           onclick="showTab('payment-confirmation')" 
           id="tab-payment-confirmation"
-          style="flex: 1; padding: 16px 24px; text-align: center; font-weight: 600; border-bottom: 2px solid transparent; transition: color 0.2s; cursor: pointer; background: none; border-left: none; border-right: none; border-top: none;"
-          onmouseover="this.style.color='#789DBC'"
-          onmouseout="if (!this.classList.contains('active-tab')) this.style.color=''"
+          class="tab-button"
+          style="flex: 1; padding: 16px 24px; text-align: center; font-weight: 600; border-bottom: 2px solid transparent; transition: all 0.2s; cursor: pointer; background: none; border-left: none; border-right: none; border-top: none;"
         >
           <svg style="width: 20px; height: 20px; display: inline; margin-right: 8px; vertical-align: middle;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 0h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
@@ -30,9 +29,8 @@
         <button 
           onclick="showTab('order-status')" 
           id="tab-order-status"
-          style="flex: 1; padding: 16px 24px; text-align: center; font-weight: 600; border-bottom: 2px solid transparent; transition: color 0.2s; cursor: pointer; background: none; border-left: none; border-right: none; border-top: none;"
-          onmouseover="this.style.color='#789DBC'"
-          onmouseout="if (!this.classList.contains('active-tab')) this.style.color=''"
+          class="tab-button"
+          style="flex: 1; padding: 16px 24px; text-align: center; font-weight: 600; border-bottom: 2px solid transparent; transition: all 0.2s; cursor: pointer; background: none; border-left: none; border-right: none; border-top: none;"
         >
           <svg style="width: 20px; height: 20px; display: inline; margin-right: 8px; vertical-align: middle;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
@@ -43,7 +41,7 @@
     </div>
 
     {{-- Payment Confirmation Tab --}}
-    <div id="payment-confirmation" style="padding: 24px;">
+    <div id="payment-confirmation" class="tab-content" style="padding: 24px;">
       @if($paymentConfirmations->count() > 0)
         <div style="display: flex; flex-direction: column; gap: 16px;">
           @foreach($paymentConfirmations as $order)
@@ -118,7 +116,7 @@
     </div>
 
     {{-- Order Status Tab --}}
-    <div id="order-status" style="padding: 24px; display: none;">
+    <div id="order-status" class="tab-content" style="padding: 24px; display: none;">
       @if($orderStatuses->count() > 0)
         <div style="display: flex; flex-direction: column; gap: 16px;">
           @foreach($orderStatuses as $order)
@@ -309,20 +307,34 @@
       grid-template-columns: 1fr 1fr !important;
     }
   }
+  
+  /* Tab button hover styles */
+  .tab-button:hover {
+    color: #789DBC !important;
+    background-color: #f8fafc;
+  }
+  
+  /* Active tab styles */
+  .tab-button.active {
+    color: #789DBC !important;
+    border-bottom-color: #789DBC !important;
+  }
 </style>
 
 <script>
 function showTab(tabName) {
   // Hide all tab contents
-  document.querySelectorAll('.tab-content').forEach(tab => {
+  const allTabs = document.querySelectorAll('.tab-content');
+  allTabs.forEach(tab => {
     tab.style.display = 'none';
   });
   
-  // Remove active class from all buttons
-  document.querySelectorAll('.tab-button').forEach(button => {
+  // Remove active class from all buttons and reset styles
+  const allButtons = document.querySelectorAll('.tab-button');
+  allButtons.forEach(button => {
+    button.classList.remove('active');
     button.style.borderBottomColor = 'transparent';
-    button.style.color = '';
-    button.classList.remove('active-tab');
+    button.style.color = '#6b7280';
   });
   
   // Show selected tab
@@ -334,9 +346,9 @@ function showTab(tabName) {
   // Add active class to selected button
   const selectedButton = document.getElementById('tab-' + tabName);
   if (selectedButton) {
+    selectedButton.classList.add('active');
     selectedButton.style.borderBottomColor = '#789DBC';
     selectedButton.style.color = '#789DBC';
-    selectedButton.classList.add('active-tab');
   }
 }
 
@@ -369,7 +381,7 @@ function copyResi(resiNumber, orderId) {
   });
 }
 
-// Initialize first tab as active
+// Initialize first tab as active when page loads
 document.addEventListener('DOMContentLoaded', function() {
   showTab('payment-confirmation');
 });

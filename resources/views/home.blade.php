@@ -22,13 +22,13 @@
       Mulai mengobrol
     </a>
 
-    <div style="display: flex; flex-wrap: wrap; gap: 24px;">
-      <div style="width: 289px; height: 181px; padding: 16px; border-radius: 8px; background-color: #E2EAF4; display: flex; align-items: center; justify-content: center;">
+    <div style="display: flex; gap: 24px;">
+      <div style="flex: 1; min-width: 280px; height: 181px; padding: 16px; border-radius: 8px; background-color: #E2EAF4; display: flex; align-items: center; justify-content: center;">
         <p style="font-weight: 600; font-size: 25px; text-align: center; margin: 0;">
           Aman, Cepat, dan Terpercaya sejak 2005
         </p>
       </div>
-      <div style="width: 289px; height: 181px; padding: 16px; border-radius: 8px; background-color: #E2EAF4; display: flex; align-items: center; justify-content: center;">
+      <div style="flex: 1; min-width: 280px; height: 181px; padding: 16px; border-radius: 8px; background-color: #E2EAF4; display: flex; align-items: center; justify-content: center;">
         <p style="font-weight: 600; font-size: 25px; text-align: center; margin: 0;">
           Sudah menangani 1000+ motor
         </p>
@@ -70,15 +70,6 @@
     max-width: 400px !important;
     height: auto !important;
   }
-  
-  .stats-container {
-    justify-content: center !important;
-  }
-  
-  .stats-box {
-    width: 100% !important;
-    max-width: 300px !important;
-  }
 }
 
 @media (max-width: 768px) {
@@ -98,10 +89,25 @@
   
   .stats-box {
     height: 150px !important;
+    min-width: 220px !important;
   }
   
   .stats-box p {
-    font-size: 20px !important;
+    font-size: 18px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .stats-container {
+    gap: 12px !important;
+  }
+  
+  .stats-box {
+    min-width: 200px !important;
+  }
+  
+  .stats-box p {
+    font-size: 16px !important;
   }
 }
 </style>
@@ -113,8 +119,8 @@ document.addEventListener('DOMContentLoaded', function() {
   const content = document.querySelector('[style*="flex: 1"]');
   const image = document.querySelector('img[alt="Cover Home"]');
   const whatsappBtn = document.querySelector('a[href*="wa.me"]');
-  const statsContainer = document.querySelector('[style*="flex-wrap: wrap"]');
-  const statsBoxes = document.querySelectorAll('[style*="width: 289px"]');
+  const statsContainer = document.querySelector('[style*="gap: 24px"]');
+  const statsBoxes = document.querySelectorAll('[style*="flex: 1"]');
   
   if (container) container.classList.add('home-container');
   if (content) content.classList.add('home-content');
