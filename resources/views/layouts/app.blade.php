@@ -1,18 +1,22 @@
-{{-- resources/views/layouts/app.blade.php --}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <title>@yield('title', 'Locomotif Jajar')</title>
 
+  {{-- Google Fonts --}}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  {{-- Vite Assets --}}
   @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-  <!-- Heroicons -->
+  {{-- Heroicons --}}
   <script src="https://cdn.jsdelivr.net/npm/heroicons@2.0.18/24/outline/index.js"></script>
 </head>
-<body class="bg-white text-gray-800">
+<body class="bg-white text-gray-800 font-sans">
 
   {{-- Navbar --}}
   <nav class="px-6 py-4 flex items-center justify-between" style="border-bottom:2px solid #789DBC;">
@@ -110,6 +114,15 @@
   <main class="container mx-auto py-10">
     @yield('content')
   </main>
+
+  {{-- JavaScript untuk dropdown dan interaksi lainnya --}}
+  <script>
+    // Dropdown functionality untuk mobile atau jika diperlukan
+    document.addEventListener('DOMContentLoaded', function() {
+      // Tambahkan JavaScript custom jika diperlukan
+      console.log('Locomotif App Loaded');
+    });
+  </script>
 
 </body>
 </html>

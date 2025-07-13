@@ -1,14 +1,47 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-/* Custom Styles */
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source "../**/*.blade.php";
+@source "../**/*.js";
+@source "../**/*.vue";
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+    
+    /* Custom colors */
+    --color-primary: #789DBC;
+    --color-primary-hover: #6b8bb3;
+    --color-light: #E2EAF4;
+}
+
+/* Custom utilities - Pindahan dari app.blade.php */
+.text-primary { 
+    color: #789DBC; 
+}
+
+.bg-primary { 
+    background-color: #789DBC; 
+}
+
+.bg-light { 
+    background-color: #E2EAF4; 
+}
+
+.border-primary { 
+    border-color: #789DBC; 
+}
+
+.hover\:text-primary:hover { 
+    color: #6b8bb3; 
+}
+
+.hover\:bg-primary:hover { 
+    background-color: #6b8bb3; 
+}
+
+/* Stroke navbar */
 nav {
-  border-bottom: 2px solid #789DBC;
-}
-.text-primary {
-  color: #167DD3;
-}
-.bg-light {
-  background-color: #E2EAF4;
+    border-bottom: 2px solid #789DBC;
 }
