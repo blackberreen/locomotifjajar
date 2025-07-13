@@ -1,101 +1,109 @@
-{{-- resources/views/user/bookings.blade.php --}}
 @extends('layouts.app')
 
 @section('title', 'Booking Saya - Locomotif')
 
 @section('content')
-<div class="max-w-6xl mx-auto px-4">
-    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-        <h1 class="text-2xl font-bold text-gray-800 mb-2">Riwayat Booking Saya</h1>
-        <p class="text-gray-600">Lihat semua riwayat booking layanan servis motor Anda</p>
+<div style="max-width:96rem; margin:0 auto; padding:0 1rem;">
+    <div style="background-color:#fff; border-radius:0.5rem; box-shadow:0 1px 3px rgba(0,0,0,0.1); padding:1.5rem; margin-bottom:1.5rem;">
+        <h1 style="font-size:1.5rem; font-weight:bold; color:#1F2937; margin-bottom:0.5rem;">Riwayat Booking Saya</h1>
+        <p style="color:#4B5563;">Lihat semua riwayat booking layanan servis motor Anda</p>
     </div>
 
     @if($bookings->isEmpty())
-        <div class="bg-white rounded-lg shadow-md p-8 text-center">
-            <div class="mb-4">
-                <svg class="w-16 h-16 text-gray-400 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div style="background-color:#fff; border-radius:0.5rem; box-shadow:0 1px 3px rgba(0,0,0,0.1); padding:2rem; text-align:center;">
+            <div style="margin-bottom:1rem;">
+                <svg style="width:4rem; height:4rem; color:#9CA3AF; margin:0 auto;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3a4 4 0 118 0v4m-4 12l-3-3m0 0l3-3m-3 3h18"></path>
                 </svg>
             </div>
-            <h3 class="text-lg font-semibold text-gray-800 mb-2">Belum Ada Booking</h3>
-            <p class="text-gray-600 mb-4">Anda belum memiliki riwayat booking layanan servis motor.</p>
-            <a href="{{ route('booking') }}" class="bg-[#789DBC] text-white px-6 py-2 rounded-lg hover:bg-[#6b8bb3] transition-colors font-medium">
-                Booking Sekarang
+            <h3 style="font-size:1.125rem; font-weight:600; color:#1F2937; margin-bottom:0.5rem;">Belum Ada Booking</h3>
+            <p style="color:#4B5563; margin-bottom:1rem;">Anda belum memiliki riwayat booking layanan servis motor.</p>
+            <a href="{{ route('booking') }}"
+               style="background-color:#789DBC; color:#fff; padding:0.5rem 1.5rem; border-radius:0.5rem; text-decoration:none; font-weight:500;"
+               onmouseover="this.style.backgroundColor='#6b8bb3'"
+               onmouseout="this.style.backgroundColor='#789DBC'">
+               Booking Sekarang
             </a>
         </div>
     @else
-        <div class="space-y-4">
+        <div style="display:flex; flex-direction:column; gap:1rem;">
             @foreach($bookings as $booking)
-                <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-4">
+                <div style="background-color:#fff; border-radius:0.5rem; box-shadow:0 1px 3px rgba(0,0,0,0.1); overflow:hidden;">
+                    <div style="padding:1.5rem;">
+                        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1rem;">
                             <div>
-                                <h3 class="text-lg font-semibold text-gray-800">Booking #{{ $booking->bookingid }}</h3>
-                                <p class="text-sm text-gray-600">{{ $booking->created_at->format('d M Y, H:i') }}</p>
+                                <h3 style="font-size:1.125rem; font-weight:600; color:#1F2937;">Booking #{{ $booking->bookingid }}</h3>
+                                <p style="font-size:0.875rem; color:#4B5563;">{{ $booking->created_at->format('d M Y, H:i') }}</p>
                             </div>
-                            <div class="text-right">
-                                <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold {{ $booking->status_color }}">
+                            <div style="text-align:right;">
+                                <span class="{{ $booking->status_color }}"
+                                      style="display:inline-block; padding:0.25rem 0.75rem; border-radius:9999px; font-size:0.75rem; font-weight:600;">
                                     {{ $booking->status_text }}
                                 </span>
                             </div>
                         </div>
 
-                        <div class="grid md:grid-cols-2 gap-6">
-                            <div class="space-y-3">
-                                <div class="flex items-center">
-                                    <svg class="w-5 h-5 text-gray-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div style="display:grid; grid-template-columns:1fr; gap:1.5rem; margin-bottom:1rem;">
+                            <div style="display:flex; flex-direction:column; gap:0.75rem;">
+                                <div style="display:flex; align-items:center;">
+                                    <svg style="width:1.25rem; height:1.25rem; color:#6B7280; margin-right:0.75rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                                     </svg>
-                                    <span class="text-gray-700">{{ $booking->nama }}</span>
+                                    <span style="color:#374151;">{{ $booking->nama }}</span>
                                 </div>
-                                <div class="flex items-center">
-                                    <svg class="w-5 h-5 text-gray-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <div style="display:flex; align-items:center;">
+                                    <svg style="width:1.25rem; height:1.25rem; color:#6B7280; margin-right:0.75rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
                                     </svg>
-                                    <span class="text-gray-700">{{ $booking->nomor_telpon }}</span>
+                                    <span style="color:#374151;">{{ $booking->nomor_telpon }}</span>
                                 </div>
-                                <div class="flex items-center">
-                                    <svg class="w-5 h-5 text-gray-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <div style="display:flex; align-items:center;">
+                                    <svg style="width:1.25rem; height:1.25rem; color:#6B7280; margin-right:0.75rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                                     </svg>
-                                    <span class="text-gray-700">{{ $booking->jenis_motor }}</span>
+                                    <span style="color:#374151;">{{ $booking->jenis_motor }}</span>
                                 </div>
                             </div>
 
-                            <div class="space-y-3">
-                                <div class="flex items-center">
-                                    <svg class="w-5 h-5 text-gray-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div style="display:flex; flex-direction:column; gap:0.75rem;">
+                                <div style="display:flex; align-items:center;">
+                                    <svg style="width:1.25rem; height:1.25rem; color:#6B7280; margin-right:0.75rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
-                                    <span class="text-gray-700">{{ $booking->jasa }}</span>
+                                    <span style="color:#374151;">{{ $booking->jasa }}</span>
                                 </div>
-                                <div class="flex items-center">
-                                    <svg class="w-5 h-5 text-gray-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <div style="display:flex; align-items:center;">
+                                    <svg style="width:1.25rem; height:1.25rem; color:#6B7280; margin-right:0.75rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3a4 4 0 118 0v4m-4 12l-3-3m0 0l3-3m-3 3h18"></path>
                                     </svg>
-                                    <span class="text-gray-700">{{ $booking->tanggal_booking->format('d M Y') }}</span>
+                                    <span style="color:#374151;">{{ $booking->tanggal_booking->format('d M Y') }}</span>
                                 </div>
                             </div>
                         </div>
 
                         @if($booking->keluhan)
-                            <div class="mt-4 p-4 bg-gray-50 rounded-lg">
-                                <h4 class="font-semibold text-gray-800 mb-2">Keluhan:</h4>
-                                <p class="text-gray-700">{{ $booking->keluhan }}</p>
+                            <div style="margin-top:1rem; padding:1rem; background-color:#F9FAFB; border-radius:0.5rem;">
+                                <h4 style="font-weight:600; color:#1F2937; margin-bottom:0.5rem;">Keluhan:</h4>
+                                <p style="color:#374151;">{{ $booking->keluhan }}</p>
                             </div>
                         @endif
 
-                        <div class="mt-4 flex justify-end space-x-2">
-                            <a href="{{ route('booking.show', $booking->bookingid) }}" class="bg-[#789DBC] text-white px-4 py-2 rounded-lg hover:bg-[#6b8bb3] transition-colors font-medium">
+                        <div style="margin-top:1rem; display:flex; justify-content:flex-end; gap:0.5rem;">
+                            <a href="{{ route('booking.show', $booking->bookingid) }}"
+                               style="background-color:#789DBC; color:white; padding:0.5rem 1rem; border-radius:0.5rem; text-decoration:none; font-weight:500;"
+                               onmouseover="this.style.backgroundColor='#6b8bb3'"
+                               onmouseout="this.style.backgroundColor='#789DBC'">
                                 Lihat Detail
                             </a>
-                            
+
                             @if(!$booking->is_completed)
-                                <form method="POST" action="{{ route('booking.cancel', $booking->bookingid) }}" class="inline">
+                                <form method="POST" action="{{ route('booking.cancel', $booking->bookingid) }}" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" 
-                                            class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors font-medium"
+                                    <button type="submit"
+                                            style="background-color:#EF4444; color:white; padding:0.5rem 1rem; border-radius:0.5rem; font-weight:500; border:none; cursor:pointer;"
+                                            onmouseover="this.style.backgroundColor='#DC2626'"
+                                            onmouseout="this.style.backgroundColor='#EF4444'"
                                             onclick="return confirm('Apakah Anda yakin ingin membatalkan booking ini?')">
                                         Batalkan
                                     </button>
@@ -107,9 +115,8 @@
             @endforeach
         </div>
 
-        {{-- Pagination --}}
         @if($bookings->hasPages())
-            <div class="mt-8">
+            <div style="margin-top:2rem;">
                 {{ $bookings->links() }}
             </div>
         @endif

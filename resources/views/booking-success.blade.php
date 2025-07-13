@@ -78,6 +78,6 @@
     .action-buttons {
         flex-direction: row;
     }
-}
+} 
 </style>
 @endsection

@@ -170,5 +170,5 @@
             @endif
         @endif
     </div>
-</div>
+</div> 
 @endsection
