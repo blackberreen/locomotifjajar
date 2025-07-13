@@ -92,7 +92,7 @@ class BookingController extends Controller
     /**
      * Display the specified booking.
      */
-    public function show($id)
+    public function show($bookingid)
     {
         // Pastikan user sudah login
         if (!Auth::check()) {
@@ -101,7 +101,7 @@ class BookingController extends Controller
         }
 
         $booking = Booking::where('user_id', Auth::id())
-            ->where('bookingid', $id)
+            ->where('bookingid', $bookingid)
             ->first();
 
         if (!$booking) {
@@ -115,10 +115,10 @@ class BookingController extends Controller
     /**
      * Cancel the specified booking.
      */
-    public function cancel($id)
+    public function cancel($bookingid)
     {
         // Debug log
-        \Log::info('Cancel method called with ID: ' . $id);
+        \Log::info('Cancel method called with ID: ' . $bookingid);
     
         // Pastikan user sudah login
         if (!Auth::check()) {
@@ -127,14 +127,14 @@ class BookingController extends Controller
         }
 
         // Validasi ID tidak kosong
-        if (empty($id)) {
+        if (empty($bookingid)) {
             return redirect()->route('user.bookings')
                 ->with('error', 'ID booking tidak valid.');
         }
 
         // Cari booking dengan bookingid (bukan id)
         $booking = Booking::where('user_id', Auth::id())
-            ->where('bookingid', $id)  // Menggunakan bookingid sebagai field pencarian
+            ->where('bookingid', $bookingid)  // Menggunakan bookingid sebagai field pencarian
             ->where('is_completed', false)
             ->first();
 
