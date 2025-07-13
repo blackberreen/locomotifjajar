@@ -117,14 +117,24 @@ class BookingController extends Controller
      */
     public function cancel($id)
     {
+        // Debug log
+        \Log::info('Cancel method called with ID: ' . $id);
+    
         // Pastikan user sudah login
         if (!Auth::check()) {
             return redirect()->route('user.login')
                 ->with('error', 'Silakan login terlebih dahulu.');
         }
 
+        // Validasi ID tidak kosong
+        if (empty($id)) {
+            return redirect()->route('user.bookings')
+                ->with('error', 'ID booking tidak valid.');
+        }
+
+        // Cari booking dengan bookingid (bukan id)
         $booking = Booking::where('user_id', Auth::id())
-            ->where('bookingid', $id)
+            ->where('bookingid', $id)  // Menggunakan bookingid sebagai field pencarian
             ->where('is_completed', false)
             ->first();
 
@@ -138,6 +148,7 @@ class BookingController extends Controller
             return redirect()->route('user.bookings')
                 ->with('success', 'Booking berhasil dibatalkan!');
         } catch (\Exception $e) {
+            \Log::error('Error canceling booking: ' . $e->getMessage());
             return redirect()->route('user.bookings')
                 ->with('error', 'Terjadi kesalahan saat membatalkan booking.');
         }
