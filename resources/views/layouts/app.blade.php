@@ -7,10 +7,10 @@
 
   <title>@yield('title', 'Locomotif Jajar')</title>
 
-  @vite('resources/js/app.js')
-  <!-- Heroicons for user icon -->
-  <script src="https://cdn.jsdelivr.net/npm/heroicons@2.0.18/24/outline/index.js"></script>
+  @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+  <!-- Heroicons -->
+  <script src="https://cdn.jsdelivr.net/npm/heroicons@2.0.18/24/outline/index.js"></script>
 </head>
 <body class="bg-white text-gray-800">
 
