@@ -3,44 +3,48 @@
 @section('title', 'Booking • Locomotif Jajar')
 
 @section('content')
-<div class="px-10 py-6 flex flex-col lg:flex-row gap-10 items-start">
+<div style="padding: 24px 40px; display: flex; flex-direction: column; gap: 40px; align-items: flex-start;">
+  @media (min-width: 1024px) {
+    <div style="flex-direction: row;">
+  }
+  
   <!-- Kiri -->
-  <div class="flex flex-col items-start">
-    <h1 class="text-[44px] font-bold font-sans text-left mb-3">Booking Service</h1>
-    <p class="text-[20px] font-sans text-left mb-4 leading-tight">
+  <div style="display: flex; flex-direction: column; align-items: flex-start;">
+    <h1 style="font-size: 44px; font-weight: bold; font-family: sans-serif; text-align: left; margin-bottom: 12px;">Booking Service</h1>
+    <p style="font-size: 20px; font-family: sans-serif; text-align: left; margin-bottom: 16px; line-height: 1.2;">
       Pesan tanpa antri, motor anda langsung <br> kami perbaiki.
     </p>
     <img
       src="{{ asset('img/coverbooking.jpeg') }}"
       alt="Cover Booking"
-      class="w-[515px] h-[280px] object-cover rounded-lg"
+      style="width: 515px; height: 280px; object-fit: cover; border-radius: 8px;"
     />
   </div>
 
   <!-- Kanan (Form) -->
-  <div class="w-[746px]">
+  <div style="width: 746px;">
     @if(!Auth::check())
       <!-- Alert untuk user yang belum login -->
-      <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6 mb-6">
-        <div class="flex items-center">
-          <div class="flex-shrink-0">
-            <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+      <div style="background-color: #fefce8; border: 1px solid #fef3c7; border-radius: 8px; padding: 24px; margin-bottom: 24px;">
+        <div style="display: flex; align-items: center;">
+          <div style="flex-shrink: 0;">
+            <svg style="height: 20px; width: 20px; color: #f59e0b;" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
             </svg>
           </div>
-          <div class="ml-3">
-            <h3 class="text-sm font-medium text-yellow-800">
+          <div style="margin-left: 12px;">
+            <h3 style="font-size: 14px; font-weight: 500; color: #92400e;">
               Login Diperlukan
             </h3>
-            <div class="mt-2 text-sm text-yellow-700">
+            <div style="margin-top: 8px; font-size: 14px; color: #a16207;">
               <p>Untuk melakukan booking, silakan login terlebih dahulu.</p>
             </div>
-            <div class="mt-4">
-              <div class="flex space-x-2">
-                <a href="{{ route('user.login') }}" class="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition-colors">
+            <div style="margin-top: 16px;">
+              <div style="display: flex; gap: 8px;">
+                <a href="{{ route('user.login') }}" style="background-color: #eab308; color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none; transition: background-color 0.2s;">
                   Login
                 </a>
-                <a href="{{ route('user.register') }}" class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors">
+                <a href="{{ route('user.register') }}" style="background-color: #6b7280; color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none; transition: background-color 0.2s;">
                   Register
                 </a>
               </div>
@@ -51,52 +55,52 @@
     @endif
 
     <form method="POST" action="{{ route('booking.store') }}" 
-          class="border border-[#E2EAF4] rounded-xl p-6 flex flex-col gap-4 {{ !Auth::check() ? 'opacity-50 pointer-events-none' : '' }}">
+          style="border: 1px solid #E2EAF4; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 16px; {{ !Auth::check() ? 'opacity: 0.5; pointer-events: none;' : '' }}">
       @csrf
 
       @if(session('error'))
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+        <div style="background-color: #fef2f2; border: 1px solid #fca5a5; color: #b91c1c; padding: 12px 16px; border-radius: 4px; margin-bottom: 16px;">
           {{ session('error') }}
         </div>
       @endif
 
       <!-- Nama -->
       <div>
-        <label class="block text-[20px] font-sans font-semibold mb-1">Nama</label>
+        <label style="display: block; font-size: 20px; font-family: sans-serif; font-weight: 600; margin-bottom: 4px;">Nama</label>
         <input type="text" name="nama" required 
                value="{{ old('nama', Auth::user()->name ?? '') }}"
-               class="w-full h-[36px] rounded-[20px] border border-[#789DBC] px-4" />
+               style="width: 100%; height: 36px; border-radius: 20px; border: 1px solid #789DBC; padding: 0 16px;" />
         @error('nama')
-          <span class="text-red-500 text-sm">{{ $message }}</span>
+          <span style="color: #ef4444; font-size: 14px;">{{ $message }}</span>
         @enderror
       </div>
 
       <!-- Nomor Telpon -->
       <div>
-        <label class="block text-[20px] font-sans font-semibold mb-1">Nomor Telpon</label>
+        <label style="display: block; font-size: 20px; font-family: sans-serif; font-weight: 600; margin-bottom: 4px;">Nomor Telpon</label>
         <input type="text" name="nomor_telpon" required 
                value="{{ old('nomor_telpon') }}"
-               class="w-full h-[36px] rounded-[20px] border border-[#789DBC] px-4" />
+               style="width: 100%; height: 36px; border-radius: 20px; border: 1px solid #789DBC; padding: 0 16px;" />
         @error('nomor_telpon')
-          <span class="text-red-500 text-sm">{{ $message }}</span>
+          <span style="color: #ef4444; font-size: 14px;">{{ $message }}</span>
         @enderror
       </div>
 
       <!-- Jenis Motor -->
       <div>
-        <label class="block text-[20px] font-sans font-semibold mb-1">Jenis Motor</label>
+        <label style="display: block; font-size: 20px; font-family: sans-serif; font-weight: 600; margin-bottom: 4px;">Jenis Motor</label>
         <input type="text" name="jenis_motor" required 
                value="{{ old('jenis_motor') }}"
-               class="w-full h-[36px] rounded-[20px] border border-[#789DBC] px-4" />
+               style="width: 100%; height: 36px; border-radius: 20px; border: 1px solid #789DBC; padding: 0 16px;" />
         @error('jenis_motor')
-          <span class="text-red-500 text-sm">{{ $message }}</span>
+          <span style="color: #ef4444; font-size: 14px;">{{ $message }}</span>
         @enderror
       </div>
 
       <!-- Jasa yang Diinginkan -->
       <div>
-        <label class="block text-[20px] font-sans font-semibold mb-1">Jasa yang diinginkan</label>
-        <select name="jasa" required class="w-full h-[36px] rounded-[20px] border border-[#789DBC] px-4">
+        <label style="display: block; font-size: 20px; font-family: sans-serif; font-weight: 600; margin-bottom: 4px;">Jasa yang diinginkan</label>
+        <select name="jasa" required style="width: 100%; height: 36px; border-radius: 20px; border: 1px solid #789DBC; padding: 0 16px;">
           <option value="">Pilih Jasa</option>
           <option value="Upgrade Kaki-kaki Motor" {{ old('jasa') == 'Upgrade Kaki-kaki Motor' ? 'selected' : '' }}>
             Upgrade Kaki-kaki Motor
@@ -112,36 +116,38 @@
           </option>
         </select>
         @error('jasa')
-          <span class="text-red-500 text-sm">{{ $message }}</span>
+          <span style="color: #ef4444; font-size: 14px;">{{ $message }}</span>
         @enderror
       </div>
 
       <!-- Keluhan -->
       <div>
-        <label class="block text-[20px] font-sans font-semibold mb-1">Keluhan</label>
+        <label style="display: block; font-size: 20px; font-family: sans-serif; font-weight: 600; margin-bottom: 4px;">Keluhan</label>
         <textarea name="keluhan" 
-                  class="w-full h-[80px] rounded-[20px] border border-[#789DBC] px-4 py-2"
+                  style="width: 100%; height: 80px; border-radius: 20px; border: 1px solid #789DBC; padding: 8px 16px;"
                   placeholder="Jelaskan keluhan atau kebutuhan khusus...">{{ old('keluhan') }}</textarea>
         @error('keluhan')
-          <span class="text-red-500 text-sm">{{ $message }}</span>
+          <span style="color: #ef4444; font-size: 14px;">{{ $message }}</span>
         @enderror
       </div>
 
       <!-- Tanggal Booking -->
       <div>
-        <label class="block text-[20px] font-sans font-semibold mb-1">Tanggal Booking</label>
+        <label style="display: block; font-size: 20px; font-family: sans-serif; font-weight: 600; margin-bottom: 4px;">Tanggal Booking</label>
         <input type="date" name="tanggal_booking" required 
                value="{{ old('tanggal_booking') }}"
                min="{{ date('Y-m-d', strtotime('+1 day')) }}"
-               class="w-full h-[36px] rounded-[20px] border border-[#789DBC] px-4" />
+               style="width: 100%; height: 36px; border-radius: 20px; border: 1px solid #789DBC; padding: 0 16px;" />
         @error('tanggal_booking')
-          <span class="text-red-500 text-sm">{{ $message }}</span>
+          <span style="color: #ef4444; font-size: 14px;">{{ $message }}</span>
         @enderror
       </div>
 
       <!-- Tombol -->
       <button type="submit" 
-              class="w-[390px] h-[60px] bg-[#E2EAF4] text-[20px] font-bold font-sans mt-2 rounded-lg hover:opacity-90 self-center {{ !Auth::check() ? 'cursor-not-allowed' : '' }}">
+              style="width: 390px; height: 60px; background-color: #E2EAF4; font-size: 20px; font-weight: bold; font-family: sans-serif; margin-top: 8px; border-radius: 8px; border: none; cursor: pointer; align-self: center; transition: opacity 0.2s; {{ !Auth::check() ? 'cursor: not-allowed;' : '' }}"
+              onmouseover="this.style.opacity='0.9'"
+              onmouseout="this.style.opacity='1'">
         Booking Service
       </button>
     </form>

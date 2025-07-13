@@ -3,30 +3,32 @@
 @section('title', 'Detail Booking • Locomotif Jajar')
 
 @section('content')
-<div class="px-10 py-6">
-    <div class="max-w-4xl mx-auto">
+<div style="padding: 24px 40px;">
+    <div style="max-width: 1024px; margin: 0 auto;">
         <!-- Header -->
-        <div class="mb-6">
-            <div class="flex items-center gap-4 mb-4">
-                <a href="{{ route('user.bookings') }}" class="text-blue-600 hover:text-blue-800">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div style="margin-bottom: 24px;">
+            <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+                <a href="{{ route('user.bookings') }}" style="color: #2563eb; text-decoration: none; transition: color 0.2s;"
+                   onmouseover="this.style.color='#1d4ed8'"
+                   onmouseout="this.style.color='#2563eb'">
+                    <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                     </svg>
                 </a>
-                <h1 class="text-[44px] font-bold font-sans">Detail Booking</h1>
+                <h1 style="font-size: 44px; font-weight: bold; font-family: sans-serif; margin: 0;">Detail Booking</h1>
             </div>
-            <p class="text-gray-600">Booking ID: #{{ $booking->bookingid }}</p>
+            <p style="color: #6b7280; margin: 0;">Booking ID: #{{ $booking->bookingid }}</p>
         </div>
 
         <!-- Status Banner -->
-        <div class="mb-6">
-            <div class="bg-white border border-[#E2EAF4] rounded-xl p-6 shadow-sm">
-                <div class="flex justify-between items-center">
+        <div style="margin-bottom: 24px;">
+            <div style="background-color: white; border: 1px solid #E2EAF4; border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
                     <div>
-                        <h3 class="text-lg font-semibold text-gray-800">Status Booking</h3>
-                        <p class="text-gray-600">Dibuat pada: {{ $booking->created_at->format('d M Y, H:i') }}</p>
+                        <h3 style="font-size: 18px; font-weight: 600; color: #1f2937; margin: 0 0 8px 0;">Status Booking</h3>
+                        <p style="color: #6b7280; margin: 0;">Dibuat pada: {{ $booking->created_at->format('d M Y, H:i') }}</p>
                     </div>
-                    <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium {{ $booking->status_color }}">
+                    <span style="display: inline-flex; align-items: center; padding: 8px 16px; border-radius: 50px; font-size: 14px; font-weight: 500; {{ $booking->status_color }}">
                         {{ $booking->status_text }}
                     </span>
                 </div>
@@ -34,42 +36,42 @@
         </div>
 
         <!-- Detail Information -->
-        <div class="grid md:grid-cols-2 gap-6 mb-6">
+        <div style="display: grid; grid-template-columns: 1fr; gap: 24px; margin-bottom: 24px;">
             <!-- Informasi Pelanggan -->
-            <div class="bg-white border border-[#E2EAF4] rounded-xl p-6 shadow-sm">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">Informasi Pelanggan</h3>
-                <div class="space-y-3">
+            <div style="background-color: white; border: 1px solid #E2EAF4; border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                <h3 style="font-size: 18px; font-weight: 600; color: #1f2937; margin: 0 0 16px 0;">Informasi Pelanggan</h3>
+                <div style="display: flex; flex-direction: column; gap: 12px;">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">Nama</label>
-                        <p class="text-gray-900">{{ $booking->nama }}</p>
+                        <label style="display: block; font-size: 14px; font-weight: 500; color: #374151; margin-bottom: 4px;">Nama</label>
+                        <p style="color: #111827; margin: 0;">{{ $booking->nama }}</p>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">Nomor Telepon</label>
-                        <p class="text-gray-900">{{ $booking->nomor_telpon }}</p>
+                        <label style="display: block; font-size: 14px; font-weight: 500; color: #374151; margin-bottom: 4px;">Nomor Telepon</label>
+                        <p style="color: #111827; margin: 0;">{{ $booking->nomor_telpon }}</p>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">Jenis Motor</label>
-                        <p class="text-gray-900">{{ $booking->jenis_motor }}</p>
+                        <label style="display: block; font-size: 14px; font-weight: 500; color: #374151; margin-bottom: 4px;">Jenis Motor</label>
+                        <p style="color: #111827; margin: 0;">{{ $booking->jenis_motor }}</p>
                     </div>
                 </div>
             </div>
 
             <!-- Detail Layanan -->
-            <div class="bg-white border border-[#E2EAF4] rounded-xl p-6 shadow-sm">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">Detail Layanan</h3>
-                <div class="space-y-3">
+            <div style="background-color: white; border: 1px solid #E2EAF4; border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                <h3 style="font-size: 18px; font-weight: 600; color: #1f2937; margin: 0 0 16px 0;">Detail Layanan</h3>
+                <div style="display: flex; flex-direction: column; gap: 12px;">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">Jasa yang Dipilih</label>
-                        <p class="text-gray-900">{{ $booking->jasa }}</p>
+                        <label style="display: block; font-size: 14px; font-weight: 500; color: #374151; margin-bottom: 4px;">Jasa yang Dipilih</label>
+                        <p style="color: #111827; margin: 0;">{{ $booking->jasa }}</p>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">Tanggal Booking</label>
-                        <p class="text-gray-900">{{ $booking->tanggal_booking->format('d M Y') }}</p>
+                        <label style="display: block; font-size: 14px; font-weight: 500; color: #374151; margin-bottom: 4px;">Tanggal Booking</label>
+                        <p style="color: #111827; margin: 0;">{{ $booking->tanggal_booking->format('d M Y') }}</p>
                     </div>
                     @if($booking->keluhan)
                         <div>
-                            <label class="block text-sm font-medium text-gray-700">Keluhan</label>
-                            <p class="text-gray-900">{{ $booking->keluhan }}</p>
+                            <label style="display: block; font-size: 14px; font-weight: 500; color: #374151; margin-bottom: 4px;">Keluhan</label>
+                            <p style="color: #111827; margin: 0;">{{ $booking->keluhan }}</p>
                         </div>
                     @endif
                 </div>
@@ -78,16 +80,18 @@
 
         <!-- Actions -->
         @if(!$booking->is_completed)
-            <div class="bg-white border border-[#E2EAF4] rounded-xl p-6 shadow-sm">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">Aksi</h3>
-                <div class="flex space-x-3">
+            <div style="background-color: white; border: 1px solid #E2EAF4; border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                <h3 style="font-size: 18px; font-weight: 600; color: #1f2937; margin: 0 0 16px 0;">Aksi</h3>
+                <div style="display: flex; gap: 12px;">
                     <form method="POST" action="{{ route('booking.cancel', $booking->bookingid) }}" 
                           onsubmit="return confirm('Apakah Anda yakin ingin membatalkan booking ini?')" 
-                          class="inline">
+                          style="display: inline;">
                         @csrf
                         @method('DELETE')
                         <button type="submit" 
-                                class="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition-colors">
+                                style="background-color: #ef4444; color: white; padding: 8px 24px; border-radius: 8px; border: none; cursor: pointer; transition: background-color 0.2s;"
+                                onmouseover="this.style.backgroundColor='#dc2626'"
+                                onmouseout="this.style.backgroundColor='#ef4444'">
                             Batalkan Booking
                         </button>
                     </form>
@@ -96,4 +100,12 @@
         @endif
     </div>
 </div>
+
+<style>
+@media (min-width: 768px) {
+    .detail-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+</style>
 @endsection

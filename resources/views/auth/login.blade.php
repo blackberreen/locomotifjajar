@@ -3,65 +3,71 @@
 @section('title', 'Login - Locomotif')
 
 @section('content')
-<div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-  <div class="max-w-md w-full space-y-8">
+<div style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background-color: #f9fafb; padding: 48px 0; padding-left: 16px; padding-right: 16px;">
+  <div style="max-width: 400px; width: 100%; display: flex; flex-direction: column; gap: 32px;">
     <div>
-      <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+      <h2 style="margin-top: 24px; text-align: center; font-size: 30px; font-weight: 800; color: #111827; margin-bottom: 8px;">
         Masuk ke akun Anda
       </h2>
-      <p class="mt-2 text-center text-sm text-gray-600">
+      <p style="margin-top: 8px; text-align: center; font-size: 14px; color: #6b7280; margin-bottom: 0;">
         Atau
-        <a href="{{ route('user.register') }}" class="font-medium text-[#789DBC] hover:text-[#6b8bb3]">
+        <a href="{{ route('user.register') }}" style="font-weight: 500; color: #789DBC; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#6b8bb3'" onmouseout="this.style.color='#789DBC'">
           daftar akun baru
         </a>
       </p>
     </div>
 
-    <form class="mt-8 space-y-6" action="{{ route('user.login') }}" method="POST">
+    <form style="margin-top: 32px; display: flex; flex-direction: column; gap: 24px;" action="{{ route('user.login') }}" method="POST">
       @csrf
-      <div class="rounded-md shadow-sm -space-y-px">
+      <div style="border-radius: 6px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); overflow: hidden;">
         <div>
-          <label for="email" class="sr-only">Email address</label>
+          <label for="email" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;">Email address</label>
           <input id="email" 
                  name="email" 
                  type="email" 
                  autocomplete="email" 
                  required 
-                 class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-[#789DBC] focus:border-[#789DBC] focus:z-10 sm:text-sm" 
+                 style="appearance: none; border-radius: 0; position: relative; display: block; width: 100%; padding: 12px; border: 1px solid #d1d5db; background-color: white; color: #111827; border-top-left-radius: 6px; border-top-right-radius: 6px; outline: none; font-size: 14px; box-sizing: border-box;" 
                  placeholder="Alamat Email"
-                 value="{{ old('email') }}">
+                 value="{{ old('email') }}"
+                 onfocus="this.style.borderColor='#789DBC'; this.style.boxShadow='0 0 0 1px #789DBC';"
+                 onblur="this.style.borderColor='#d1d5db'; this.style.boxShadow='none';">
           @error('email')
-            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+            <p style="margin-top: 4px; font-size: 14px; color: #dc2626;">{{ $message }}</p>
           @enderror
         </div>
         <div>
-          <label for="password" class="sr-only">Password</label>
+          <label for="password" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;">Password</label>
           <input id="password" 
                  name="password" 
                  type="password" 
                  autocomplete="current-password" 
                  required 
-                 class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-[#789DBC] focus:border-[#789DBC] focus:z-10 sm:text-sm" 
-                 placeholder="Password">
+                 style="appearance: none; border-radius: 0; position: relative; display: block; width: 100%; padding: 12px; border: 1px solid #d1d5db; background-color: white; color: #111827; border-bottom-left-radius: 6px; border-bottom-right-radius: 6px; outline: none; font-size: 14px; box-sizing: border-box; margin-top: -1px;" 
+                 placeholder="Password"
+                 onfocus="this.style.borderColor='#789DBC'; this.style.boxShadow='0 0 0 1px #789DBC';"
+                 onblur="this.style.borderColor='#d1d5db'; this.style.boxShadow='none';">
           @error('password')
-            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+            <p style="margin-top: 4px; font-size: 14px; color: #dc2626;">{{ $message }}</p>
           @enderror
         </div>
       </div>
 
-      <div class="flex items-center justify-between">
-        <div class="flex items-center">
+      <div style="display: flex; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center;">
           <input id="remember-me" 
                  name="remember" 
                  type="checkbox" 
-                 class="h-4 w-4 text-[#789DBC] focus:ring-[#789DBC] border-gray-300 rounded">
-          <label for="remember-me" class="ml-2 block text-sm text-gray-900">
+                 style="height: 16px; width: 16px; color: #789DBC; border: 1px solid #d1d5db; border-radius: 4px; margin-right: 8px;"
+                 onfocus="this.style.boxShadow='0 0 0 2px #789DBC';"
+                 onblur="this.style.boxShadow='none';">
+          <label for="remember-me" style="margin-left: 8px; display: block; font-size: 14px; color: #111827;">
             Ingat saya
           </label>
         </div>
 
-        <div class="text-sm">
-          <a href="#" class="font-medium text-[#789DBC] hover:text-[#6b8bb3]">
+        <div style="font-size: 14px;">
+          <a href="#" style="font-weight: 500; color: #789DBC; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#6b8bb3'" onmouseout="this.style.color='#789DBC'">
             Lupa password?
           </a>
         </div>
@@ -69,9 +75,13 @@
 
       <div>
         <button type="submit" 
-                class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#789DBC] hover:bg-[#6b8bb3] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#789DBC]">
-          <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-            <svg class="h-5 w-5 text-[#6b8bb3] group-hover:text-white" fill="currentColor" viewBox="0 0 20 20">
+                style="position: relative; width: 100%; display: flex; justify-content: center; padding: 12px 16px; border: none; font-size: 14px; font-weight: 500; border-radius: 6px; color: white; background-color: #789DBC; cursor: pointer; outline: none; transition: background-color 0.2s; box-sizing: border-box;"
+                onmouseover="this.style.backgroundColor='#6b8bb3'"
+                onmouseout="this.style.backgroundColor='#789DBC'"
+                onfocus="this.style.boxShadow='0 0 0 2px rgba(120, 157, 188, 0.5)'"
+                onblur="this.style.boxShadow='none'">
+          <span style="position: absolute; left: 0; top: 0; bottom: 0; display: flex; align-items: center; padding-left: 12px;">
+            <svg style="height: 20px; width: 20px; color: #6b8bb3;" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
             </svg>
           </span>
