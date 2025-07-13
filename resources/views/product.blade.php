@@ -3,68 +3,83 @@
 @section('title', 'Product • Locomotif Jajar')
 
 @section('content')
-<div class="px-10 py-8">
+<div style="padding: 2rem 2.5rem;">
   <!-- Cart & Search -->
-  <div class="flex justify-end items-center gap-4 mb-6">
+  <div style="display: flex; justify-content: flex-end; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
     <!-- Cart -->
     <a href="{{ route('cart') }}">
-      <img src="{{ asset('icons/cart.svg') }}" alt="Cart" class="w-[62px] h-[56px] text-[#779FE5]">
+      <img src="{{ asset('icons/cart.svg') }}" alt="Cart" style="width: 62px; height: 56px;">
     </a>
 
     <!-- Search Bar -->
-    <form action="{{ route('product') }}" method="GET" class="flex items-center gap-2">
+    <form action="{{ route('product') }}" method="GET" style="display: flex; align-items: center; gap: 0.5rem;">
       <input
         type="text"
         name="search"
         placeholder="Search product..."
         value="{{ request('search') }}"
-        class="w-[356px] h-[34px] rounded-[15px] border border-[#789DBC] px-4"
+        style="width: 356px; height: 34px; border-radius: 15px; border: 1px solid #789DBC; padding: 0 1rem; outline: none;"
       >
-      <button type="submit" class="text-[20px] text-black">Search</button>
+      <button type="submit" style="font-size: 20px; color: black; background: none; border: none; cursor: pointer; padding: 0.5rem;">Search</button>
     </form>
   </div>
 
   <!-- Filter Kategori -->
-  <div class="flex justify-center gap-10 mb-4 text-[24px] font-semibold">
-    <a href="{{ route('product') }}" class="hover:underline">All</a>
-    <a href="{{ route('product', ['kategori' => 'Oli']) }}" class="hover:underline">Oli</a>
-    <a href="{{ route('product', ['kategori' => 'Sparepart']) }}" class="hover:underline">Sparepart</a>
-    <a href="{{ route('product', ['kategori' => 'Ban']) }}" class="hover:underline">Ban</a>
-    <a href="{{ route('product', ['kategori' => 'Aksesoris']) }}" class="hover:underline">Aksesoris</a>
+  <div style="display: flex; justify-content: center; gap: 2.5rem; margin-bottom: 1rem; font-size: 24px; font-weight: 600;">
+    <a href="{{ route('product') }}" style="text-decoration: none; color: inherit;">All</a>
+    <a href="{{ route('product', ['kategori' => 'Oli']) }}" style="text-decoration: none; color: inherit;">Oli</a>
+    <a href="{{ route('product', ['kategori' => 'Sparepart']) }}" style="text-decoration: none; color: inherit;">Sparepart</a>
+    <a href="{{ route('product', ['kategori' => 'Ban']) }}" style="text-decoration: none; color: inherit;">Ban</a>
+    <a href="{{ route('product', ['kategori' => 'Aksesoris']) }}" style="text-decoration: none; color: inherit;">Aksesoris</a>
   </div>
 
   <!-- Garis Pembatas -->
-  <div class="w-[1207px] h-[2px] bg-black mx-auto mb-10"></div>
+  <div style="width: 1207px; height: 2px; background-color: black; margin: 0 auto 2.5rem auto;"></div>
 
   <!-- Grid Produk -->
-  <div class="max-w-[1300px] mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-[48px] gap-y-[50px] justify-items-center">
+  <div style="max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(223px, 1fr)); gap: 48px 50px; justify-items: center;">
     @forelse($products as $product)
-    <div class="w-[223px] h-[260px] border border-black rounded-lg p-4 flex flex-col items-center justify-between shadow-md">
+    <div style="width: 223px; height: 260px; border: 1px solid black; border-radius: 8px; padding: 1rem; display: flex; flex-direction: column; align-items: center; justify-content: space-between; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);">
       <!-- Gambar Produk -->
-      <div class="w-[84px] h-[125px] bg-gray-300 rounded-[5px] mb-2 overflow-hidden">
-        <img src="{{ asset('img/' . $product->image) }}" alt="{{ $product->nama }}" class="w-full h-full object-cover">
+      <div style="width: 84px; height: 125px; background-color: #d1d5db; border-radius: 5px; margin-bottom: 0.5rem; overflow: hidden;">
+        <img src="{{ asset('img/' . $product->image) }}" alt="{{ $product->nama }}" style="width: 100%; height: 100%; object-fit: cover;">
       </div>
 
       <!-- Info Produk -->
-      <div class="text-center">
-        <h3 class="font-bold text-[16px]">{{ $product->nama }}</h3>
-        <p class="text-[14px]">Rp. {{ number_format($product->harga, 0, ',', '.') }}</p>
-        <p class="text-[14px]">Stock: {{ $product->stok }}</p>
+      <div style="text-align: center;">
+        <h3 style="font-weight: bold; font-size: 16px; margin: 0 0 0.25rem 0;">{{ $product->nama }}</h3>
+        <p style="font-size: 14px; margin: 0 0 0.25rem 0;">Rp. {{ number_format($product->harga, 0, ',', '.') }}</p>
+        <p style="font-size: 14px; margin: 0;">Stock: {{ $product->stok }}</p>
       </div>
 
       <!-- Button Add -->
       <form action="{{ route('cart.add') }}" method="POST">
         @csrf
         <input type="hidden" name="product_id" value="{{ $product->id_produk }}">
-        <button type="submit" class="w-6 h-6 bg-[#779FE5] text-white rounded-full text-center font-bold hover:scale-110 transition">
+        <button type="submit" style="width: 24px; height: 24px; background-color: #779FE5; color: white; border-radius: 50%; border: none; cursor: pointer; font-weight: bold; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: transform 0.2s;">
             +
         </button>
       </form>
     </div>
     @empty
-    <p class="text-center col-span-4">Produk tidak ditemukan.</p>
+    <p style="text-align: center; grid-column: 1 / -1; font-size: 18px; color: #6b7280;">Produk tidak ditemukan.</p>
     @endforelse
   </div>
 </div>
-@endsection
 
+<style>
+  /* Hover effects */
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  button:hover {
+    transform: scale(1.1);
+  }
+  
+  input:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  }
+</style>
+@endsection

@@ -16,64 +16,64 @@
   {{-- Heroicons --}}
   <script src="https://cdn.jsdelivr.net/npm/heroicons@2.0.18/24/outline/index.js"></script>
 </head>
-<body class="bg-white text-gray-800 font-sans">
+<body style="background-color: white; color: #1f2937; font-family: 'Instrument Sans', sans-serif;">
 
   {{-- Navbar --}}
-  <nav class="px-6 py-4 flex items-center justify-between" style="border-bottom:2px solid #789DBC;">
-    <div class="text-[32px] font-bold ml-4">Locomotif</div>
+  <nav style="padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #789DBC;">
+    <div style="font-size: 32px; font-weight: bold; margin-left: 1rem;">Locomotif</div>
     
-    <div class="flex items-center space-x-10">
-      <ul class="flex space-x-10">
-        <li><a href="{{ route('home') }}" class="text-[20px] hover:text-primary">Beranda</a></li>
-        <li><a href="{{ route('service') }}" class="text-[20px] hover:text-primary">Layanan</a></li>
-        <li><a href="{{ route('product') }}" class="text-[20px] hover:text-primary">Produk</a></li>
-        <li><a href="{{ route('about') }}" class="text-[20px] hover:text-primary">Tentang kami</a></li>
+    <div style="display: flex; align-items: center; gap: 2.5rem;">
+      <ul style="display: flex; gap: 2.5rem; list-style: none; padding: 0; margin: 0;">
+        <li><a href="{{ route('home') }}" style="font-size: 20px; text-decoration: none; color: inherit;">Beranda</a></li>
+        <li><a href="{{ route('service') }}" style="font-size: 20px; text-decoration: none; color: inherit;">Layanan</a></li>
+        <li><a href="{{ route('product') }}" style="font-size: 20px; text-decoration: none; color: inherit;">Produk</a></li>
+        <li><a href="{{ route('about') }}" style="font-size: 20px; text-decoration: none; color: inherit;">Tentang kami</a></li>
       </ul>
 
       {{-- User Authentication Section --}}
-      <div class="relative">
+      <div style="position: relative;">
         @auth
           {{-- User is logged in - Show user dropdown --}}
-          <div class="relative group">
-            <button class="flex items-center space-x-2 p-2 rounded-full hover:bg-gray-100 transition-colors">
-              <div class="w-10 h-10 bg-[#789DBC] rounded-full flex items-center justify-center text-white font-semibold">
+          <div style="position: relative; display: inline-block;" class="user-dropdown">
+            <button style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; border-radius: 9999px; background: none; border: none; cursor: pointer; transition: background-color 0.2s;">
+              <div style="width: 40px; height: 40px; background-color: #789DBC; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;">
                 {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
               </div>
-              <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg style="width: 16px; height: 16px; color: #6b7280;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
               </svg>
             </button>
 
             {{-- Dropdown Menu --}}
-            <div class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-              <div class="py-2">
-                <div class="px-4 py-2 border-b border-gray-100">
-                  <p class="text-sm font-semibold text-gray-800">{{ auth()->user()->name }}</p>
-                  <p class="text-xs text-gray-600">{{ auth()->user()->email }}</p>
+            <div style="position: absolute; right: 0; top: 100%; margin-top: 0.5rem; width: 192px; background: white; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); opacity: 0; visibility: hidden; z-index: 50; transition: opacity 0.2s, visibility 0.2s;" class="dropdown-menu">
+              <div style="padding: 0.5rem 0;">
+                <div style="padding: 0.5rem 1rem; border-bottom: 1px solid #f3f4f6;">
+                  <p style="font-size: 14px; font-weight: 600; color: #1f2937; margin: 0;">{{ auth()->user()->name }}</p>
+                  <p style="font-size: 12px; color: #6b7280; margin: 0;">{{ auth()->user()->email }}</p>
                 </div>
-                <a href="{{ route('user.profile') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <a href="{{ route('user.profile') }}" style="display: block; padding: 0.5rem 1rem; font-size: 14px; color: #374151; text-decoration: none;">
+                  <svg style="width: 16px; height: 16px; display: inline; margin-right: 0.5rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                   </svg>
                   Profil
                 </a>
-                <a href="{{ route('user.orders') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <a href="{{ route('user.orders') }}" style="display: block; padding: 0.5rem 1rem; font-size: 14px; color: #374151; text-decoration: none;">
+                  <svg style="width: 16px; height: 16px; display: inline; margin-right: 0.5rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                   </svg>
                   Pesanan Saya
                 </a>
-                <a href="{{ route('user.bookings') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <a href="{{ route('user.bookings') }}" style="display: block; padding: 0.5rem 1rem; font-size: 14px; color: #374151; text-decoration: none;">
+                  <svg style="width: 16px; height: 16px; display: inline; margin-right: 0.5rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                   </svg>
                   Reservasi Saya
                 </a>
-                <hr class="my-1">
-                <form method="POST" action="{{ route('user.logout') }}" class="block">
+                <hr style="margin: 0.25rem 0;">
+                <form method="POST" action="{{ route('user.logout') }}" style="display: block; margin: 0;">
                   @csrf
-                  <button type="submit" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50">
-                    <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <button type="submit" style="width: 100%; text-align: left; padding: 0.5rem 1rem; font-size: 14px; color: #dc2626; background: none; border: none; cursor: pointer;">
+                    <svg style="width: 16px; height: 16px; display: inline; margin-right: 0.5rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
                     </svg>
                     Keluar
@@ -84,11 +84,11 @@
           </div>
         @else
           {{-- User is not logged in - Show login/register buttons --}}
-          <div class="flex items-center space-x-4">
-            <a href="{{ route('user.login') }}" class="text-[16px] text-[#789DBC] hover:text-[#6b8bb3] font-medium">
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <a href="{{ route('user.login') }}" style="font-size: 16px; color: #789DBC; text-decoration: none; font-weight: 500;">
               Masuk
             </a>
-            <a href="{{ route('user.register') }}" class="bg-[#789DBC] text-white px-4 py-2 rounded-lg hover:bg-[#6b8bb3] transition-colors font-medium">
+            <a href="{{ route('user.register') }}" style="background-color: #789DBC; color: white; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 500; transition: background-color 0.2s;">
               Daftar
             </a>
           </div>
@@ -99,27 +99,51 @@
 
   {{-- Flash Messages --}}
   @if(session('success'))
-    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 mx-6 mt-4 rounded">
+    <div style="background-color: #dcfce7; border: 1px solid #22c55e; color: #15803d; padding: 0.75rem 1rem; margin: 1rem 1.5rem; border-radius: 4px;">
       {{ session('success') }}
     </div>
   @endif
 
   @if(session('error'))
-    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mx-6 mt-4 rounded">
+    <div style="background-color: #fef2f2; border: 1px solid #ef4444; color: #dc2626; padding: 0.75rem 1rem; margin: 1rem 1.5rem; border-radius: 4px;">
       {{ session('error') }}
     </div>
   @endif
 
   {{-- Konten halaman --}}
-  <main class="container mx-auto py-10">
+  <main style="max-width: 1200px; margin: 0 auto; padding: 2.5rem 0;">
     @yield('content')
   </main>
 
-  {{-- JavaScript untuk dropdown dan interaksi lainnya --}}
+  {{-- JavaScript untuk dropdown --}}
   <script>
-    // Dropdown functionality untuk mobile atau jika diperlukan
     document.addEventListener('DOMContentLoaded', function() {
-      // Tambahkan JavaScript custom jika diperlukan
+      const userDropdown = document.querySelector('.user-dropdown');
+      const dropdownMenu = document.querySelector('.dropdown-menu');
+      
+      if (userDropdown && dropdownMenu) {
+        userDropdown.addEventListener('mouseenter', function() {
+          dropdownMenu.style.opacity = '1';
+          dropdownMenu.style.visibility = 'visible';
+        });
+        
+        userDropdown.addEventListener('mouseleave', function() {
+          dropdownMenu.style.opacity = '0';
+          dropdownMenu.style.visibility = 'hidden';
+        });
+      }
+      
+      // Hover effects
+      const buttons = document.querySelectorAll('button');
+      buttons.forEach(button => {
+        button.addEventListener('mouseenter', function() {
+          this.style.backgroundColor = '#f3f4f6';
+        });
+        button.addEventListener('mouseleave', function() {
+          this.style.backgroundColor = '';
+        });
+      });
+      
       console.log('Locomotif App Loaded');
     });
   </script>
