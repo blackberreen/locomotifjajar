@@ -17,7 +17,7 @@ class AdminProductController extends Controller
 
     public function create()
     {
-        // Ambil semua file gambar dari folder public/img
+        // Ambil semua gambar dari folder public/img
         $imageFiles = File::files(public_path('img'));
         $imageNames = array_map(function ($file) {
             return $file->getFilename();
@@ -29,11 +29,11 @@ class AdminProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama' => 'required|string|max:255',
-            'harga' => 'required|numeric',
-            'stok' => 'required|integer',
+            'nama'     => 'required|string|max:255',
+            'harga'    => 'required|numeric',
+            'stok'     => 'required|integer',
             'kategori' => 'required|string|max:255',
-            'image' => 'required|string',
+            'image'    => 'required|string',
         ]);
 
         $data = $request->only(['nama', 'harga', 'stok', 'kategori', 'image']);
@@ -59,15 +59,16 @@ class AdminProductController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nama' => 'required|string|max:255',
-            'harga' => 'required|numeric',
-            'stok' => 'required|integer',
+            'nama'     => 'required|string|max:255',
+            'harga'    => 'required|numeric',
+            'stok'     => 'required|integer',
             'kategori' => 'required|string|max:255',
-            'image' => 'required|string',
+            'image'    => 'required|string',
         ]);
 
         $produk = Product::findOrFail($id);
         $data = $request->only(['nama', 'harga', 'stok', 'kategori', 'image']);
+
         $produk->update($data);
 
         return redirect()->route('admin.product')->with('success', 'Produk berhasil diperbarui.');
@@ -84,7 +85,7 @@ class AdminProductController extends Controller
     public function bulkDestroy(Request $request)
     {
         $request->validate([
-            'product_ids' => 'required|array',
+            'product_ids'   => 'required|array',
             'product_ids.*' => 'exists:produk,id_produk',
         ]);
 
@@ -100,12 +101,12 @@ class AdminProductController extends Controller
         $produk = Product::findOrFail($id);
 
         return response()->json([
-            'id' => $produk->id_produk,
-            'nama' => $produk->nama,
-            'kategori' => $produk->kategori,
-            'harga' => $produk->harga,
-            'stok' => $produk->stok,
-            'image' => $produk->image,
+            'id'         => $produk->id_produk,
+            'nama'       => $produk->nama,
+            'kategori'   => $produk->kategori,
+            'harga'      => $produk->harga,
+            'stok'       => $produk->stok,
+            'image'      => $produk->image,
             'created_at' => $produk->created_at,
             'updated_at' => $produk->updated_at,
         ]);
@@ -121,9 +122,9 @@ class AdminProductController extends Controller
         $produk->update(['stok' => $request->stok]);
 
         return response()->json([
-            'success' => true,
-            'message' => 'Stok berhasil diperbarui',
-            'new_stock' => $produk->stok,
+            'success'    => true,
+            'message'    => 'Stok berhasil diperbarui',
+            'new_stock'  => $produk->stok,
         ]);
     }
 }
