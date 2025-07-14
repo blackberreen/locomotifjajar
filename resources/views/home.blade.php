@@ -1,48 +1,107 @@
-{{-- resources/views/home.blade.php --}}
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locomotif Jajar</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: white;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 100px 50px;
+        }
+        .text-content {
+            max-width: 50%;
+        }
+        .text-content h1 {
+            font-size: 32px;
+        }
+        .text-content .highlight {
+            color: #167DD3;
+        }
+        .btn-chat {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #E2EAF4;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            color: black;
+        }
+        .info-cards {
+            display: flex;
+            margin-top: 30px;
+            gap: 20px;
+        }
+        .card {
+            background-color: #E2EAF4;
+            padding: 20px;
+            border-radius: 8px;
+            width: 200px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .image-box {
+            width: 400px;
+            height: 300px;
+            background-color: grey;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
 
-@section('title', 'Home • Locomotif Jajar')
+    <header>
+        <div class="logo"><b>Locomotif</b></div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="#">Services</a>
+            <a href="#">Blog</a>
+            <a href="#">Product</a>
+            <a href="#">About Us</a>
+        </nav>
+    </header>
 
-@section('content')
-<div class="home-container" style="display: flex; justify-content: center; align-items: center; padding: 100px 80px; gap: 80px; flex-wrap: wrap;">
-  <!-- Kolom Kiri -->
-  <div class="home-content" style="flex: 1; max-width: 750px; text-align: center;">
-    <h1 style="font-size: 45px; font-weight: bold; line-height: 1.5; margin-bottom: 40px;">
-      <span style="color: #167DD3;">Modifikasi</span> motor anda dengan<br>
-      Aman dan Terpercaya di Bengkel<br>
-      <span style="color: #167DD3;">Locomotif Jajar.</span>
-    </h1>
+    <div class="container">
+        <div class="text-content">
+            <h1><span class="highlight">Modifikasi</span> motor anda dengan<br>
+            Aman dan Terpercaya di Bengkel<br>
+            <span class="highlight">Locomotif Jajar</span>.</h1>
 
-    <a
-      href="https://wa.me/628176820332"
-      style="display: inline-block; width: 400px; height: 90px; background-color: #E2EAF4; border-radius: 12px; line-height: 90px; font-size: 24px; font-weight: 600; color: black; text-decoration: none; margin-bottom: 50px;"
-      onmouseover="this.style.opacity='0.9'"
-      onmouseout="this.style.opacity='1'"
-    >
-      Mulai mengobrol
-    </a>
+            <a href="https://wa.me/6281234567890" class="btn-chat" target="_blank">Mulai Mengobrol</a>
 
-    <div class="stats-container" style="display: flex; justify-content: center; gap: 32px;">
-      <div style="background-color: #E2EAF4; padding: 32px; border-radius: 16px; width: 320px; height: 180px; display: flex; align-items: center; justify-content: center;">
-        <p style="margin: 0; font-size: 24px; font-weight: 600;">
-          Aman, Cepat, dan<br>Terpercaya sejak 2005
-        </p>
-      </div>
-      <div style="background-color: #E2EAF4; padding: 32px; border-radius: 16px; width: 320px; height: 180px; display: flex; align-items: center; justify-content: center;">
-        <p style="margin: 0; font-size: 24px; font-weight: 600;">
-          Sudah menangani<br>1000+ motor
-        </p>
-      </div>
+            <div class="info-cards">
+                <div class="card">Aman, Cepat, dan Terpercaya sejak 2005</div>
+                <div class="card">Sudah menangani 1000+ motor</div>
+            </div>
+        </div>
+
+        <div class="image-box">
+            <!-- Nanti di sini kamu ganti dengan <img> -->
+        </div>
     </div>
-  </div>
 
-  <!-- Kolom Kanan (Gambar) -->
-  <div class="home-image-container" style="flex: 1; max-width: 620px; display: flex; justify-content: center;">
-    <img
-      src="{{ asset('img/coverhome.jpeg') }}"
-      alt="Cover Home"
-      style="width: 425px; max-width: 648px; height: auto; border-radius: 12px; object-fit: cover;"
-    />
-  </div>
-</div>
-@endsection
+</body>
+</html>
