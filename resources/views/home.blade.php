@@ -4,9 +4,9 @@
 @section('title', 'Home • Locomotif Jajar')
 
 @section('content')
-<div class="home-container" style="display: flex; align-items: center; justify-content: space-between; padding: 40px 40px 40px 60px; min-height: 70vh;">
+<div class="home-container" style="display: flex; flex-wrap: nowrap; align-items: center; justify-content: space-between; padding: 40px 60px; min-height: 70vh; max-width: 1440px; margin: auto;">
   <!-- Konten Kiri -->
-  <div class="home-content" style="flex: 1; max-width: 600px; margin-right: 40px;">
+  <div class="home-content" style="flex: 1; max-width: 600px;">
     <h1 style="font-size: 45px; font-weight: bold; margin-bottom: 24px; line-height: 1.2; text-align: left;">
       <span style="color: #789DBC;">Modifikasi</span> motor anda dengan<br>
       Aman dan Terpercaya di Bengkel<br>
@@ -23,143 +23,97 @@
       Mulai mengobrol
     </a>
 
-    <div class="stats-container" style="display: flex; gap: 24px;">
-      <div class="stats-box" style="flex: 1; min-width: 280px; height: 181px; padding: 16px; border-radius: 8px; background-color: #E2EAF4; display: flex; align-items: center; justify-content: center;">
-        <p style="font-weight: 600; font-size: 25px; text-align: center; margin: 0;">
+    <div class="stats-container" style="display: flex; gap: 24px; flex-wrap: wrap;">
+      <div class="stats-box" style="flex: 1; min-width: 260px; height: 160px; padding: 16px; border-radius: 8px; background-color: #E2EAF4; display: flex; align-items: center; justify-content: center;">
+        <p style="font-weight: 600; font-size: 22px; text-align: center; margin: 0;">
           Aman, Cepat, dan Terpercaya sejak 2005
         </p>
       </div>
-      <div class="stats-box" style="flex: 1; min-width: 280px; height: 181px; padding: 16px; border-radius: 8px; background-color: #E2EAF4; display: flex; align-items: center; justify-content: center;">
-        <p style="font-weight: 600; font-size: 25px; text-align: center; margin: 0;">
+      <div class="stats-box" style="flex: 1; min-width: 260px; height: 160px; padding: 16px; border-radius: 8px; background-color: #E2EAF4; display: flex; align-items: center; justify-content: center;">
+        <p style="font-weight: 600; font-size: 22px; text-align: center; margin: 0;">
           Sudah menangani 1000+ motor
         </p>
       </div>
     </div>
   </div>
 
-  <!-- Foto Kanan -->
-  <div class="home-image-container" style="flex: 0 0 auto;">
+  <!-- Gambar Kanan -->
+  <div class="home-image-container" style="flex-shrink: 0; margin-left: 40px;">
     <img
       src="{{ asset('img/coverhome.jpeg') }}"
       alt="Cover Home"
       class="home-image"
-      style="width: 525px; height: 548px; object-fit: cover; border-radius: 8px;"
+      style="width: 480px; height: auto; object-fit: cover; border-radius: 8px;"
     />
   </div>
 </div>
 
-<!-- Media Query untuk Responsif -->
+<!-- Media Query -->
 <style>
 @media (max-width: 1024px) {
   .home-container {
-    flex-direction: column !important;
-    padding: 20px !important;
-    text-align: center !important;
-    align-items: center !important;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
   }
-  
-  .home-content {
-    margin-right: 0 !important;
-    margin-bottom: 40px !important;
-    max-width: 100% !important;
-  }
-  
-  .home-content h1 {
-    text-align: center !important;
-    font-size: 38px !important;
-  }
-  
-  .home-image-container {
-    flex: none !important;
-  }
-  
-  .home-image {
-    width: 100% !important;
-    max-width: 450px !important;
-    height: auto !important;
-  }
-  
-  .whatsapp-button {
-    margin: 0 auto 32px auto !important;
-  }
-  
-  .stats-container {
-    justify-content: center !important;
-    max-width: 100% !important;
-  }
-}
 
-@media (max-width: 768px) {
-  .home-container {
-    padding: 20px !important;
+  .home-content {
+    margin-right: 0;
+    margin-bottom: 32px;
+    max-width: 100%;
   }
-  
+
   .home-content h1 {
-    font-size: 32px !important;
+    text-align: center;
+    font-size: 36px;
   }
-  
+
   .whatsapp-button {
+    margin: 0 auto 24px auto;
     width: 280px !important;
     height: 60px !important;
     font-size: 20px !important;
   }
-  
+
   .stats-container {
-    gap: 16px !important;
+    justify-content: center;
+    gap: 16px;
   }
-  
+
   .stats-box {
-    height: 150px !important;
-    min-width: 220px !important;
+    height: 140px;
   }
-  
-  .stats-box p {
-    font-size: 18px !important;
+
+  .home-image-container {
+    margin-left: 0;
   }
-  
+
   .home-image {
-    max-width: 350px !important;
+    width: 100%;
+    max-width: 400px;
   }
 }
 
 @media (max-width: 600px) {
-  .home-container {
-    padding: 15px !important;
-  }
-  
   .home-content h1 {
-    font-size: 28px !important;
+    font-size: 28px;
   }
-  
+
   .whatsapp-button {
-    width: 250px !important;
-    height: 55px !important;
-    font-size: 18px !important;
+    width: 240px;
+    height: 55px;
+    font-size: 18px;
   }
-  
-  .stats-container {
-    gap: 12px !important;
-  }
-  
+
   .stats-box {
-    min-width: 200px !important;
-    height: 130px !important;
+    height: 120px;
+    min-width: 200px;
   }
-  
+
   .stats-box p {
-    font-size: 16px !important;
-  }
-  
-  .home-image {
-    max-width: 300px !important;
+    font-size: 16px;
   }
 }
 </style>
-
-<!-- Script untuk menambahkan class responsif -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  // Classes sudah ditambahkan langsung di HTML, tidak perlu script tambahan
-});
-</script>
 @endsection
