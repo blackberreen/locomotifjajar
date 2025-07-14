@@ -157,23 +157,20 @@
 </div>
 
 <style>
-  input, textarea {
-    font-family: 'Segoe UI', sans-serif;
-    margin-bottom: 8px;
-  }
-
+  /* Focus states */
   input:focus, textarea:focus {
     border-color: #6366f1;
     box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
   }
-
+  
+  /* Button hover */
   button:hover {
     opacity: 0.9;
   }
-
+  
+  /* Link hover */
   a:hover {
     color: #6b8bb3;
   }
 </style>
-
 @endsection

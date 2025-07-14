@@ -19,60 +19,143 @@
         @method('PUT')
       @endif
 
-      <div class="form-grid">
+      <div style="display: grid; grid-template-columns: 1fr; gap: 24px;">
         {{-- Nama Lengkap --}}
-        <div>
-          <label for="nama">Nama Lengkap</label>
-          <input type="text" id="nama" name="nama" value="{{ old('nama', $profile->nama ?? '') }}" required>
-          @error('nama') <p class="error">{{ $message }}</p> @enderror
+        <div style="grid-column: 1 / -1;">
+          <label for="nama" style="font-size: 18px; font-weight: 600; display: block; margin-bottom: 8px;">Nama Lengkap</label>
+          <input 
+            type="text" 
+            id="nama" 
+            name="nama" 
+            value="{{ old('nama', $profile->nama ?? '') }}"
+            required 
+            style="width: 100%; height: 40px; border: 1px solid #789DBC; border-radius: 6px; padding: 0 12px; background-color: white; outline: none; transition: box-shadow 0.2s;"
+            onfocus="this.style.boxShadow='0 0 0 2px rgba(120, 157, 188, 0.5)'"
+            onblur="this.style.boxShadow='none'"
+          >
+          @error('nama')
+            <p style="color: #ef4444; font-size: 14px; margin-top: 4px;">{{ $message }}</p>
+          @enderror
         </div>
 
         {{-- Alamat --}}
         <div style="grid-column: 1 / -1;">
-          <label for="alamat">Alamat Lengkap</label>
-          <textarea id="alamat" name="alamat" rows="3" required>{{ old('alamat', $profile->alamat ?? '') }}</textarea>
-          @error('alamat') <p class="error">{{ $message }}</p> @enderror
+          <label for="alamat" style="font-size: 18px; font-weight: 600; display: block; margin-bottom: 8px;">Alamat Lengkap</label>
+          <textarea 
+            id="alamat" 
+            name="alamat" 
+            required 
+            rows="3"
+            style="width: 100%; border: 1px solid #789DBC; border-radius: 6px; padding: 8px 12px; background-color: white; outline: none; transition: box-shadow 0.2s; resize: vertical;"
+            onfocus="this.style.boxShadow='0 0 0 2px rgba(120, 157, 188, 0.5)'"
+            onblur="this.style.boxShadow='none'"
+          >{{ old('alamat', $profile->alamat ?? '') }}</textarea>
+          @error('alamat')
+            <p style="color: #ef4444; font-size: 14px; margin-top: 4px;">{{ $message }}</p>
+          @enderror
         </div>
 
         {{-- Provinsi --}}
         <div>
-          <label for="provinsi">Provinsi</label>
-          <input type="text" id="provinsi" name="provinsi" value="{{ old('provinsi', $profile->provinsi ?? '') }}" required>
-          @error('provinsi') <p class="error">{{ $message }}</p> @enderror
+          <label for="provinsi" style="font-size: 18px; font-weight: 600; display: block; margin-bottom: 8px;">Provinsi</label>
+          <input 
+            type="text" 
+            id="provinsi" 
+            name="provinsi" 
+            value="{{ old('provinsi', $profile->provinsi ?? '') }}"
+            required 
+            style="width: 100%; height: 40px; border: 1px solid #789DBC; border-radius: 6px; padding: 0 12px; background-color: white; outline: none; transition: box-shadow 0.2s;"
+            onfocus="this.style.boxShadow='0 0 0 2px rgba(120, 157, 188, 0.5)'"
+            onblur="this.style.boxShadow='none'"
+          >
+          @error('provinsi')
+            <p style="color: #ef4444; font-size: 14px; margin-top: 4px;">{{ $message }}</p>
+          @enderror
         </div>
 
         {{-- Kota --}}
         <div>
-          <label for="kota">Kota</label>
-          <input type="text" id="kota" name="kota" value="{{ old('kota', $profile->kota ?? '') }}" required>
-          @error('kota') <p class="error">{{ $message }}</p> @enderror
+          <label for="kota" style="font-size: 18px; font-weight: 600; display: block; margin-bottom: 8px;">Kota</label>
+          <input 
+            type="text" 
+            id="kota" 
+            name="kota" 
+            value="{{ old('kota', $profile->kota ?? '') }}"
+            required 
+            style="width: 100%; height: 40px; border: 1px solid #789DBC; border-radius: 6px; padding: 0 12px; background-color: white; outline: none; transition: box-shadow 0.2s;"
+            onfocus="this.style.boxShadow='0 0 0 2px rgba(120, 157, 188, 0.5)'"
+            onblur="this.style.boxShadow='none'"
+          >
+          @error('kota')
+            <p style="color: #ef4444; font-size: 14px; margin-top: 4px;">{{ $message }}</p>
+          @enderror
         </div>
 
         {{-- Kecamatan --}}
         <div>
-          <label for="kecamatan">Kecamatan</label>
-          <input type="text" id="kecamatan" name="kecamatan" value="{{ old('kecamatan', $profile->kecamatan ?? '') }}" required>
-          @error('kecamatan') <p class="error">{{ $message }}</p> @enderror
+          <label for="kecamatan" style="font-size: 18px; font-weight: 600; display: block; margin-bottom: 8px;">Kecamatan</label>
+          <input 
+            type="text" 
+            id="kecamatan" 
+            name="kecamatan" 
+            value="{{ old('kecamatan', $profile->kecamatan ?? '') }}"
+            required 
+            style="width: 100%; height: 40px; border: 1px solid #789DBC; border-radius: 6px; padding: 0 12px; background-color: white; outline: none; transition: box-shadow 0.2s;"
+            onfocus="this.style.boxShadow='0 0 0 2px rgba(120, 157, 188, 0.5)'"
+            onblur="this.style.boxShadow='none'"
+          >
+          @error('kecamatan')
+            <p style="color: #ef4444; font-size: 14px; margin-top: 4px;">{{ $message }}</p>
+          @enderror
         </div>
 
         {{-- Kelurahan --}}
         <div>
-          <label for="kelurahan">Kelurahan</label>
-          <input type="text" id="kelurahan" name="kelurahan" value="{{ old('kelurahan', $profile->kelurahan ?? '') }}" required>
-          @error('kelurahan') <p class="error">{{ $message }}</p> @enderror
+          <label for="kelurahan" style="font-size: 18px; font-weight: 600; display: block; margin-bottom: 8px;">Kelurahan</label>
+          <input 
+            type="text" 
+            id="kelurahan" 
+            name="kelurahan" 
+            value="{{ old('kelurahan', $profile->kelurahan ?? '') }}"
+            required 
+            style="width: 100%; height: 40px; border: 1px solid #789DBC; border-radius: 6px; padding: 0 12px; background-color: white; outline: none; transition: box-shadow 0.2s;"
+            onfocus="this.style.boxShadow='0 0 0 2px rgba(120, 157, 188, 0.5)'"
+            onblur="this.style.boxShadow='none'"
+          >
+          @error('kelurahan')
+            <p style="color: #ef4444; font-size: 14px; margin-top: 4px;">{{ $message }}</p>
+          @enderror
         </div>
 
         {{-- Nomor Telepon --}}
         <div style="grid-column: 1 / -1;">
-          <label for="telepon">Nomor Telepon</label>
-          <input type="text" id="telepon" name="telepon" value="{{ old('telepon', $profile->telepon ?? '') }}" required>
-          @error('telepon') <p class="error">{{ $message }}</p> @enderror
+          <label for="telepon" style="font-size: 18px; font-weight: 600; display: block; margin-bottom: 8px;">Nomor Telepon</label>
+          <input 
+            type="text" 
+            id="telepon" 
+            name="telepon" 
+            value="{{ old('telepon', $profile->telepon ?? '') }}"
+            required 
+            style="width: 100%; height: 40px; border: 1px solid #789DBC; border-radius: 6px; padding: 0 12px; background-color: white; outline: none; transition: box-shadow 0.2s;"
+            onfocus="this.style.boxShadow='0 0 0 2px rgba(120, 157, 188, 0.5)'"
+            onblur="this.style.boxShadow='none'"
+          >
+          @error('telepon')
+            <p style="color: #ef4444; font-size: 14px; margin-top: 4px;">{{ $message }}</p>
+          @enderror
         </div>
       </div>
 
       {{-- Submit Button --}}
       <div style="display: flex; justify-content: center; margin-top: 32px;">
-        <button type="submit">{{ $profile ? 'Update Profile' : 'Simpan Profile' }}</button>
+        <button 
+          type="submit" 
+          style="width: 300px; height: 50px; background-color: #789DBC; color: white; border-radius: 8px; font-size: 18px; font-weight: 600; border: none; cursor: pointer; transition: background-color 0.2s;"
+          onmouseover="this.style.backgroundColor='#6b8bb3'"
+          onmouseout="this.style.backgroundColor='#789DBC'"
+        >
+          {{ $profile ? 'Update Profile' : 'Simpan Profile' }}
+        </button>
       </div>
     </form>
   </div>
@@ -95,70 +178,53 @@
   @endif
 </div>
 
+{{-- Media Query for Responsive Design --}}
 <style>
-  .form-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 24px;
+@media (min-width: 768px) {
+  .grid-container {
+    grid-template-columns: 1fr 1fr;
   }
+  .grid-full-width {
+    grid-column: 1 / -1;
+  }
+}
+</style>
 
-  @media (min-width: 768px) {
-    .form-grid {
-      grid-template-columns: 1fr 1fr;
+<script>
+// Apply responsive grid classes
+document.addEventListener('DOMContentLoaded', function() {
+  const gridContainer = document.querySelector('div[style*="display: grid"]');
+  if (gridContainer && window.innerWidth >= 768) {
+    gridContainer.classList.add('grid-container');
+    gridContainer.style.gridTemplateColumns = '1fr 1fr';
+    
+    // Apply full width to specific elements
+    const fullWidthElements = [
+      'div:has(#nama)',
+      'div:has(#alamat)', 
+      'div:has(#telepon)'
+    ];
+    
+    fullWidthElements.forEach(selector => {
+      const element = gridContainer.querySelector(selector);
+      if (element) {
+        element.classList.add('grid-full-width');
+        element.style.gridColumn = '1 / -1';
+      }
+    });
+  }
+});
+
+// Handle window resize
+window.addEventListener('resize', function() {
+  const gridContainer = document.querySelector('div[style*="display: grid"]');
+  if (gridContainer) {
+    if (window.innerWidth >= 768) {
+      gridContainer.style.gridTemplateColumns = '1fr 1fr';
+    } else {
+      gridContainer.style.gridTemplateColumns = '1fr';
     }
   }
-
-  label {
-    font-size: 18px;
-    font-weight: 600;
-    display: block;
-    margin-bottom: 8px;
-  }
-
-  input, textarea {
-    width: 100%;
-    border: 1px solid #789DBC;
-    border-radius: 6px;
-    padding: 8px 12px;
-    background-color: white;
-    outline: none;
-    font-family: 'Segoe UI', sans-serif;
-  }
-
-  input {
-    height: 40px;
-  }
-
-  textarea {
-    resize: vertical;
-  }
-
-  input:focus, textarea:focus {
-    box-shadow: 0 0 0 2px rgba(120, 157, 188, 0.5);
-  }
-
-  button {
-    width: 300px;
-    height: 50px;
-    background-color: #789DBC;
-    color: white;
-    border-radius: 8px;
-    font-size: 18px;
-    font-weight: 600;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    font-family: 'Segoe UI', sans-serif;
-  }
-
-  button:hover {
-    background-color: #6b8bb3;
-  }
-
-  .error {
-    color: #ef4444;
-    font-size: 14px;
-    margin-top: 4px;
-  }
-</style>
+});
+</script>
 @endsection
