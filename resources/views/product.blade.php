@@ -42,7 +42,15 @@
     <div style="width: 223px; height: 260px; border: 1px solid black; border-radius: 8px; padding: 1rem; display: flex; flex-direction: column; align-items: center; justify-content: space-between; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);">
       <!-- Gambar Produk -->
       <div style="width: 84px; height: 125px; background-color: #d1d5db; border-radius: 5px; margin-bottom: 0.5rem; overflow: hidden;">
-        <img src="{{ asset('img/' . $product->image) }}" alt="{{ $product->nama }}" style="width: 100%; height: 100%; object-fit: cover;">
+        @if($product->image)
+          <!-- Debug: tampilkan path gambar -->
+          <p style="font-size: 10px;">{{ asset('img/' . $product->image) }}</p>
+          <img src="{{ asset('img/' . $product->image) }}" alt="{{ $product->nama }}" style="width: 100%; height: 100%; object-fit: cover;" 
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+          <div style="display: none; text-align: center; font-size: 12px; color: red;">Image not found</div>
+        @else
+          <p style="font-size: 12px; color: red;">No image</p>
+        @endif
       </div>
 
       <!-- Info Produk -->
