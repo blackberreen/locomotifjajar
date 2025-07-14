@@ -4,7 +4,7 @@
 @section('title', 'Home • Locomotif Jajar')
 
 @section('content')
-<div class="home-container" style="display: flex; align-items: center; justify-content: space-between; padding: 40px 80px; min-height: 70vh;">
+<div class="home-container" style="display: flex; align-items: center; justify-content: space-between; padding: 40px 40px 40px 60px; min-height: 70vh;">
   <!-- Konten Kiri -->
   <div class="home-content" style="flex: 1; max-width: 600px; margin-right: 40px;">
     <h1 style="font-size: 45px; font-weight: bold; margin-bottom: 24px; line-height: 1.2; text-align: left;">
