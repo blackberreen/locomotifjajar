@@ -3,11 +3,11 @@
 @section('title', 'Booking • Locomotif Jajar')
 
 @section('content')
-<div style="padding: 1.5rem 2.5rem; display: flex; flex-direction: column; gap: 2.5rem; align-items: flex-start;">
+<div style="padding: 1.5rem 2.5rem; display: flex; flex-direction: column; gap: 2.5rem; align-items: flex-start; font-family: 'Segoe UI', sans-serif;">
   <!-- Kiri -->
   <div style="display: flex; flex-direction: column; align-items: flex-start;">
-    <h1 style="font-size: 44px; font-weight: bold; font-family: sans-serif; text-align: left; margin-bottom: 0.75rem;">Booking Service</h1>
-    <p style="font-size: 20px; font-family: sans-serif; text-align: left; margin-bottom: 1rem; line-height: 1.2;">
+    <h1 style="font-size: 44px; font-weight: bold; margin-bottom: 0.75rem;">Booking Service</h1>
+    <p style="font-size: 20px; margin-bottom: 1rem; line-height: 1.2;">
       Pesan tanpa antri, motor anda langsung <br> kami perbaiki.
     </p>
     <img
@@ -29,21 +29,11 @@
             </svg>
           </div>
           <div style="margin-left: 0.75rem;">
-            <h3 style="font-size: 0.875rem; font-weight: 500; color: #92400e;">
-              Login Diperlukan
-            </h3>
-            <div style="margin-top: 0.5rem; font-size: 0.875rem; color: #b45309;">
-              <p>Untuk melakukan booking, silakan login terlebih dahulu.</p>
-            </div>
-            <div style="margin-top: 1rem;">
-              <div style="display: flex; gap: 0.5rem;">
-                <a href="{{ route('user.login') }}" style="background-color: #eab308; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none; transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='#ca8a04'" onmouseout="this.style.backgroundColor='#eab308'">
-                  Login
-                </a>
-                <a href="{{ route('user.register') }}" style="background-color: #6b7280; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none; transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='#4b5563'" onmouseout="this.style.backgroundColor='#6b7280'">
-                  Register
-                </a>
-              </div>
+            <h3 style="font-size: 0.875rem; font-weight: 500; color: #92400e;">Login Diperlukan</h3>
+            <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #b45309;">Untuk melakukan booking, silakan login terlebih dahulu.</p>
+            <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+              <a href="{{ route('user.login') }}" style="background-color: #eab308; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">Login</a>
+              <a href="{{ route('user.register') }}" style="background-color: #6b7280; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none;">Register</a>
             </div>
           </div>
         </div>
@@ -60,112 +50,64 @@
         </div>
       @endif
 
+      @php
+        $inputStyle = 'width: 100%; height: 42px; border-radius: 0.75rem; border: 1px solid #789DBC; padding: 0 1rem; font-family: Segoe UI, sans-serif;';
+        $labelStyle = 'display: block; font-size: 20px; font-weight: 600; margin-bottom: 0.25rem;';
+      @endphp
+
       <!-- Nama -->
       <div>
-        <label style="display: block; font-size: 20px; font-family: sans-serif; font-weight: 600; margin-bottom: 0.25rem;">Nama</label>
-        <input type="text" name="nama" required 
-               value="{{ old('nama', Auth::user()->name ?? '') }}"
-               style="width: 100%; height: 36px; border-radius: 20px; border: 1px solid #789DBC; padding: 0 1rem;" />
-        @error('nama')
-          <span style="color: #ef4444; font-size: 0.875rem;">{{ $message }}</span>
-        @enderror
+        <label style="{{ $labelStyle }}">Nama</label>
+        <input type="text" name="nama" required value="{{ old('nama', Auth::user()->name ?? '') }}" style="{{ $inputStyle }}" />
+        @error('nama') <span style="color: #ef4444; font-size: 0.875rem;">{{ $message }}</span> @enderror
       </div>
 
-      <!-- Nomor Telpon -->
+      <!-- No Telp -->
       <div>
-        <label style="display: block; font-size: 20px; font-family: sans-serif; font-weight: 600; margin-bottom: 0.25rem;">Nomor Telpon</label>
-        <input type="text" name="nomor_telpon" required 
-               value="{{ old('nomor_telpon') }}"
-               style="width: 100%; height: 36px; border-radius: 20px; border: 1px solid #789DBC; padding: 0 1rem;" />
-        @error('nomor_telpon')
-          <span style="color: #ef4444; font-size: 0.875rem;">{{ $message }}</span>
-        @enderror
+        <label style="{{ $labelStyle }}">Nomor Telepon</label>
+        <input type="text" name="nomor_telpon" required value="{{ old('nomor_telpon') }}" style="{{ $inputStyle }}" />
+        @error('nomor_telpon') <span style="color: #ef4444; font-size: 0.875rem;">{{ $message }}</span> @enderror
       </div>
 
       <!-- Jenis Motor -->
       <div>
-        <label style="display: block; font-size: 20px; font-family: sans-serif; font-weight: 600; margin-bottom: 0.25rem;">Jenis Motor</label>
-        <input type="text" name="jenis_motor" required 
-               value="{{ old('jenis_motor') }}"
-               style="width: 100%; height: 36px; border-radius: 20px; border: 1px solid #789DBC; padding: 0 1rem;" />
-        @error('jenis_motor')
-          <span style="color: #ef4444; font-size: 0.875rem;">{{ $message }}</span>
-        @enderror
+        <label style="{{ $labelStyle }}">Jenis Motor</label>
+        <input type="text" name="jenis_motor" required value="{{ old('jenis_motor') }}" style="{{ $inputStyle }}" />
+        @error('jenis_motor') <span style="color: #ef4444; font-size: 0.875rem;">{{ $message }}</span> @enderror
       </div>
 
-      <!-- Jasa yang Diinginkan -->
+      <!-- Jasa -->
       <div>
-        <label style="display: block; font-size: 20px; font-family: sans-serif; font-weight: 600; margin-bottom: 0.25rem;">Jasa yang diinginkan</label>
-        <select name="jasa" required style="width: 100%; height: 36px; border-radius: 20px; border: 1px solid #789DBC; padding: 0 1rem;">
+        <label style="{{ $labelStyle }}">Jasa yang Diinginkan</label>
+        <select name="jasa" required style="{{ $inputStyle }}">
           <option value="">Pilih Jasa</option>
-          <option value="Upgrade Kaki-kaki Motor" {{ old('jasa') == 'Upgrade Kaki-kaki Motor' ? 'selected' : '' }}>
-            Upgrade Kaki-kaki Motor
-          </option>
-          <option value="Bubut" {{ old('jasa') == 'Bubut' ? 'selected' : '' }}>
-            Bubut
-          </option>
-          <option value="Modifikasi Motor" {{ old('jasa') == 'Modifikasi Motor' ? 'selected' : '' }}>
-            Modifikasi Motor
-          </option>
-          <option value="Reparasi Motor" {{ old('jasa') == 'Reparasi Motor' ? 'selected' : '' }}>
-            Reparasi Motor
-          </option>
+          <option value="Upgrade Kaki-kaki Motor" {{ old('jasa') == 'Upgrade Kaki-kaki Motor' ? 'selected' : '' }}>Upgrade Kaki-kaki Motor</option>
+          <option value="Bubut" {{ old('jasa') == 'Bubut' ? 'selected' : '' }}>Bubut</option>
+          <option value="Modifikasi Motor" {{ old('jasa') == 'Modifikasi Motor' ? 'selected' : '' }}>Modifikasi Motor</option>
+          <option value="Reparasi Motor" {{ old('jasa') == 'Reparasi Motor' ? 'selected' : '' }}>Reparasi Motor</option>
         </select>
-        @error('jasa')
-          <span style="color: #ef4444; font-size: 0.875rem;">{{ $message }}</span>
-        @enderror
+        @error('jasa') <span style="color: #ef4444; font-size: 0.875rem;">{{ $message }}</span> @enderror
       </div>
 
       <!-- Keluhan -->
       <div>
-        <label style="display: block; font-size: 20px; font-family: sans-serif; font-weight: 600; margin-bottom: 0.25rem;">Keluhan</label>
-        <textarea name="keluhan" 
-                  style="width: 100%; height: 80px; border-radius: 20px; border: 1px solid #789DBC; padding: 0.5rem 1rem;"
-                  placeholder="Jelaskan keluhan atau kebutuhan khusus...">{{ old('keluhan') }}</textarea>
-        @error('keluhan')
-          <span style="color: #ef4444; font-size: 0.875rem;">{{ $message }}</span>
-        @enderror
+        <label style="{{ $labelStyle }}">Keluhan</label>
+        <textarea name="keluhan" style="width: 100%; height: 80px; border-radius: 0.75rem; border: 1px solid #789DBC; padding: 0.75rem 1rem; font-family: Segoe UI, sans-serif;" placeholder="Jelaskan keluhan atau kebutuhan khusus...">{{ old('keluhan') }}</textarea>
+        @error('keluhan') <span style="color: #ef4444; font-size: 0.875rem;">{{ $message }}</span> @enderror
       </div>
 
       <!-- Tanggal Booking -->
       <div>
-        <label style="display: block; font-size: 20px; font-family: sans-serif; font-weight: 600; margin-bottom: 0.25rem;">Tanggal Booking</label>
-        <input type="date" name="tanggal_booking" required 
-               value="{{ old('tanggal_booking') }}"
-               min="{{ date('Y-m-d', strtotime('+1 day')) }}"
-               style="width: 100%; height: 36px; border-radius: 20px; border: 1px solid #789DBC; padding: 0 1rem;" />
-        @error('tanggal_booking')
-          <span style="color: #ef4444; font-size: 0.875rem;">{{ $message }}</span>
-        @enderror
+        <label style="{{ $labelStyle }}">Tanggal Booking</label>
+        <input type="date" name="tanggal_booking" required value="{{ old('tanggal_booking') }}" min="{{ date('Y-m-d', strtotime('+1 day')) }}" style="{{ $inputStyle }}" />
+        @error('tanggal_booking') <span style="color: #ef4444; font-size: 0.875rem;">{{ $message }}</span> @enderror
       </div>
 
       <!-- Tombol -->
-      <button type="submit" 
-              style="width: 390px; height: 60px; background-color: #E2EAF4; font-size: 20px; font-weight: bold; font-family: sans-serif; margin-top: 0.5rem; border-radius: 0.5rem; border: none; align-self: center; transition: opacity 0.2s; {{ !Auth::check() ? 'cursor: not-allowed;' : 'cursor: pointer;' }}"
-              onmouseover="if({{ Auth::check() ? 'true' : 'false' }}) this.style.opacity='0.9'"
-              onmouseout="this.style.opacity='1'">
+      <button type="submit" style="width: 100%; height: 50px; background-color: #E2EAF4; font-size: 20px; font-weight: bold; font-family: 'Segoe UI', sans-serif; margin-top: 0.5rem; border-radius: 0.5rem; border: none; transition: opacity 0.2s; {{ !Auth::check() ? 'cursor: not-allowed;' : 'cursor: pointer;' }}" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
         Booking Service
       </button>
     </form>
   </div>
 </div>
-
-<!-- Media Query untuk Responsif -->
-<style>
-@media (min-width: 1024px) {
-  .container-booking {
-    flex-direction: row !important;
-  }
-}
-</style>
-
-<!-- Script untuk menambahkan class responsif -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const container = document.querySelector('[style*="flex-direction: column"]');
-  if (container) {
-    container.classList.add('container-booking');
-  }
-});
-</script>
 @endsection
