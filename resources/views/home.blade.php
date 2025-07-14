@@ -4,7 +4,7 @@
 @section('title', 'Home • Locomotif Jajar')
 
 @section('content')
-<div class="home-container" style="display: flex; flex-wrap: nowrap; align-items: center; justify-content: space-between; padding: 40px 60px; min-height: 70vh; max-width: 1440px; margin: auto;">
+<div class="home-container" style="display: flex; align-items: center; justify-content: space-between; padding: 40px 60px; min-height: 70vh; max-width: 1440px; margin: auto;">
   <!-- Konten Kiri -->
   <div class="home-content" style="flex: 1; max-width: 600px;">
     <h1 style="font-size: 45px; font-weight: bold; margin-bottom: 24px; line-height: 1.2; text-align: left;">
@@ -23,13 +23,14 @@
       Mulai mengobrol
     </a>
 
-    <div class="stats-container" style="display: flex; gap: 24px; flex-wrap: wrap;">
-      <div class="stats-box" style="flex: 1; min-width: 260px; height: 160px; padding: 16px; border-radius: 8px; background-color: #E2EAF4; display: flex; align-items: center; justify-content: center;">
+    <!-- Dua kotak info berdampingan -->
+    <div class="stats-container" style="display: flex; flex-wrap: nowrap; gap: 24px;">
+      <div class="stats-box" style="flex: 1; height: 160px; padding: 16px; border-radius: 8px; background-color: #E2EAF4; display: flex; align-items: center; justify-content: center;">
         <p style="font-weight: 600; font-size: 22px; text-align: center; margin: 0;">
           Aman, Cepat, dan Terpercaya sejak 2005
         </p>
       </div>
-      <div class="stats-box" style="flex: 1; min-width: 260px; height: 160px; padding: 16px; border-radius: 8px; background-color: #E2EAF4; display: flex; align-items: center; justify-content: center;">
+      <div class="stats-box" style="flex: 1; height: 160px; padding: 16px; border-radius: 8px; background-color: #E2EAF4; display: flex; align-items: center; justify-content: center;">
         <p style="font-weight: 600; font-size: 22px; text-align: center; margin: 0;">
           Sudah menangani 1000+ motor
         </p>
@@ -77,7 +78,7 @@
   }
 
   .stats-container {
-    justify-content: center;
+    flex-direction: column !important;
     gap: 16px;
   }
 
@@ -108,7 +109,6 @@
 
   .stats-box {
     height: 120px;
-    min-width: 200px;
   }
 
   .stats-box p {
