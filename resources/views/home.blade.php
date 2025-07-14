@@ -4,116 +4,45 @@
 @section('title', 'Home • Locomotif Jajar')
 
 @section('content')
-<div class="home-container" style="display: flex; align-items: center; justify-content: space-between; padding: 40px 60px; min-height: 70vh; max-width: 1440px; margin: auto;">
-  <!-- Konten Kiri -->
-  <div class="home-content" style="flex: 1; max-width: 600px;">
-    <h1 style="font-size: 45px; font-weight: bold; margin-bottom: 24px; line-height: 1.2; text-align: left;">
-      <span style="color: #789DBC;">Modifikasi</span> motor anda dengan<br>
+<div class="home-container" style="display: flex; justify-content: center; align-items: center; padding: 60px 40px; gap: 40px; flex-wrap: wrap;">
+  <!-- Kolom Kiri -->
+  <div class="home-content" style="flex: 1; max-width: 600px; text-align: center;">
+    <h1 style="font-size: 38px; font-weight: bold; line-height: 1.4; margin-bottom: 24px;">
+      <span style="color: #167DD3;">Modifikasi</span> motor anda dengan<br>
       Aman dan Terpercaya di Bengkel<br>
-      <span style="color: #789DBC;">Locomotif Jajar.</span>
+      <span style="color: #167DD3;">Locomotif Jajar.</span>
     </h1>
 
     <a
       href="https://wa.me/628176820332"
-      class="whatsapp-button"
-      style="width: 360px; height: 80px; display: flex; align-items: center; justify-content: center; border-radius: 8px; font-weight: 500; background-color: #E2EAF4; text-decoration: none; color: inherit; font-size: 25px; margin-bottom: 32px; transition: opacity 0.3s; cursor: pointer;"
+      style="display: inline-block; width: 220px; height: 55px; background-color: #E2EAF4; border-radius: 8px; line-height: 55px; font-size: 18px; font-weight: 500; color: black; text-decoration: none; margin-bottom: 28px;"
       onmouseover="this.style.opacity='0.9'"
       onmouseout="this.style.opacity='1'"
     >
       Mulai mengobrol
     </a>
 
-    <!-- Dua kotak info berdampingan -->
-    <div class="stats-container" style="display: flex; flex-wrap: nowrap; gap: 24px;">
-      <div class="stats-box" style="flex: 1; height: 160px; padding: 16px; border-radius: 8px; background-color: #E2EAF4; display: flex; align-items: center; justify-content: center;">
-        <p style="font-weight: 600; font-size: 22px; text-align: center; margin: 0;">
-          Aman, Cepat, dan Terpercaya sejak 2005
+    <div class="stats-container" style="display: flex; justify-content: center; gap: 16px;">
+      <div style="background-color: #E2EAF4; padding: 16px; border-radius: 8px; width: 240px; height: 100px; display: flex; align-items: center; justify-content: center;">
+        <p style="margin: 0; font-size: 16px; font-weight: 500;">
+          Aman, Cepat, dan<br>Terpercaya sejak 2005
         </p>
       </div>
-      <div class="stats-box" style="flex: 1; height: 160px; padding: 16px; border-radius: 8px; background-color: #E2EAF4; display: flex; align-items: center; justify-content: center;">
-        <p style="font-weight: 600; font-size: 22px; text-align: center; margin: 0;">
-          Sudah menangani 1000+ motor
+      <div style="background-color: #E2EAF4; padding: 16px; border-radius: 8px; width: 240px; height: 100px; display: flex; align-items: center; justify-content: center;">
+        <p style="margin: 0; font-size: 16px; font-weight: 500;">
+          Sudah menangani<br>1000+ motor
         </p>
       </div>
     </div>
   </div>
 
-  <!-- Gambar Kanan -->
-  <div class="home-image-container" style="flex-shrink: 0; margin-left: 40px;">
+  <!-- Kolom Kanan (Gambar) -->
+  <div class="home-image-container" style="flex: 1; max-width: 500px; display: flex; justify-content: center;">
     <img
       src="{{ asset('img/coverhome.jpeg') }}"
       alt="Cover Home"
-      class="home-image"
-      style="width: 480px; height: auto; object-fit: cover; border-radius: 8px;"
+      style="width: 100%; max-width: 460px; height: auto; border-radius: 8px; object-fit: cover;"
     />
   </div>
 </div>
-
-<!-- Media Query -->
-<style>
-@media (max-width: 1024px) {
-  .home-container {
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    text-align: center;
-  }
-
-  .home-content {
-    margin-right: 0;
-    margin-bottom: 32px;
-    max-width: 100%;
-  }
-
-  .home-content h1 {
-    text-align: center;
-    font-size: 36px;
-  }
-
-  .whatsapp-button {
-    margin: 0 auto 24px auto;
-    width: 280px !important;
-    height: 60px !important;
-    font-size: 20px !important;
-  }
-
-  .stats-container {
-    flex-direction: column !important;
-    gap: 16px;
-  }
-
-  .stats-box {
-    height: 140px;
-  }
-
-  .home-image-container {
-    margin-left: 0;
-  }
-
-  .home-image {
-    width: 100%;
-    max-width: 400px;
-  }
-}
-
-@media (max-width: 600px) {
-  .home-content h1 {
-    font-size: 28px;
-  }
-
-  .whatsapp-button {
-    width: 240px;
-    height: 55px;
-    font-size: 18px;
-  }
-
-  .stats-box {
-    height: 120px;
-  }
-
-  .stats-box p {
-    font-size: 16px;
-  }
-}
-</style>
 @endsection
