@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 
 class AdminProductController extends Controller
 {
@@ -31,16 +33,83 @@ class AdminProductController extends Controller
 
         $data = $request->all();
 
+        // Debug: Log semua data request
+        Log::info('Request data:', $request->all());
+        Log::info('Has file foto:', $request->hasFile('foto'));
+
         if ($request->hasFile('foto')) {
             $foto = $request->file('foto');
-            $fotoName = time() . '.' . $foto->getClientOriginalExtension();
-            $foto->move(public_path('img'), $fotoName);
-            $data['image'] = $fotoName;
+            
+            // Debug: Log info file
+            Log::info('File info:', [
+                'original_name' => $foto->getClientOriginalName(),
+                'size' => $foto->getSize(),
+                'mime_type' => $foto->getMimeType(),
+                'is_valid' => $foto->isValid()
+            ]);
+            
+            // Generate nama file yang unik
+            $fotoName = time() . '_' . uniqid() . '.' . $foto->getClientOriginalExtension();
+            
+            // Path tujuan
+            $destinationPath = public_path('img');
+            
+            // Debug: Log path info
+            Log::info('Path info:', [
+                'destination_path' => $destinationPath,
+                'path_exists' => File::exists($destinationPath),
+                'path_writable' => is_writable($destinationPath),
+                'full_path' => $destinationPath . '/' . $fotoName
+            ]);
+            
+            // Pastikan folder ada dan writable
+            if (!File::exists($destinationPath)) {
+                File::makeDirectory($destinationPath, 0755, true);
+                Log::info('Created directory:', ['path' => $destinationPath]);
+            }
+            
+            // Coba pindahkan file
+            try {
+                $moved = $foto->move($destinationPath, $fotoName);
+                Log::info('File moved successfully:', [
+                    'moved' => $moved,
+                    'final_path' => $destinationPath . '/' . $fotoName,
+                    'file_exists_after_move' => file_exists($destinationPath . '/' . $fotoName)
+                ]);
+                
+                // Set nama file ke data
+                $data['image'] = $fotoName;
+                
+            } catch (\Exception $e) {
+                Log::error('Error moving file:', [
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString()
+                ]);
+                
+                return redirect()->back()->with('error', 'Gagal mengupload foto: ' . $e->getMessage());
+            }
         }
 
-        Product::create($data);
+        // Hapus foto dari data karena field di database adalah image
+        unset($data['foto']);
 
-        return redirect()->route('admin.product')->with('success', 'Produk berhasil ditambahkan.');
+        // Debug: Log data yang akan disimpan
+        Log::info('Data to save:', $data);
+
+        try {
+            $product = Product::create($data);
+            Log::info('Product created:', ['id' => $product->id_produk]);
+            
+            return redirect()->route('admin.product')->with('success', 'Produk berhasil ditambahkan.');
+            
+        } catch (\Exception $e) {
+            Log::error('Error creating product:', [
+                'error' => $e->getMessage(),
+                'data' => $data
+            ]);
+            
+            return redirect()->back()->with('error', 'Gagal menyimpan produk: ' . $e->getMessage());
+        }
     }
 
     public function edit($id)
@@ -63,11 +132,34 @@ class AdminProductController extends Controller
         $data = $request->all();
 
         if ($request->hasFile('foto')) {
+            // Hapus foto lama jika ada
+            if ($produk->image && file_exists(public_path('img/' . $produk->image))) {
+                unlink(public_path('img/' . $produk->image));
+                Log::info('Old file deleted:', ['file' => $produk->image]);
+            }
+            
             $foto = $request->file('foto');
-            $fotoName = time() . '.' . $foto->getClientOriginalExtension();
-            $foto->move(public_path('img'), $fotoName);
-            $data['image'] = $fotoName;
+            $fotoName = time() . '_' . uniqid() . '.' . $foto->getClientOriginalExtension();
+            $destinationPath = public_path('img');
+            
+            // Pastikan folder ada
+            if (!File::exists($destinationPath)) {
+                File::makeDirectory($destinationPath, 0755, true);
+            }
+            
+            try {
+                $foto->move($destinationPath, $fotoName);
+                $data['image'] = $fotoName;
+                Log::info('File updated successfully:', ['new_file' => $fotoName]);
+                
+            } catch (\Exception $e) {
+                Log::error('Error updating file:', ['error' => $e->getMessage()]);
+                return redirect()->back()->with('error', 'Gagal mengupdate foto: ' . $e->getMessage());
+            }
         }
+
+        // Hapus foto dari data
+        unset($data['foto']);
 
         $produk->update($data);
 
@@ -78,9 +170,10 @@ class AdminProductController extends Controller
     {
         $produk = Product::findOrFail($id);
         
-
+        // Hapus file foto jika ada
         if ($produk->image && file_exists(public_path('img/' . $produk->image))) {
             unlink(public_path('img/' . $produk->image));
+            Log::info('File deleted:', ['file' => $produk->image]);
         }
         
         $produk->delete();
@@ -88,31 +181,27 @@ class AdminProductController extends Controller
         return redirect()->route('admin.product')->with('success', 'Produk berhasil dihapus.');
     }
 
-
     public function bulkDestroy(Request $request)
     {
         $request->validate([
             'product_ids' => 'required|array',
-            'product_ids.*' => 'exists:products,id_produk'
+            'product_ids.*' => 'exists:produk,id_produk'
         ]);
 
         $productIds = $request->product_ids;
         $products = Product::whereIn('id_produk', $productIds)->get();
         
-
         foreach ($products as $product) {
             if ($product->image && file_exists(public_path('img/' . $product->image))) {
                 unlink(public_path('img/' . $product->image));
             }
         }
         
-
         Product::whereIn('id_produk', $productIds)->delete();
         
         $count = count($productIds);
         return redirect()->route('admin.product')->with('success', "$count produk berhasil dihapus.");
     }
-
 
     public function show($id)
     {
@@ -128,7 +217,6 @@ class AdminProductController extends Controller
             'updated_at' => $produk->updated_at
         ]);
     }
-
 
     public function updateStock(Request $request, $id)
     {
