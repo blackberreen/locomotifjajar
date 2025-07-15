@@ -20,7 +20,6 @@ class AdminOrderController extends Controller
 
     public function updateStatus(Request $request, $id)
     {
-
         if ($request->status_pengiriman === 'sedang_dikirim') {
             $request->validate([
                 'status_pengiriman' => 'required|in:belum_dikirim,sedang_dikirim,sudah_dikirim',
@@ -36,22 +35,17 @@ class AdminOrderController extends Controller
 
         $order = BuktiPembayaran::findOrFail($id);
         
- 
-        $shipment = $order->shipment ?? new OrderShipment();
+        // Find or create shipment record
+        $shipment = OrderShipment::firstOrNew(['bukti_pembayaran_id' => $order->id]);
         $shipment->bukti_pembayaran_id = $order->id;
         $shipment->status = $request->status_pengiriman;
         
-   
+        // Set resi number if status is sedang_dikirim
         if ($request->status_pengiriman === 'sedang_dikirim') {
             $shipment->resi_number = $request->resi_number;
         }
         
         $shipment->save();
-
-        if (!$order->shipment) {
-            $order->shipment()->associate($shipment);
-            $order->save();
-        }
 
         $statusLabels = [
             'belum_dikirim' => 'Belum Dikirim',

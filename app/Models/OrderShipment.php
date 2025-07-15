@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class OrderShipment extends Model
 {
-    protected $primaryKey = 'shipmentid';
+    // Hapus baris ini karena primary key default adalah 'id'
+    // protected $primaryKey = 'shipmentid';
+    
     protected $fillable = [
         'bukti_pembayaran_id',
         'resi_number',
