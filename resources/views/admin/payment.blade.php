@@ -61,9 +61,9 @@
                     <td class="p-3">Rp. {{ number_format($data->total_belanja, 0, ',', '.') }}</td>
                     <td class="p-3">
                         @if($data->bukti_transfer)
-                            <a href="javascript:void(0);" onclick="openModal('{{ asset('storage/bukti_transfer/' . $data->bukti_transfer) }}')">
+                            <a href="javascript:void(0);" onclick="openModal('{{ $data->bukti_transfer_url }}')">
                                 <img 
-                                    src="{{ asset('storage/bukti_transfer/' . $data->bukti_transfer) }}" 
+                                    src="{{ $data->bukti_transfer_url }}" 
                                     alt="Bukti" 
                                     class="w-32 h-32 object-cover border rounded-lg hover:opacity-80 cursor-pointer"
                                 />
@@ -120,9 +120,9 @@
                     <td class="p-3">Rp. {{ number_format($data->total_belanja, 0, ',', '.') }}</td>
                     <td class="p-3">
                         @if($data->bukti_transfer)
-                            <a href="javascript:void(0);" onclick="openModal('{{ asset('storage/bukti_transfer/' . $data->bukti_transfer) }}')">
+                            <a href="javascript:void(0);" onclick="openModal('{{ $data->bukti_transfer_url }}')">
                                 <img 
-                                    src="{{ asset('storage/bukti_transfer/' . $data->bukti_transfer) }}" 
+                                    src="{{ $data->bukti_transfer_url }}" 
                                     alt="Bukti" 
                                     class="w-32 h-32 object-cover border rounded-lg hover:opacity-80 cursor-pointer"
                                 />
@@ -169,9 +169,9 @@
                     <td class="p-3">Rp. {{ number_format($data->total_belanja, 0, ',', '.') }}</td>
                     <td class="p-3">
                         @if($data->bukti_transfer)
-                            <a href="javascript:void(0);" onclick="openModal('{{ asset('storage/bukti_transfer/' . $data->bukti_transfer) }}')">
+                            <a href="javascript:void(0);" onclick="openModal('{{ $data->bukti_transfer_url }}')">
                                 <img 
-                                    src="{{ asset('storage/bukti_transfer/' . $data->bukti_transfer) }}" 
+                                    src="{{ $data->bukti_transfer_url }}" 
                                     alt="Bukti" 
                                     class="w-32 h-32 object-cover border rounded-lg hover:opacity-80 cursor-pointer"
                                 />

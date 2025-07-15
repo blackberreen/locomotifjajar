@@ -11,6 +11,7 @@ use App\Models\BuktiPembayaran;
 use App\Models\Shipping;
 use App\Models\OrderDetail;
 use App\Models\OrderShipment;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class PaymentController extends Controller
 {
@@ -33,49 +34,66 @@ class PaymentController extends Controller
             return back()->with('error', 'Data pengiriman tidak ditemukan.');
         }
 
-        $namaFile = Str::random(10) . '.' . $request->file('bukti_transfer')->getClientOriginalExtension();
-        $path = $request->file('bukti_transfer')->storeAs('bukti_transfer', $namaFile, 'public');
-
-        $cart = session('cart', []);
-        $total = collect($cart)->sum(function ($item) {
-            return $item['harga'] * $item['quantity'];
-        });
-
-        // Simpan data bukti pembayaran
-        $order = BuktiPembayaran::create([
-            'shipping_id' => $shipping->id,
-            'nama_pembeli' => $shipping->nama,
-            'nomor_hp' => $shipping->telepon,
-            'total_belanja' => $total,
-            'bukti_transfer' => $namaFile,
-            'status_verifikasi' => 'Menunggu'
-        ]);
-
-        // Simpan detail pesanan (order_details)
-        foreach ($cart as $item) {
-            OrderDetail::create([
-                'bukti_pembayaran_id' => $order->id,
-                'nama_produk' => $item['nama'],
-                'jumlah' => $item['quantity']
+        try {
+            // Upload ke Cloudinary
+            $uploadResult = Cloudinary::upload($request->file('bukti_transfer')->getRealPath(), [
+                'folder' => 'bukti_transfer',
+                'resource_type' => 'image',
+                'transformation' => [
+                    'quality' => 'auto',
+                    'fetch_format' => 'auto'
+                ]
             ]);
+
+            // Ambil URL dan public_id dari hasil upload
+            $imageUrl = $uploadResult->getSecurePath();
+            $publicId = $uploadResult->getPublicId();
+
+            $cart = session('cart', []);
+            $total = collect($cart)->sum(function ($item) {
+                return $item['harga'] * $item['quantity'];
+            });
+
+            // Simpan data bukti pembayaran dengan URL Cloudinary
+            $order = BuktiPembayaran::create([
+                'shipping_id' => $shipping->id,
+                'nama_pembeli' => $shipping->nama,
+                'nomor_hp' => $shipping->telepon,
+                'total_belanja' => $total,
+                'bukti_transfer' => $imageUrl, // Simpan URL Cloudinary
+                'cloudinary_public_id' => $publicId, // Simpan public_id untuk keperluan delete
+                'status_verifikasi' => 'Menunggu'
+            ]);
+
+            // Simpan detail pesanan (order_details)
+            foreach ($cart as $item) {
+                OrderDetail::create([
+                    'bukti_pembayaran_id' => $order->id,
+                    'nama_produk' => $item['nama'],
+                    'jumlah' => $item['quantity']
+                ]);
+            }
+
+            // Buat entry shipment dengan status default
+            OrderShipment::create([
+                'bukti_pembayaran_id' => $order->id,
+                'status' => 'belum_dikirim'
+            ]);
+
+            // Kosongkan keranjang setelah checkout
+            session()->forget('cart');
+            session()->forget('shipping_data');
+            session()->forget('shipping_id');
+            session()->forget('order_total');
+
+            return redirect()->route('payment.confirmation')->with([
+                'success' => true,
+                'path' => $imageUrl
+            ]);
+
+        } catch (\Exception $e) {
+            return back()->with('error', 'Gagal upload gambar: ' . $e->getMessage());
         }
-
-        // Buat entry shipment dengan status default
-        OrderShipment::create([
-            'bukti_pembayaran_id' => $order->id,
-            'status' => 'belum_dikirim'
-        ]);
-
-        // Kosongkan keranjang setelah checkout
-        session()->forget('cart');
-        session()->forget('shipping_data');
-        session()->forget('shipping_id');
-        session()->forget('order_total');
-
-        return redirect()->route('payment.confirmation')->with([
-            'success' => true,
-            'path' => $namaFile
-        ]);
     }
 
     public function showConfirmation()
