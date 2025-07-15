@@ -65,7 +65,7 @@
         <label style="display: block; font-size: 20px; font-family: sans-serif; font-weight: 600; margin-bottom: 0.25rem;">Nama</label>
         <input type="text" name="nama" required 
                value="{{ old('nama', Auth::user()->name ?? '') }}"
-               style="width: 100%; height: 36px; border-radius: 20px; border: 1px solid #789DBC; padding: 0 1rem;" />
+               style="width: 100%; height: 36px; border-radius: 20px; border: 1px solid #789DBC; padding: 0 1rem; box-sizing: border-box; font-size: 16px; font-family: sans-serif;" />
         @error('nama')
           <span style="color: #ef4444; font-size: 0.875rem;">{{ $message }}</span>
         @enderror
@@ -76,7 +76,7 @@
         <label style="display: block; font-size: 20px; font-family: sans-serif; font-weight: 600; margin-bottom: 0.25rem;">Nomor Telpon</label>
         <input type="text" name="nomor_telpon" required 
                value="{{ old('nomor_telpon') }}"
-               style="width: 100%; height: 36px; border-radius: 20px; border: 1px solid #789DBC; padding: 0 1rem;" />
+               style="width: 100%; height: 36px; border-radius: 20px; border: 1px solid #789DBC; padding: 0 1rem; box-sizing: border-box; font-size: 16px; font-family: sans-serif;" />
         @error('nomor_telpon')
           <span style="color: #ef4444; font-size: 0.875rem;">{{ $message }}</span>
         @enderror
@@ -87,7 +87,7 @@
         <label style="display: block; font-size: 20px; font-family: sans-serif; font-weight: 600; margin-bottom: 0.25rem;">Jenis Motor</label>
         <input type="text" name="jenis_motor" required 
                value="{{ old('jenis_motor') }}"
-               style="width: 100%; height: 36px; border-radius: 20px; border: 1px solid #789DBC; padding: 0 1rem;" />
+               style="width: 100%; height: 36px; border-radius: 20px; border: 1px solid #789DBC; padding: 0 1rem; box-sizing: border-box; font-size: 16px; font-family: sans-serif;" />
         @error('jenis_motor')
           <span style="color: #ef4444; font-size: 0.875rem;">{{ $message }}</span>
         @enderror
@@ -96,7 +96,7 @@
       <!-- Jasa yang Diinginkan -->
       <div>
         <label style="display: block; font-size: 20px; font-family: sans-serif; font-weight: 600; margin-bottom: 0.25rem;">Jasa yang diinginkan</label>
-        <select name="jasa" required style="width: 100%; height: 36px; border-radius: 20px; border: 1px solid #789DBC; padding: 0 1rem;">
+        <select name="jasa" required style="width: 100%; height: 36px; border-radius: 20px; border: 1px solid #789DBC; padding: 0 1rem; box-sizing: border-box; font-size: 16px; font-family: sans-serif; appearance: none; background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iOCIgdmlld0JveD0iMCAwIDEyIDgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xIDFMNiA2TDExIDEiIHN0cm9rZT0iIzc4OURCQyIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+'); background-repeat: no-repeat; background-position: right 1rem center; background-size: 12px 8px;">
           <option value="">Pilih Jasa</option>
           <option value="Upgrade Kaki-kaki Motor" {{ old('jasa') == 'Upgrade Kaki-kaki Motor' ? 'selected' : '' }}>
             Upgrade Kaki-kaki Motor
@@ -120,7 +120,7 @@
       <div>
         <label style="display: block; font-size: 20px; font-family: sans-serif; font-weight: 600; margin-bottom: 0.25rem;">Keluhan</label>
         <textarea name="keluhan" 
-                  style="width: 100%; height: 80px; border-radius: 20px; border: 1px solid #789DBC; padding: 0.5rem 1rem;"
+                  style="width: 100%; height: 80px; border-radius: 20px; border: 1px solid #789DBC; padding: 0.5rem 1rem; box-sizing: border-box; font-size: 16px; font-family: sans-serif; resize: vertical;"
                   placeholder="Jelaskan keluhan atau kebutuhan khusus...">{{ old('keluhan') }}</textarea>
         @error('keluhan')
           <span style="color: #ef4444; font-size: 0.875rem;">{{ $message }}</span>
@@ -133,7 +133,7 @@
         <input type="date" name="tanggal_booking" required 
                value="{{ old('tanggal_booking') }}"
                min="{{ date('Y-m-d', strtotime('+1 day')) }}"
-               style="width: 100%; height: 36px; border-radius: 20px; border: 1px solid #789DBC; padding: 0 1rem;" />
+               style="width: 100%; height: 36px; border-radius: 20px; border: 1px solid #789DBC; padding: 0 1rem; box-sizing: border-box; font-size: 16px; font-family: sans-serif;" />
         @error('tanggal_booking')
           <span style="color: #ef4444; font-size: 0.875rem;">{{ $message }}</span>
         @enderror
@@ -141,9 +141,7 @@
 
       <!-- Tombol -->
       <button type="submit" 
-              style="width: 390px; height: 60px; background-color: #E2EAF4; font-size: 20px; font-weight: bold; font-family: sans-serif; margin-top: 0.5rem; border-radius: 0.5rem; border: none; align-self: center; transition: opacity 0.2s; {{ !Auth::check() ? 'cursor: not-allowed;' : 'cursor: pointer;' }}"
-              onmouseover="if({{ Auth::check() ? 'true' : 'false' }}) this.style.opacity='0.9'"
-              onmouseout="this.style.opacity='1'">
+              style="width: 390px; height: 60px; background-color: #E2EAF4; font-size: 20px; font-weight: bold; font-family: sans-serif; margin-top: 0.5rem; border-radius: 0.5rem; border: none; align-self: center; {{ !Auth::check() ? 'cursor: not-allowed;' : 'cursor: pointer;' }}">
         Booking Service
       </button>
     </form>
@@ -156,6 +154,68 @@
   .container-booking {
     flex-direction: row !important;
   }
+}
+
+/* Responsive untuk mobile */
+@media (max-width: 768px) {
+  div[style*="padding: 1.5rem 2.5rem"] {
+    padding: 1rem !important;
+  }
+  
+  div[style*="width: 746px"] {
+    width: 100% !important;
+  }
+  
+  img[style*="width: 515px"] {
+    width: 100% !important;
+    height: auto !important;
+  }
+  
+  button[style*="width: 390px"] {
+    width: 100% !important;
+  }
+  
+  h1[style*="font-size: 44px"] {
+    font-size: 32px !important;
+  }
+  
+  p[style*="font-size: 20px"] {
+    font-size: 18px !important;
+  }
+  
+  label[style*="font-size: 20px"] {
+    font-size: 18px !important;
+  }
+}
+
+/* Fix untuk input dan select consistency */
+input[type="text"],
+input[type="date"],
+select,
+textarea {
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus,
+select:focus,
+textarea:focus {
+  border-color: #4a90e2;
+}
+
+/* Custom styling untuk select dropdown */
+select option {
+  font-size: 16px;
+  font-family: sans-serif;
+  padding: 0.5rem;
+}
+
+/* Styling untuk textarea */
+textarea::placeholder {
+  font-size: 16px;
+  font-family: sans-serif;
+  color: #9ca3af;
 }
 </style>
 

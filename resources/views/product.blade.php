@@ -56,7 +56,7 @@
       <form action="{{ route('cart.add') }}" method="POST">
         @csrf
         <input type="hidden" name="product_id" value="{{ $product->id_produk }}">
-        <button type="submit" style="width: 24px; height: 24px; background-color: #779FE5; color: white; border-radius: 50%; border: none; cursor: pointer; font-weight: bold; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: transform 0.2s;">
+        <button type="submit" style="width: 24px; height: 24px; background-color: #779FE5; color: white; border-radius: 50%; border: none; cursor: pointer; font-weight: bold; font-size: 16px; display: flex; align-items: center; justify-content: center;">
             +
         </button>
       </form>
@@ -71,10 +71,6 @@
   /* Hover effects */
   a:hover {
     text-decoration: underline;
-  }
-  
-  button:hover {
-    transform: scale(1.1);
   }
   
   input:focus {
