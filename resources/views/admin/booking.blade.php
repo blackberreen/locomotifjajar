@@ -53,7 +53,7 @@
                             <td class="p-3 text-[16px] align-top">{{ $booking->jasa }}</td>
                             <td class="p-3 text-[16px] align-top">{{ $booking->tanggal_booking->format('d/m/Y') }}</td>
                             <td class="p-3 align-top">
-                                <form action="{{ route('admin.booking.updateStatus', $booking->bookingid) }}" method="POST" class="booking-form">
+                                <form action="{{ route('admin.booking.updateStatus', $booking->id) }}" method="POST" class="booking-form">
                                     @csrf
                                     <button type="submit" name="is_completed" value="1"
                                             class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded transition-colors text-sm font-medium">
