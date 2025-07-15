@@ -35,19 +35,25 @@ class PaymentController extends Controller
         }
 
         try {
-            // Upload ke Cloudinary
-            $uploadResult = Cloudinary::upload($request->file('bukti_transfer')->getRealPath(), [
+            // Method 1: Upload langsung dengan file
+            $uploadedFile = $request->file('bukti_transfer');
+            
+            $uploadResult = Cloudinary::uploadFile($uploadedFile, [
                 'folder' => 'bukti_transfer',
-                'resource_type' => 'image',
-                'transformation' => [
-                    'quality' => 'auto',
-                    'fetch_format' => 'auto'
-                ]
+                'resource_type' => 'image'
             ]);
+
+            // Debug: Cek hasil upload
+            \Log::info('Cloudinary Upload Result:', ['result' => $uploadResult]);
 
             // Ambil URL dan public_id dari hasil upload
             $imageUrl = $uploadResult->getSecurePath();
             $publicId = $uploadResult->getPublicId();
+
+            // Validasi hasil upload
+            if (!$imageUrl || !$publicId) {
+                throw new \Exception('Upload berhasil tapi tidak mendapatkan URL atau Public ID');
+            }
 
             $cart = session('cart', []);
             $total = collect($cart)->sum(function ($item) {
@@ -92,6 +98,7 @@ class PaymentController extends Controller
             ]);
 
         } catch (\Exception $e) {
+            \Log::error('Cloudinary Upload Error:', ['error' => $e->getMessage()]);
             return back()->with('error', 'Gagal upload gambar: ' . $e->getMessage());
         }
     }
