@@ -22,7 +22,6 @@ class BookingController extends Controller
      */
     public function myBookings()
     {
-        // Pastikan user sudah login
         if (!Auth::check()) {
             return redirect()->route('user.login')
                 ->with('error', 'Silakan login terlebih dahulu.');
@@ -40,7 +39,6 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        // Cek apakah user sudah login
         if (!Auth::check()) {
             return redirect()->route('user.login')
                 ->with('error', 'Silakan login terlebih dahulu untuk melakukan booking.');
@@ -68,7 +66,7 @@ class BookingController extends Controller
             ]);
 
             return redirect()->route('booking.success')
-                ->with('success', 'Booking berhasil dibuat dengan ID #' . str_pad($booking->bookingid, 6, '0', STR_PAD_LEFT) . '!');
+                ->with('success', 'Booking berhasil dibuat dengan ID #' . str_pad($booking->id, 6, '0', STR_PAD_LEFT) . '!');
         } catch (\Exception $e) {
             return redirect()->back()
                 ->withInput()
@@ -81,7 +79,6 @@ class BookingController extends Controller
      */
     public function success()
     {
-        // Pastikan user sudah login
         if (!Auth::check()) {
             return redirect()->route('user.login');
         }
@@ -92,16 +89,15 @@ class BookingController extends Controller
     /**
      * Display the specified booking.
      */
-    public function show($bookingid)
+    public function show($id)
     {
-        // Pastikan user sudah login
         if (!Auth::check()) {
             return redirect()->route('user.login')
                 ->with('error', 'Silakan login terlebih dahulu.');
         }
 
         $booking = Booking::where('user_id', Auth::id())
-            ->where('bookingid', $bookingid)
+            ->where('id', $id)
             ->first();
 
         if (!$booking) {
@@ -115,26 +111,22 @@ class BookingController extends Controller
     /**
      * Cancel the specified booking.
      */
-    public function cancel($bookingid)
+    public function cancel($id)
     {
-        // Debug log
-        \Log::info('Cancel method called with ID: ' . $bookingid);
-    
-        // Pastikan user sudah login
+        \Log::info('Cancel method called with ID: ' . $id);
+
         if (!Auth::check()) {
             return redirect()->route('user.login')
                 ->with('error', 'Silakan login terlebih dahulu.');
         }
 
-        // Validasi ID tidak kosong
-        if (empty($bookingid)) {
+        if (empty($id)) {
             return redirect()->route('user.bookings')
                 ->with('error', 'ID booking tidak valid.');
         }
 
-        // Cari booking dengan bookingid (bukan id)
         $booking = Booking::where('user_id', Auth::id())
-            ->where('bookingid', $bookingid)  // Menggunakan bookingid sebagai field pencarian
+            ->where('id', $id)
             ->where('is_completed', false)
             ->first();
 
@@ -155,7 +147,7 @@ class BookingController extends Controller
     }
 
     /**
-     * Get booking statistics for user
+     * Get booking statistics for user.
      */
     public function getBookingStats()
     {
