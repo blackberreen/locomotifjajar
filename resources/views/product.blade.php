@@ -20,7 +20,7 @@
         value="{{ request('search') }}"
         style="width: 356px; height: 34px; border-radius: 15px; border: 1px solid #789DBC; padding: 0 1rem; outline: none;"
       >
-      <button type="submit" style="font-size: 20px; color: black; background: none; border: none; cursor: pointer; padding: 0.5rem;">Search</button>
+      <button type="submit" style="font-size: 20px; color: black; background: none; border: none; cursor: pointer; padding: 0.5rem;" onmouseover="this.style.backgroundColor='transparent'" onmouseout="this.style.backgroundColor='transparent'">Search</button>
     </form>
   </div>
 
@@ -56,7 +56,7 @@
       <form action="{{ route('cart.add') }}" method="POST">
         @csrf
         <input type="hidden" name="product_id" value="{{ $product->id_produk }}">
-        <button type="submit" style="width: 24px; height: 24px; background-color: #779FE5; color: white; border-radius: 50%; border: none; cursor: pointer; font-weight: bold; font-size: 16px; display: flex; align-items: center; justify-content: center;">
+        <button type="submit" style="width: 24px; height: 24px; background-color: #779FE5; color: white; border-radius: 50%; border: none; cursor: pointer; font-weight: bold; font-size: 16px; display: flex; align-items: center; justify-content: center;" onmouseover="this.style.backgroundColor='#779FE5'" onmouseout="this.style.backgroundColor='#779FE5'">
             +
         </button>
       </form>

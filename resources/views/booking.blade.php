@@ -141,6 +141,7 @@
 
       <!-- Tombol -->
       <button type="submit" 
+              class="booking-button"
               style="width: 390px; height: 60px; background-color: #E2EAF4; font-size: 20px; font-weight: bold; font-family: sans-serif; margin-top: 0.5rem; border-radius: 0.5rem; border: none; align-self: center; {{ !Auth::check() ? 'cursor: not-allowed;' : 'cursor: pointer;' }}">
         Booking Service
       </button>
@@ -216,6 +217,22 @@ textarea::placeholder {
   font-size: 16px;
   font-family: sans-serif;
   color: #9ca3af;
+}
+
+/* Fix untuk button - mencegah perubahan warna menjadi abu-abu saat hover */
+.booking-button {
+  transition: none !important;
+}
+
+.booking-button:hover {
+  background-color: #E2EAF4 !important;
+  color: inherit !important;
+}
+
+/* Untuk user yang belum login, tetap tidak bisa diklik */
+form[style*="pointer-events: none"] .booking-button:hover {
+  background-color: #E2EAF4 !important;
+  cursor: not-allowed !important;
 }
 </style>
 
