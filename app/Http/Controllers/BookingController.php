@@ -134,7 +134,7 @@ class BookingController extends Controller
 
         // Cari booking dengan bookingid (bukan id)
         $booking = Booking::where('user_id', Auth::id())
-            ->where('bookingid', $id)  // Menggunakan bookingid sebagai field pencarian
+            ->where('bookingid', $bookingid)  // Menggunakan bookingid sebagai field pencarian
             ->where('is_completed', false)
             ->first();
 
