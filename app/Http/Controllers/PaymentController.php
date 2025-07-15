@@ -32,7 +32,11 @@ class PaymentController extends Controller
         if (!$shipping) {
             return back()->with('error', 'Data pengiriman tidak ditemukan.');
         }
-
+        \Log::info('Cloudinary ENV', [
+            'cloud_name' => config('cloudinary.cloudinary.cloud_name'),
+            'api_key' => config('cloudinary.cloudinary.api_key'),
+            'api_secret' => config('cloudinary.cloudinary.api_secret') ? 'SET' : 'NOT SET'
+        ]);
         try {
             // Debug: Cek konfigurasi Cloudinary
             \Log::info('Cloudinary Config:', [
