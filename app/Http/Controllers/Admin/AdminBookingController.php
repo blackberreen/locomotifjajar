@@ -22,9 +22,9 @@ class AdminBookingController extends Controller
         return view('admin.booking', compact('pending', 'selesai'));
     }
 
-    public function updateStatus(Request $request, $bookingid)
+    public function updateStatus(Request $request, $id)
     {
-        $booking = Booking::findOrFail($bookingid);
+        $booking = Booking::findOrFail($id);
         
         // Set status selesai jika ada input 
         if ($request->has('is_completed')) {
