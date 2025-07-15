@@ -1,9 +1,11 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use App\Models\BuktiPembayaran;
 use App\Models\Shipping;
 use App\Models\OrderDetail;
@@ -26,43 +28,56 @@ class PaymentController extends Controller
 
         $shippingId = session('shipping_id');
         $shipping = Shipping::find($shippingId);
-
+        
         if (!$shipping) {
             return back()->with('error', 'Data pengiriman tidak ditemukan.');
         }
 
         try {
+            // Upload file ke Cloudinary
             $uploadedFile = $request->file('bukti_transfer');
-
-            // Upload ke Cloudinary
-            $uploadResult = Cloudinary::uploadFile($uploadedFile->getRealPath(), [
+            
+            $uploadResult = Cloudinary::upload($uploadedFile->getRealPath(), [
                 'folder' => 'bukti_transfer',
-            ])->getResult(); // <-- pastikan ini dipanggil untuk mendapatkan array hasil
+                'resource_type' => 'image'
+            ]);
 
-            // Ambil URL dan public_id dari array hasil upload
-            $imageUrl = $uploadResult['secure_url'] ?? null;
-            $publicId = $uploadResult['public_id'] ?? null;
+            // Debug: Cek hasil upload
+            \Log::info('Cloudinary Upload Result:', ['result' => $uploadResult]);
 
+            // Validasi hasil upload - cek apakah array atau objek
+            if (is_array($uploadResult)) {
+                $imageUrl = $uploadResult['secure_url'] ?? null;
+                $publicId = $uploadResult['public_id'] ?? null;
+            } else {
+                // Jika objek, gunakan method
+                $imageUrl = $uploadResult->getSecurePath();
+                $publicId = $uploadResult->getPublicId();
+            }
+
+            // Validasi hasil upload
             if (!$imageUrl || !$publicId) {
                 throw new \Exception('Upload berhasil tapi tidak mendapatkan URL atau Public ID');
             }
 
-            // Hitung total dari keranjang
+            // Hitung total belanja
             $cart = session('cart', []);
-            $total = collect($cart)->sum(fn($item) => $item['harga'] * $item['quantity']);
+            $total = collect($cart)->sum(function ($item) {
+                return $item['harga'] * $item['quantity'];
+            });
 
-            // Simpan data pembayaran
+            // Simpan data bukti pembayaran dengan URL Cloudinary
             $order = BuktiPembayaran::create([
                 'shipping_id' => $shipping->id,
                 'nama_pembeli' => $shipping->nama,
                 'nomor_hp' => $shipping->telepon,
                 'total_belanja' => $total,
-                'bukti_transfer' => $imageUrl,
-                'cloudinary_public_id' => $publicId,
+                'bukti_transfer' => $imageUrl, // Simpan URL Cloudinary
+                'cloudinary_public_id' => $publicId, // Simpan public_id untuk keperluan delete
                 'status_verifikasi' => 'Menunggu'
             ]);
 
-            // Simpan detail pesanan
+            // Simpan detail pesanan (order_details)
             foreach ($cart as $item) {
                 OrderDetail::create([
                     'bukti_pembayaran_id' => $order->id,
@@ -71,14 +86,17 @@ class PaymentController extends Controller
                 ]);
             }
 
-            // Simpan shipment
+            // Buat entry shipment dengan status default
             OrderShipment::create([
                 'bukti_pembayaran_id' => $order->id,
                 'status' => 'belum_dikirim'
             ]);
 
-            // Kosongkan session
-            session()->forget(['cart', 'shipping_data', 'shipping_id', 'order_total']);
+            // Kosongkan keranjang setelah checkout
+            session()->forget('cart');
+            session()->forget('shipping_data');
+            session()->forget('shipping_id');
+            session()->forget('order_total');
 
             return redirect()->route('payment.confirmation')->with([
                 'success' => true,
