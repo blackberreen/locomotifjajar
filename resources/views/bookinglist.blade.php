@@ -87,7 +87,7 @@
                         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
                             <div>
                                 <h3 style="font-size: 20px; font-weight: 600; color: #1f2937; margin: 0 0 8px 0;">
-                                    Booking #{{ str_pad($booking->bookingid, 6, '0', STR_PAD_LEFT) }}
+                                    Booking #{{ str_pad($booking->id, 6, '0', STR_PAD_LEFT) }}
                                 </h3>
                                 <p style="color: #6b7280; font-size: 14px; margin: 0;">
                                     <svg style="width: 16px; height: 16px; display: inline; margin-right: 4px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -142,7 +142,7 @@
                                 </div>
                                 <div style="display: flex; gap: 12px;">
                                     @if(!$booking->is_completed)
-                                        <form method="POST" action="{{ route('booking.cancel', $booking->bookingid) }}" 
+                                        <form method="POST" action="{{ route('booking.cancel', $booking->id) }}" 
                                               onsubmit="return confirm('Apakah Anda yakin ingin membatalkan booking ini?')" 
                                               style="display: inline;">
                                             @csrf

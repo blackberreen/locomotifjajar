@@ -36,7 +36,7 @@ Route::prefix('auth')->group(function () {
         Route::get('/orders/payment-confirmation', [OrderController::class, 'paymentConfirmation'])->name('user.orders.payment');
         Route::get('/orders/status', [OrderController::class, 'orderStatus'])->name('user.orders.status');
         
-        // Bookings - User reservations (MOVED TO AUTH GROUP)
+        // Bookings - User reservations (FIXED: menggunakan {id} bukan {bookingid})
         Route::get('/my-bookings', [BookingController::class, 'myBookings'])->name('user.bookings');
         Route::get('/bookings/{id}', [BookingController::class, 'show'])->name('booking.show');
         Route::delete('/bookings/{id}', [BookingController::class, 'cancel'])->name('booking.cancel');
@@ -94,9 +94,10 @@ Route::prefix('admin')->group(function () {
         // Halaman Dashboard Admin (setelah login)
         Route::get('/home', [AdminHomeController::class, 'index'])->name('admin.home');
 
-        // Booking Page
+        // Booking Page (FIXED: menggunakan {id} bukan {bookingid})
         Route::get('/booking', [AdminBookingController::class, 'index'])->name('admin.booking');
-        Route::post('/booking/update-status/{bookingid}', [AdminBookingController::class, 'updateStatus'])->name('admin.booking.updateStatus');
+        Route::post('/booking/update-status/{id}', [AdminBookingController::class, 'updateStatus'])->name('admin.booking.updateStatus');
+        
         // CRUD Product
         Route::get('/product', [AdminProductController::class, 'index'])->name('admin.product');
         Route::get('/product/create', [AdminProductController::class, 'create'])->name('admin.product.create');
