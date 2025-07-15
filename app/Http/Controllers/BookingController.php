@@ -22,6 +22,7 @@ class BookingController extends Controller
      */
     public function myBookings()
     {
+        // Pastikan user sudah login
         if (!Auth::check()) {
             return redirect()->route('user.login')
                 ->with('error', 'Silakan login terlebih dahulu.');
@@ -39,6 +40,7 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
+        // Cek apakah user sudah login
         if (!Auth::check()) {
             return redirect()->route('user.login')
                 ->with('error', 'Silakan login terlebih dahulu untuk melakukan booking.');
@@ -79,6 +81,7 @@ class BookingController extends Controller
      */
     public function success()
     {
+        // Pastikan user sudah login
         if (!Auth::check()) {
             return redirect()->route('user.login');
         }
@@ -91,6 +94,7 @@ class BookingController extends Controller
      */
     public function show($id)
     {
+        // Pastikan user sudah login
         if (!Auth::check()) {
             return redirect()->route('user.login')
                 ->with('error', 'Silakan login terlebih dahulu.');
@@ -113,20 +117,24 @@ class BookingController extends Controller
      */
     public function cancel($id)
     {
+        // Debug log
         \Log::info('Cancel method called with ID: ' . $id);
-
+    
+        // Pastikan user sudah login
         if (!Auth::check()) {
             return redirect()->route('user.login')
                 ->with('error', 'Silakan login terlebih dahulu.');
         }
 
+        // Validasi ID tidak kosong
         if (empty($id)) {
             return redirect()->route('user.bookings')
                 ->with('error', 'ID booking tidak valid.');
         }
 
+        // Cari booking dengan id (bukan bookingid)
         $booking = Booking::where('user_id', Auth::id())
-            ->where('id', $id)
+            ->where('id', $id)  // Menggunakan id sebagai field pencarian
             ->where('is_completed', false)
             ->first();
 
@@ -147,7 +155,7 @@ class BookingController extends Controller
     }
 
     /**
-     * Get booking statistics for user.
+     * Get booking statistics for user
      */
     public function getBookingStats()
     {

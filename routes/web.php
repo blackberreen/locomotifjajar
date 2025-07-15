@@ -118,3 +118,64 @@ Route::prefix('admin')->group(function () {
         Route::put('/order/update-status/{id}', [AdminOrderController::class, 'updateStatus'])->name('admin.order.updateStatus');
     });
 });
+
+
+Route::get('/test-cloudinary', function() {
+    try {
+        // Test environment variables
+        $env = [
+            'CLOUDINARY_CLOUD_NAME' => env('CLOUDINARY_CLOUD_NAME'),
+            'CLOUDINARY_API_KEY' => env('CLOUDINARY_API_KEY'), 
+            'CLOUDINARY_API_SECRET' => env('CLOUDINARY_API_SECRET') ? 'SET' : 'NOT_SET'
+        ];
+        
+        // Test config
+        $config = [
+            'cloud_name' => config('cloudinary.cloud_name'),
+            'api_key' => config('cloudinary.api_key'),
+            'api_secret' => config('cloudinary.api_secret') ? 'SET' : 'NOT_SET'
+        ];
+        
+        // Test Cloudinary class
+        $cloudinaryExists = class_exists('\CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary');
+        
+        // Test service container
+        $canInstantiate = false;
+        $instantiateError = null;
+        
+        try {
+            $cloudinary = app('cloudinary');
+            $canInstantiate = true;
+        } catch (\Exception $e) {
+            $instantiateError = $e->getMessage();
+        }
+        
+        // Test alternative approach
+        $directCloudinary = false;
+        try {
+            $cloudinary = \CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::class;
+            $directCloudinary = true;
+        } catch (\Exception $e) {
+            $directCloudinary = $e->getMessage();
+        }
+        
+        return response()->json([
+            'status' => 'success',
+            'env_vars' => $env,
+            'config_vars' => $config,
+            'cloudinary_class_exists' => $cloudinaryExists,
+            'can_instantiate' => $canInstantiate,
+            'instantiate_error' => $instantiateError,
+            'direct_cloudinary' => $directCloudinary,
+            'php_version' => PHP_VERSION,
+            'laravel_version' => app()->version()
+        ]);
+        
+    } catch (\Exception $e) {
+        return response()->json([
+            'status' => 'error',
+            'error' => $e->getMessage(),
+            'trace' => $e->getTraceAsString()
+        ]);
+    }
+});
