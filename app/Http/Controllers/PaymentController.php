@@ -32,17 +32,21 @@ class PaymentController extends Controller
         if (!$shipping) {
             return back()->with('error', 'Data pengiriman tidak ditemukan.');
         }
-        \Log::info('Cloudinary ENV', [
-            'cloud_name' => config('cloudinary.cloudinary.cloud_name'),
-            'api_key' => config('cloudinary.cloudinary.api_key'),
-            'api_secret' => config('cloudinary.cloudinary.api_secret') ? 'SET' : 'NOT SET'
-        ]);
+
         try {
-            // Debug: Cek konfigurasi Cloudinary
-            \Log::info('Cloudinary Config:', [
-                'cloud_name' => config('cloudinary.cloud_name'),
-                'api_key' => config('cloudinary.api_key'),
-                'api_secret' => config('cloudinary.api_secret') ? '***SET***' : 'NOT_SET'
+            // Validasi konfigurasi Cloudinary terlebih dahulu
+            $cloudName = config('cloudinary.cloud_name');
+            $apiKey = config('cloudinary.api_key');
+            $apiSecret = config('cloudinary.api_secret');
+
+            if (empty($cloudName) || empty($apiKey) || empty($apiSecret)) {
+                throw new \Exception('Konfigurasi Cloudinary tidak lengkap. Pastikan CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, dan CLOUDINARY_API_SECRET sudah diset.');
+            }
+
+            \Log::info('Cloudinary Config Check:', [
+                'cloud_name' => $cloudName,
+                'api_key' => $apiKey,
+                'api_secret' => $apiSecret ? '***SET***' : 'NOT_SET'
             ]);
 
             // Upload file ke Cloudinary
@@ -55,46 +59,50 @@ class PaymentController extends Controller
                 'path' => $uploadedFile->getRealPath()
             ]);
 
-            $uploadResult = Cloudinary::upload($uploadedFile->getRealPath(), [
-                'folder' => 'bukti_transfer',
-                'resource_type' => 'image'
-            ]);
-
-            // Debug: Cek hasil upload secara detail
-            \Log::info('Upload Result Debug:', [
-                'type' => gettype($uploadResult),
-                'is_null' => is_null($uploadResult),
-                'is_array' => is_array($uploadResult),
-                'is_object' => is_object($uploadResult),
-                'content' => $uploadResult
-            ]);
-
-            // Cek apakah uploadResult null
-            if (is_null($uploadResult)) {
-                throw new \Exception('Upload result is null - kemungkinan masalah kredensial Cloudinary');
+            // Pastikan file exists dan readable
+            if (!file_exists($uploadedFile->getRealPath())) {
+                throw new \Exception('File tidak ditemukan atau tidak dapat dibaca.');
             }
 
-            // Validasi hasil upload - cek apakah array atau objek
+            // Upload dengan parameter yang lebih spesifik
+            $uploadResult = Cloudinary::upload($uploadedFile->getRealPath(), [
+                'folder' => 'bukti_transfer',
+                'resource_type' => 'image',
+                'use_filename' => true,
+                'unique_filename' => true,
+                'overwrite' => false
+            ]);
+
+            \Log::info('Upload Result:', [
+                'result' => $uploadResult,
+                'type' => gettype($uploadResult),
+                'is_null' => is_null($uploadResult)
+            ]);
+
+            // Cek apakah upload berhasil
+            if (is_null($uploadResult)) {
+                throw new \Exception('Upload gagal - hasil upload null. Periksa kredensial Cloudinary.');
+            }
+
+            // Ekstrak URL dan public_id dari hasil upload
             $imageUrl = null;
             $publicId = null;
 
+            // Handle berbagai format response dari Cloudinary
             if (is_array($uploadResult)) {
-                $imageUrl = $uploadResult['secure_url'] ?? null;
+                $imageUrl = $uploadResult['secure_url'] ?? $uploadResult['url'] ?? null;
                 $publicId = $uploadResult['public_id'] ?? null;
             } elseif (is_object($uploadResult)) {
-                // Coba beberapa method yang mungkin ada
-                if (method_exists($uploadResult, 'getSecurePath')) {
-                    $imageUrl = $uploadResult->getSecurePath();
-                } elseif (method_exists($uploadResult, 'getSecureUrl')) {
+                // Untuk objek, coba berbagai property yang mungkin ada
+                $imageUrl = $uploadResult->secure_url ?? $uploadResult->url ?? null;
+                $publicId = $uploadResult->public_id ?? null;
+                
+                // Jika masih null, coba method getter
+                if (!$imageUrl && method_exists($uploadResult, 'getSecureUrl')) {
                     $imageUrl = $uploadResult->getSecureUrl();
-                } elseif (isset($uploadResult->secure_url)) {
-                    $imageUrl = $uploadResult->secure_url;
                 }
-
-                if (method_exists($uploadResult, 'getPublicId')) {
+                if (!$publicId && method_exists($uploadResult, 'getPublicId')) {
                     $publicId = $uploadResult->getPublicId();
-                } elseif (isset($uploadResult->public_id)) {
-                    $publicId = $uploadResult->public_id;
                 }
             }
 
@@ -103,9 +111,13 @@ class PaymentController extends Controller
                 'publicId' => $publicId
             ]);
 
-            // Validasi hasil upload
-            if (!$imageUrl || !$publicId) {
-                throw new \Exception('Upload berhasil tapi tidak mendapatkan URL atau Public ID. URL: ' . $imageUrl . ', Public ID: ' . $publicId);
+            // Validasi hasil ekstraksi
+            if (empty($imageUrl)) {
+                throw new \Exception('Gagal mendapatkan URL gambar dari Cloudinary. Response: ' . json_encode($uploadResult));
+            }
+
+            if (empty($publicId)) {
+                throw new \Exception('Gagal mendapatkan Public ID dari Cloudinary. Response: ' . json_encode($uploadResult));
             }
 
             // Hitung total belanja
@@ -120,12 +132,12 @@ class PaymentController extends Controller
                 'nama_pembeli' => $shipping->nama,
                 'nomor_hp' => $shipping->telepon,
                 'total_belanja' => $total,
-                'bukti_transfer' => $imageUrl, // Simpan URL Cloudinary
-                'cloudinary_public_id' => $publicId, // Simpan public_id untuk keperluan delete
+                'bukti_transfer' => $imageUrl,
+                'cloudinary_public_id' => $publicId,
                 'status_verifikasi' => 'Menunggu'
             ]);
 
-            // Simpan detail pesanan (order_details)
+            // Simpan detail pesanan
             foreach ($cart as $item) {
                 OrderDetail::create([
                     'bukti_pembayaran_id' => $order->id,
@@ -134,13 +146,13 @@ class PaymentController extends Controller
                 ]);
             }
 
-            // Buat entry shipment dengan status default
+            // Buat entry shipment
             OrderShipment::create([
                 'bukti_pembayaran_id' => $order->id,
                 'status' => 'belum_dikirim'
             ]);
 
-            // Kosongkan keranjang setelah checkout
+            // Bersihkan session
             session()->forget('cart');
             session()->forget('shipping_data');
             session()->forget('shipping_id');
@@ -152,10 +164,13 @@ class PaymentController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            \Log::error('Cloudinary Upload Error:', [
+            \Log::error('Payment Upload Error:', [
                 'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
+                'trace' => $e->getTraceAsString(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine()
             ]);
+            
             return back()->with('error', 'Gagal upload gambar: ' . $e->getMessage());
         }
     }
