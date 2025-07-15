@@ -3,10 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 use App\Models\BuktiPembayaran;
 use App\Models\Shipping;
 use App\Models\OrderDetail;
@@ -35,43 +32,37 @@ class PaymentController extends Controller
         }
 
         try {
-            // Method 1: Upload langsung dengan file
             $uploadedFile = $request->file('bukti_transfer');
-            
-            $uploadResult = Cloudinary::uploadFile($uploadedFile, [
+
+            // Upload ke Cloudinary
+            $uploadResult = Cloudinary::uploadFile($uploadedFile->getRealPath(), [
                 'folder' => 'bukti_transfer',
-                'resource_type' => 'image'
-            ]);
+            ])->getResult(); // <-- pastikan ini dipanggil untuk mendapatkan array hasil
 
-            // Debug: Cek hasil upload
-            \Log::info('Cloudinary Upload Result:', ['result' => $uploadResult]);
+            // Ambil URL dan public_id dari array hasil upload
+            $imageUrl = $uploadResult['secure_url'] ?? null;
+            $publicId = $uploadResult['public_id'] ?? null;
 
-            // Ambil URL dan public_id dari hasil upload
-            $imageUrl = $uploadResult->getSecurePath();
-            $publicId = $uploadResult->getPublicId();
-
-            // Validasi hasil upload
             if (!$imageUrl || !$publicId) {
                 throw new \Exception('Upload berhasil tapi tidak mendapatkan URL atau Public ID');
             }
 
+            // Hitung total dari keranjang
             $cart = session('cart', []);
-            $total = collect($cart)->sum(function ($item) {
-                return $item['harga'] * $item['quantity'];
-            });
+            $total = collect($cart)->sum(fn($item) => $item['harga'] * $item['quantity']);
 
-            // Simpan data bukti pembayaran dengan URL Cloudinary
+            // Simpan data pembayaran
             $order = BuktiPembayaran::create([
                 'shipping_id' => $shipping->id,
                 'nama_pembeli' => $shipping->nama,
                 'nomor_hp' => $shipping->telepon,
                 'total_belanja' => $total,
-                'bukti_transfer' => $imageUrl, // Simpan URL Cloudinary
-                'cloudinary_public_id' => $publicId, // Simpan public_id untuk keperluan delete
+                'bukti_transfer' => $imageUrl,
+                'cloudinary_public_id' => $publicId,
                 'status_verifikasi' => 'Menunggu'
             ]);
 
-            // Simpan detail pesanan (order_details)
+            // Simpan detail pesanan
             foreach ($cart as $item) {
                 OrderDetail::create([
                     'bukti_pembayaran_id' => $order->id,
@@ -80,17 +71,14 @@ class PaymentController extends Controller
                 ]);
             }
 
-            // Buat entry shipment dengan status default
+            // Simpan shipment
             OrderShipment::create([
                 'bukti_pembayaran_id' => $order->id,
                 'status' => 'belum_dikirim'
             ]);
 
-            // Kosongkan keranjang setelah checkout
-            session()->forget('cart');
-            session()->forget('shipping_data');
-            session()->forget('shipping_id');
-            session()->forget('order_total');
+            // Kosongkan session
+            session()->forget(['cart', 'shipping_data', 'shipping_id', 'order_total']);
 
             return redirect()->route('payment.confirmation')->with([
                 'success' => true,
