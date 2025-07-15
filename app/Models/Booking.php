@@ -11,7 +11,7 @@ class Booking extends Model
     use HasFactory;
 
     protected $table = 'bookings';
-    protected $primaryKey = 'bookingid';
+    protected $primaryKey = 'id';
     public $incrementing = true;
     protected $keyType = 'int';
 
@@ -78,6 +78,6 @@ class Booking extends Model
      */
     public function getFormattedIdAttribute()
     {
-        return str_pad($this->bookingid, 6, '0', STR_PAD_LEFT);
+        return str_pad($this->id, 6, '0', STR_PAD_LEFT);
     }
 }
