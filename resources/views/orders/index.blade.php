@@ -63,11 +63,6 @@
 
               {{-- Order Details --}}
               <div style="display: grid; grid-template-columns: 1fr; gap: 24px; margin-bottom: 16px;">
-                @media (min-width: 768px) {
-                  <style>
-                    .order-grid { grid-template-columns: 1fr 1fr; }
-                  </style>
-                }
                 <div class="order-grid" style="display: grid; grid-template-columns: 1fr; gap: 24px;">
                   <div>
                     <h4 style="font-weight: 600; margin: 0 0 8px 0;">Detail Pesanan:</h4>
