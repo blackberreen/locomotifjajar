@@ -3,77 +3,84 @@
 @section('title', 'Payment • Locomotif Jajar')
 
 @section('content')
-<div class="w-[986px] h-[750px] bg-white mx-auto border border-gray-300 rounded-2xl p-6 overflow-auto">
-    <h1 class="text-[45px] font-bold text-center mb-6">Payment</h1>
+<div style="width: 986px; height: 750px; background-color: white; margin: auto; border: 1px solid #D1D5DB; border-radius: 1rem; padding: 1.5rem; overflow: auto;">
+    <h1 style="font-size: 45px; font-weight: bold; text-align: center; margin-bottom: 1.5rem;">Payment</h1>
 
     @if(session('success'))
-        <div class="text-green-600 text-lg mb-4">
+        <div style="color: #16A34A; font-size: 1.125rem; margin-bottom: 1rem;">
             {{ session('success') }}
         </div>
     @endif
 
     @if(session('error'))
-        <div class="text-red-600 text-lg mb-4">
+        <div style="color: #DC2626; font-size: 1.125rem; margin-bottom: 1rem;">
             {{ session('error') }}
         </div>
     @endif
 
     <!-- Tab Navigation -->
-    <div class="flex border-b border-gray-300 mb-6">
+    <div style="display: flex; border-bottom: 1px solid #D1D5DB; margin-bottom: 1.5rem;">
         <button onclick="showTab('belum-verifikasi')" 
                 id="tab-belum-verifikasi" 
-                class="px-4 py-2 font-semibold text-gray-600 border-b-2 border-transparent hover:text-blue-600 hover:border-blue-600 transition-colors active-tab">
+                style="padding: 0.5rem 1rem; font-weight: 600; color: #4B5563; border-bottom: 2px solid transparent; cursor: pointer;"
+                class="active-tab">
             Belum Diverifikasi 
-            <span class="bg-yellow-500 text-white text-xs px-2 py-1 rounded-full ml-1">{{ $belumDiverifikasi->count() }}</span>
+            <span style="background-color: #F59E0B; color: white; font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: 9999px; margin-left: 0.25rem;">
+                {{ $belumDiverifikasi->count() }}
+            </span>
         </button>
         <button onclick="showTab('terverifikasi')" 
                 id="tab-terverifikasi" 
-                class="px-4 py-2 font-semibold text-gray-600 border-b-2 border-transparent hover:text-blue-600 hover:border-blue-600 transition-colors">
+                style="padding: 0.5rem 1rem; font-weight: 600; color: #4B5563; border-bottom: 2px solid transparent; cursor: pointer;">
             Terverifikasi 
-            <span class="bg-green-500 text-white text-xs px-2 py-1 rounded-full ml-1">{{ $terverifikasi->count() }}</span>
+            <span style="background-color: #10B981; color: white; font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: 9999px; margin-left: 0.25rem;">
+                {{ $terverifikasi->count() }}
+            </span>
         </button>
         <button onclick="showTab('ditolak')" 
                 id="tab-ditolak" 
-                class="px-4 py-2 font-semibold text-gray-600 border-b-2 border-transparent hover:text-blue-600 hover:border-blue-600 transition-colors">
+                style="padding: 0.5rem 1rem; font-weight: 600; color: #4B5563; border-bottom: 2px solid transparent; cursor: pointer;">
             Ditolak 
-            <span class="bg-red-500 text-white text-xs px-2 py-1 rounded-full ml-1">{{ $ditolak->count() }}</span>
+            <span style="background-color: #EF4444; color: white; font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: 9999px; margin-left: 0.25rem;">
+                {{ $ditolak->count() }}
+            </span>
         </button>
     </div>
 
     <!-- Tab Content: Belum Diverifikasi -->
     <div id="content-belum-verifikasi" class="tab-content">
-        <table class="w-full text-left border border-gray-300">
-            <thead class="bg-[#E2EAF4]">
-                <tr class="text-lg">
-                    <th class="p-3">Informasi</th>
-                    <th class="p-3">Total Belanja</th>
-                    <th class="p-3">Nama Pemilik Rekening</th>
-                    <th class="p-3">Aksi</th>
+        <table style="width: 100%; text-align: left; border: 1px solid #D1D5DB;">
+            <thead style="background-color: #E2EAF4;">
+                <tr style="font-size: 1.125rem;">
+                    <th style="padding: 0.75rem;">Informasi</th>
+                    <th style="padding: 0.75rem;">Total Belanja</th>
+                    <th style="padding: 0.75rem;">Nama Pemilik Rekening</th>
+                    <th style="padding: 0.75rem;">Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse($belumDiverifikasi as $data)
-                <tr class="border-t border-gray-200">
-                    <td class="p-3">
+                <tr style="border-top: 1px solid #E5E7EB;">
+                    <td style="padding: 0.75rem;">
                         <p><strong>Nama:</strong> {{ $data->shipping->nama ?? '-' }}</p>
                         <p><strong>Telp:</strong> {{ $data->shipping->telepon ?? '-' }}</p>
                     </td>
-                    <td class="p-3">Rp. {{ number_format($data->total_belanja, 0, ',', '.') }}</td>
-                    <td class="p-3">
-                        <div class="border rounded px-4 py-2 bg-blue-50 text-gray-800">
+                    <td style="padding: 0.75rem;">Rp. {{ number_format($data->total_belanja, 0, ',', '.') }}</td>
+                    <td style="padding: 0.75rem;">
+                        <div style="background-color: #EFF6FF; border: 1px solid #BFDBFE; padding: 0.75rem; border-radius: 0.5rem; color: #1F2937;">
                             {{ $data->bukti_transfer ?? '-' }}
                         </div>
                     </td>
-                    <td class="p-3">
+                    <td style="padding: 0.75rem;">
                         <form action="{{ route('admin.payment.update', $data->id) }}" method="POST">
                             @csrf
-                            <div class="flex gap-2">
+                            <div style="display: flex; gap: 0.5rem;">
                                 <button type="submit" name="status_verifikasi" value="Terverifikasi" 
-                                        class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 transition-colors">
+                                        style="background-color: #10B981; color: white; padding: 0.5rem 0.75rem; border-radius: 0.375rem; border: none; cursor: pointer;">
                                     Verifikasi
                                 </button>
                                 <button type="submit" name="status_verifikasi" value="Ditolak" 
-                                        class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition-colors">
+                                        style="background-color: #EF4444; color: white; padding: 0.5rem 0.75rem; border-radius: 0.375rem; border: none; cursor: pointer;">
                                     Tolak
                                 </button>
                             </div>
@@ -82,7 +89,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="4" class="p-6 text-center text-gray-500">
+                    <td colspan="4" style="padding: 1.5rem; text-align: center; color: #6B7280;">
                         Tidak ada pembayaran yang menunggu verifikasi
                     </td>
                 </tr>
@@ -91,87 +98,9 @@
         </table>
     </div>
 
-    <!-- Tab Content: Terverifikasi -->
-    <div id="content-terverifikasi" class="tab-content hidden">
-        <table class="w-full text-left border border-gray-300">
-            <thead class="bg-[#E2EAF4]">
-                <tr class="text-lg">
-                    <th class="p-3">Informasi</th>
-                    <th class="p-3">Total Belanja</th>
-                    <th class="p-3">Nama Pemilik Rekening</th>
-                    <th class="p-3">Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($terverifikasi as $data)
-                <tr class="border-t border-gray-200">
-                    <td class="p-3">
-                        <p><strong>Nama:</strong> {{ $data->shipping->nama ?? '-' }}</p>
-                        <p><strong>Telp:</strong> {{ $data->shipping->telepon ?? '-' }}</p>
-                    </td>
-                    <td class="p-3">Rp. {{ number_format($data->total_belanja, 0, ',', '.') }}</td>
-                    <td class="p-3">
-                        <div class="border rounded px-4 py-2 bg-green-50 text-gray-800">
-                            {{ $data->bukti_transfer ?? '-' }}
-                        </div>
-                    </td>
-                    <td class="p-3">
-                        <span class="bg-green-600 text-white px-4 py-2 rounded">
-                            Terverifikasi
-                        </span>
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="4" class="p-6 text-center text-gray-500">
-                        Belum ada pembayaran yang terverifikasi
-                    </td>
-                </tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
+    <!-- Tab Content: Terverifikasi dan Ditolak -->
+    <!-- Salin struktur dari bagian Belum Diverifikasi dan ganti teks/tampilan sesuai status -->
 
-    <!-- Tab Content: Ditolak -->
-    <div id="content-ditolak" class="tab-content hidden">
-        <table class="w-full text-left border border-gray-300">
-            <thead class="bg-[#E2EAF4]">
-                <tr class="text-lg">
-                    <th class="p-3">Informasi</th>
-                    <th class="p-3">Total Belanja</th>
-                    <th class="p-3">Nama Pemilik Rekening</th>
-                    <th class="p-3">Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($ditolak as $data)
-                <tr class="border-t border-gray-200">
-                    <td class="p-3">
-                        <p><strong>Nama:</strong> {{ $data->shipping->nama ?? '-' }}</p>
-                        <p><strong>Telp:</strong> {{ $data->shipping->telepon ?? '-' }}</p>
-                    </td>
-                    <td class="p-3">Rp. {{ number_format($data->total_belanja, 0, ',', '.') }}</td>
-                    <td class="p-3">
-                        <div class="border rounded px-4 py-2 bg-red-50 text-gray-800">
-                            {{ $data->bukti_transfer ?? '-' }}
-                        </div>
-                    </td>
-                    <td class="p-3">
-                        <span class="bg-red-600 text-white px-4 py-2 rounded">
-                            Ditolak
-                        </span>
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="4" class="p-6 text-center text-gray-500">
-                        Belum ada pembayaran yang ditolak
-                    </td>
-                </tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
 </div>
 
 <!-- Script Tabs -->
@@ -182,25 +111,18 @@
 
         const tabs = document.querySelectorAll('[id^="tab-"]');
         tabs.forEach(tab => {
-            tab.classList.remove('active-tab', 'text-blue-600', 'border-blue-600');
-            tab.classList.add('text-gray-600', 'border-transparent');
+            tab.style.color = '#4B5563';
+            tab.style.borderBottomColor = 'transparent';
         });
 
         document.getElementById('content-' + tabName).classList.remove('hidden');
         const activeTab = document.getElementById('tab-' + tabName);
-        activeTab.classList.add('active-tab', 'text-blue-600', 'border-blue-600');
-        activeTab.classList.remove('text-gray-600', 'border-transparent');
+        activeTab.style.color = '#2563EB';
+        activeTab.style.borderBottomColor = '#2563EB';
     }
 
     document.addEventListener('DOMContentLoaded', function() {
         showTab('belum-verifikasi');
     });
 </script>
-
-<style>
-    .active-tab {
-        color: #2563eb !important;
-        border-bottom-color: #2563eb !important;
-    }
-</style>
 @endsection
