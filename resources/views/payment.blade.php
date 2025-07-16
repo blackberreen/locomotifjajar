@@ -3,79 +3,100 @@
 @section('title', 'Payment • Locomotif Jajar')
 
 @section('content')
-<div style="width: 1091px; height: 786px; background-color: white; border: 2px solid #E2EAF4; border-radius: 15px; margin: 5px auto; padding: 40px; text-align: center;">
-    <h2 style="font-size: 24px;">Proses Pembayaran</h2>
-    <p style="font-size: 20px;">Pembayaran hanya dapat dilakukan dengan metode Transfer ke</p>
 
-    <div style="display: flex; justify-content: center; gap: 50px; margin: 20px 0;">
-        <div style="width: 424px; height: 126px; border: 1px solid black; display: flex; align-items: center; justify-content: center; font-size: 24px;">
-            <div>
-                <strong>Bank BCA</strong><br>
-                7651430961<br>
-                A/N Ghieta Maureen
+<div class="min-h-screen bg-gray-100 py-8">
+    <div class="max-w-4xl mx-auto px-4">
+        <h1 class="text-3xl font-bold text-center mb-8">Proses Pembayaran</h1>
+
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <p class="text-lg text-gray-700 mb-4">
+                Pembayaran hanya dapat dilakukan dengan metode Transfer ke
+            </p>
+
+            <div class="bg-blue-50 p-4 rounded-lg mb-6">
+                <div class="flex items-center">
+                    <div class="bg-blue-600 text-white px-3 py-1 rounded mr-4">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-lg">Bank BCA</h3>
+                        <p class="text-xl font-bold">7651430961</p>
+                        <p class="text-gray-600">A/N Ghieta Maureen</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-yellow-50 p-4 rounded-lg mb-6">
+                <p class="text-lg font-semibold mb-2">Dengan Total Belanjaan anda, yaitu:</p>
+                <div class="text-2xl font-bold text-green-600">
+                    Rp. {{ number_format($total, 0, ',', '.') }}
+                </div>
             </div>
         </div>
-        <div>
-            <p style="font-size: 24px;">Dengan Total Belanjaan anda, yaitu:</p>
-            <div style="width: 408px; height: 76px; border: 1px solid black; display: flex; align-items: center; justify-content: center; font-size: 32px;">
-                Rp. {{ number_format($total, 0, ',', '.') }}
+
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <div class="bg-orange-50 border-l-4 border-orange-400 p-4 mb-4">
+                <p class="text-orange-700">
+                    <i class="fas fa-clock mr-2"></i>
+                    Pembayaran dilakukan maksimal 1 hari setelah proses pembelian
+                </p>
             </div>
+
+            <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-6">
+                <p class="text-red-700">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                    Pesanan otomatis gagal jika pembeli membayar lewat dari tanggal yang ditentukan.
+                </p>
+            </div>
+
+            <div class="bg-red-600 text-white p-4 rounded-lg mb-6">
+                <h3 class="text-xl font-bold mb-2">PERHATIAN!!</h3>
+                <p class="text-lg">Semua informasi yang anda kirimkan bersifat rahasia</p>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <form action="{{ route('payment.store') }}" method="POST" class="space-y-6">
+                @csrf
+                
+                <div>
+                    <label for="nama_pemilik_rekening" class="block text-lg font-medium text-gray-700 mb-2">
+                        Nama Pemilik Rekening
+                    </label>
+                    <input 
+                        type="text" 
+                        id="nama_pemilik_rekening" 
+                        name="nama_pemilik_rekening" 
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
+                        placeholder="Masukkan nama pemilik rekening"
+                        value="{{ old('nama_pemilik_rekening') }}"
+                        required
+                    >
+                </div>
+
+                <div class="pt-4">
+                    <button 
+                        type="submit" 
+                        class="w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors text-lg font-semibold"
+                    >
+                        Kirim Informasi Pembayaran
+                    </button>
+                </div>
+
+                @if($errors->any())
+                    <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                        <p class="text-red-600 font-medium">{{ $errors->first() }}</p>
+                    </div>
+                @endif
+            </form>
+        </div>
+
+        <div class="bg-gray-50 rounded-lg p-6 mt-6">
+            <p class="text-center text-gray-600 text-lg">
+                Terima kasih telah berbelanja di Locomotif Online Store.
+            </p>
         </div>
     </div>
-
-    <p style="font-size: 24px;">Pembayaran dilakukan maksimal <strong>1 hari</strong> setelah proses pembelian</p>
-    <p style="font-size: 20px;">Pesanan otomatis gagal jika pembeli membayar lewat dari tanggal yang ditentukan.</p>
-    <p style="font-size: 24px; color: #910A0A;"><strong>PERHATIAN!!</strong></p>
-    <p style="font-size: 20px;">Wajib mengirim Bukti Pembayaran<br>Dibawah ini</p>
-
-    <form action="{{ route('payment.store') }}" method="POST" enctype="multipart/form-data" style="margin-top: 30px;">
-        @csrf
-
-        <!-- hidden file input -->
-        <input 
-            type="file" 
-            name="bukti_transfer" 
-            id="bukti_transfer" 
-            required 
-            style="display:none;"
-        >
-
-        <!-- custom button -->
-        <button 
-            type="button" 
-            style="width: 390px; height: 144px; background-color: #E2EAF4; font-size: 20px; border: none; border-radius: 10px; cursor: pointer;"
-            onclick="document.getElementById('bukti_transfer').click()"
-        >
-            Klik untuk masukkan foto
-        </button>
-
-        <!-- file name -->
-        <p id="file-name" style="margin-top: 15px; font-size: 18px; color: #333;">Belum ada file yang dipilih</p>
-
-        <!-- submit button -->
-        <button type="submit" style="margin-top: 30px; font-size: 20px; padding: 12px 40px; border-radius: 8px; background-color: #167DD3; color: white; border: none; cursor: pointer;">
-            Kirim Bukti Pembayaran
-        </button>
-
-        @if($errors->any())
-            <p style="color:red; margin-top: 20px;">{{ $errors->first() }}</p>
-        @endif
-    </form>
-
-    <p style="font-size: 24px; margin-top: 50px;"><strong>Terima kasih telah berbelanja di Locomotif Online Store.</strong></p>
 </div>
 
-<script>
-    const fileInput = document.getElementById('bukti_transfer');
-    const fileNameDisplay = document.getElementById('file-name');
-
-    fileInput.addEventListener('change', function() {
-        if (fileInput.files.length > 0) {
-            fileNameDisplay.textContent = 'File terpilih: ' + fileInput.files[0].name;
-        } else {
-            fileNameDisplay.textContent = 'Belum ada file yang dipilih';
-        }
-    });
-</script>
 @endsection
-

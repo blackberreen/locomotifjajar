@@ -47,7 +47,7 @@
                 <tr class="text-lg">
                     <th class="p-3">Informasi</th>
                     <th class="p-3">Total Belanja</th>
-                    <th class="p-3">Bukti Transfer</th>
+                    <th class="p-3">Nama Pemilik Rekening</th>
                     <th class="p-3">Aksi</th>
                 </tr>
             </thead>
@@ -60,17 +60,9 @@
                     </td>
                     <td class="p-3">Rp. {{ number_format($data->total_belanja, 0, ',', '.') }}</td>
                     <td class="p-3">
-                        @if($data->bukti_transfer)
-                            <a href="javascript:void(0);" onclick="openModal('{{ $data->bukti_transfer_url }}')">
-                                <img 
-                                    src="{{ $data->bukti_transfer_url }}" 
-                                    alt="Bukti" 
-                                    class="w-32 h-32 object-cover border rounded-lg hover:opacity-80 cursor-pointer"
-                                />
-                            </a>
-                        @else
-                            <span class="text-gray-400">Tidak ada</span>
-                        @endif
+                        <div class="bg-gray-100 p-3 rounded-lg">
+                            <p class="font-semibold text-gray-800">{{ $data->bukti_transfer ?? '-' }}</p>
+                        </div>
                     </td>
                     <td class="p-3">
                         <form action="{{ route('admin.payment.update', $data->id) }}" method="POST">
@@ -106,7 +98,7 @@
                 <tr class="text-lg">
                     <th class="p-3">Informasi</th>
                     <th class="p-3">Total Belanja</th>
-                    <th class="p-3">Bukti Transfer</th>
+                    <th class="p-3">Nama Pemilik Rekening</th>
                     <th class="p-3">Status</th>
                 </tr>
             </thead>
@@ -119,17 +111,9 @@
                     </td>
                     <td class="p-3">Rp. {{ number_format($data->total_belanja, 0, ',', '.') }}</td>
                     <td class="p-3">
-                        @if($data->bukti_transfer)
-                            <a href="javascript:void(0);" onclick="openModal('{{ $data->bukti_transfer_url }}')">
-                                <img 
-                                    src="{{ $data->bukti_transfer_url }}" 
-                                    alt="Bukti" 
-                                    class="w-32 h-32 object-cover border rounded-lg hover:opacity-80 cursor-pointer"
-                                />
-                            </a>
-                        @else
-                            <span class="text-gray-400">Tidak ada</span>
-                        @endif
+                        <div class="bg-gray-100 p-3 rounded-lg">
+                            <p class="font-semibold text-gray-800">{{ $data->bukti_transfer ?? '-' }}</p>
+                        </div>
                     </td>
                     <td class="p-3">
                         <span class="bg-green-600 text-white px-4 py-2 rounded">
@@ -155,7 +139,7 @@
                 <tr class="text-lg">
                     <th class="p-3">Informasi</th>
                     <th class="p-3">Total Belanja</th>
-                    <th class="p-3">Bukti Transfer</th>
+                    <th class="p-3">Nama Pemilik Rekening</th>
                     <th class="p-3">Status</th>
                 </tr>
             </thead>
@@ -168,17 +152,9 @@
                     </td>
                     <td class="p-3">Rp. {{ number_format($data->total_belanja, 0, ',', '.') }}</td>
                     <td class="p-3">
-                        @if($data->bukti_transfer)
-                            <a href="javascript:void(0);" onclick="openModal('{{ $data->bukti_transfer_url }}')">
-                                <img 
-                                    src="{{ $data->bukti_transfer_url }}" 
-                                    alt="Bukti" 
-                                    class="w-32 h-32 object-cover border rounded-lg hover:opacity-80 cursor-pointer"
-                                />
-                            </a>
-                        @else
-                            <span class="text-gray-400">Tidak ada</span>
-                        @endif
+                        <div class="bg-gray-100 p-3 rounded-lg">
+                            <p class="font-semibold text-gray-800">{{ $data->bukti_transfer ?? '-' }}</p>
+                        </div>
                     </td>
                     <td class="p-3">
                         <span class="bg-red-600 text-white px-4 py-2 rounded">
@@ -198,35 +174,8 @@
     </div>
 </div>
 
-<!-- Modal Viewer -->
-<div id="imageModal" class="fixed inset-0 bg-black bg-opacity-60 z-50 hidden">
-    <!-- Tombol Silang -->
-    <button onclick="closeModal()" 
-        class="fixed top-6 right-8 text-white text-4xl font-bold z-[9999] hover:scale-110 duration-200">
-        &times;
-    </button>
-
-    <!-- Konten Gambar -->
-    <div class="flex items-center justify-center h-full w-full px-4">
-        <div class="bg-white p-4 rounded-lg max-w-3xl w-full max-h-[90vh] overflow-auto">
-            <img id="modalImage" src="" alt="Preview Bukti Transfer" class="w-full object-contain rounded">
-        </div>
-    </div>
-</div>
-
-<!-- Script Modal & Tabs -->
+<!-- Script Tabs -->
 <script>
-    // Modal functions
-    function openModal(imageUrl) {
-        document.getElementById('modalImage').src = imageUrl;
-        document.getElementById('imageModal').classList.remove('hidden');
-    }
-
-    function closeModal() {
-        document.getElementById('imageModal').classList.add('hidden');
-        document.getElementById('modalImage').src = '';
-    }
-
     // Tab functions
     function showTab(tabName) {
         // Hide all tab contents
