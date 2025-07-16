@@ -16,7 +16,7 @@
 
     <div>
         <p>Dengan Total Belanjaan anda, yaitu:</p>
-        <h2>Rp. {{ number_format($total, 0, ',', '.') }}</h2>
+        <h2>Rp. {{ number_format($total_belanja, 0, ',', '.') }}</h2>
     </div>
 
     <p>Pembayaran dilakukan maksimal 1 hari setelah proses pembelian</p>
