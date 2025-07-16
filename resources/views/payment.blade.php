@@ -4,78 +4,79 @@
 
 @section('content')
 
-<div style="min-height: 100vh; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 2rem;">
-    <div style="max-width: 800px; margin: 0 auto; padding: 2.5rem; background: white; border-radius: 1.5rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
+<div style="min-height: 100vh; background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding: 2rem;">
+    <div style="max-width: 900px; margin: 0 auto; padding: 2.5rem; background: white; border-radius: 1.5rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); border: 1px solid #e0f2fe;">
         
         <!-- Header -->
         <div style="text-align: center; margin-bottom: 2rem;">
-            <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center;">
-                <svg width="40" height="40" fill="white" viewBox="0 0 24 24">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                </svg>
-            </div>
-            <h1 style="font-size: 2rem; font-weight: bold; color: #1f2937; margin-bottom: 0.5rem;">
+            <h1 style="font-size: 2.25rem; font-weight: 700; color: #1e40af; margin-bottom: 0.75rem; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);">
                 Proses Pembayaran
             </h1>
-            <p style="color: #6b7280; font-size: 1.125rem; font-weight: 500;">
-                Pembayaran hanya dapat dilakukan dengan metode Transfer
+            <div style="width: 80px; height: 4px; background: linear-gradient(90deg, #3b82f6, #1d4ed8); margin: 0 auto; border-radius: 2px;"></div>
+        </div>
+
+        <!-- Instruction -->
+        <div style="text-align: center; margin-bottom: 2rem; padding: 1.5rem; background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border-radius: 1rem; border-left: 4px solid #3b82f6;">
+            <p style="font-size: 1.25rem; font-weight: 600; color: #1e40af; margin: 0;">
+                Pembayaran hanya dapat dilakukan dengan metode Transfer ke
             </p>
         </div>
 
-        <!-- Payment Cards -->
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+        <!-- Payment Info Cards -->
+        <div style="display: flex; justify-content: space-between; gap: 1.5rem; margin-bottom: 2rem;">
             <!-- Bank Info Card -->
-            <div style="background: linear-gradient(135deg, #1e40af, #3b82f6); color: white; padding: 1.5rem; border-radius: 1rem; text-align: center; position: relative; overflow: hidden;">
-                <div style="position: absolute; top: -10px; right: -10px; width: 60px; height: 60px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
-                <div style="position: absolute; bottom: -20px; left: -20px; width: 80px; height: 80px; background: rgba(255,255,255,0.05); border-radius: 50%;"></div>
-                <div style="position: relative; z-index: 1;">
-                    <p style="font-weight: bold; font-size: 1.25rem; margin-bottom: 0.5rem;">Bank BCA</p>
-                    <p style="font-weight: bold; font-size: 1.5rem; margin-bottom: 0.5rem; letter-spacing: 2px;">7651430961</p>
-                    <p style="font-weight: 500; opacity: 0.9;">A/N Ghieta Maureen</p>
+            <div style="flex: 1; background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%); padding: 2rem; text-align: center; border-radius: 1rem; border: 2px solid #3b82f6; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); transition: transform 0.2s ease;">
+                <div style="margin-bottom: 1rem;">
+                    <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center;">
+                        <span style="color: white; font-weight: bold; font-size: 1.5rem;">BCA</span>
+                    </div>
                 </div>
+                <p style="font-weight: 700; font-size: 1.25rem; color: #1e40af; margin-bottom: 0.5rem;">Bank BCA</p>
+                <p style="font-weight: 800; font-size: 1.75rem; color: #dc2626; margin-bottom: 0.5rem; font-family: 'Courier New', monospace; letter-spacing: 1px;">7651430961</p>
+                <p style="font-weight: 600; color: #64748b; font-size: 1.1rem;">A/N Ghieta Maureen</p>
             </div>
 
             <!-- Total Amount Card -->
-            <div style="background: linear-gradient(135deg, #dc2626, #ef4444); color: white; padding: 1.5rem; border-radius: 1rem; text-align: center; position: relative; overflow: hidden;">
-                <div style="position: absolute; top: -10px; right: -10px; width: 60px; height: 60px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
-                <div style="position: absolute; bottom: -20px; left: -20px; width: 80px; height: 80px; background: rgba(255,255,255,0.05); border-radius: 50%;"></div>
-                <div style="position: relative; z-index: 1;">
-                    <p style="font-weight: bold; margin-bottom: 0.5rem;">Total Belanja</p>
-                    <p style="font-size: 1.75rem; font-weight: bold; margin-bottom: 0.5rem;">Rp. {{ number_format($total, 0, ',', '.') }}</p>
+            <div style="flex: 1; background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); padding: 2rem; text-align: center; border-radius: 1rem; border: 2px solid #f59e0b; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);">
+                <div style="margin-bottom: 1rem;">
+                    <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #f59e0b, #d97706); border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center;">
+                        <span style="color: white; font-weight: bold; font-size: 1.5rem;">Rp</span>
+                    </div>
                 </div>
+                <p style="font-weight: 700; font-size: 1.1rem; color: #92400e; margin-bottom: 0.75rem;">Total Belanjaan Anda</p>
+                <p style="font-size: 2rem; font-weight: 800; color: #dc2626; font-family: 'Courier New', monospace;">Rp. {{ number_format($total, 0, ',', '.') }}</p>
             </div>
         </div>
 
         <!-- Payment Deadline -->
-        <div style="background: linear-gradient(135deg, #f59e0b, #fbbf24); color: white; padding: 1.5rem; border-radius: 1rem; text-align: center; margin-bottom: 2rem;">
-            <p style="font-weight: bold; font-size: 1.125rem; margin-bottom: 0.5rem;">⏰ Bayar sebelum tanggal 08 Juni 2026</p>
-            <p style="font-weight: 500; font-size: 0.9rem; opacity: 0.9;">
+        <div style="text-align: center; margin-bottom: 2rem; padding: 1.5rem; background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%); border-radius: 1rem; border-left: 4px solid #dc2626;">
+            <p style="font-weight: 700; font-size: 1.25rem; color: #dc2626; margin-bottom: 0.5rem;">
+                Bayar sebelum tanggal 08 Juni 2026
+            </p>
+            <p style="font-weight: 500; font-size: 1rem; color: #7f1d1d; margin: 0;">
                 Pesanan otomatis gagal jika pembeli membayar lewat dari tanggal yang ditentukan.
             </p>
         </div>
 
-        <!-- Important Notice -->
-        <div style="background: linear-gradient(135deg, #fee2e2, #fecaca); border: 1px solid #fca5a5; border-radius: 1rem; padding: 1.5rem; margin-bottom: 2rem;">
-            <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 0.5rem;">
-                <svg width="24" height="24" fill="#dc2626" viewBox="0 0 24 24" style="margin-right: 0.5rem;">
-                    <path d="M12 2L1 21h22L12 2zm0 3.99L19.53 19H4.47L12 5.99zM11 16h2v2h-2v-2zm0-6h2v4h-2v-4z"/>
-                </svg>
-                <p style="font-weight: bold; color: #dc2626; font-size: 1.125rem;">PERHATIAN!!</p>
-            </div>
-            <p style="text-align: center; color: #7f1d1d; font-weight: 500;">
-                Semua informasi yang anda berikan bersifat rahasia dan akan diproses dengan aman.
+        <!-- Warning Notice -->
+        <div style="text-align: center; margin-bottom: 2rem; padding: 1.5rem; background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 1rem; border-left: 4px solid #f59e0b;">
+            <p style="font-weight: 700; color: #dc2626; font-size: 1.25rem; margin-bottom: 0.5rem;">
+                PERHATIAN!!
+            </p>
+            <p style="font-weight: 600; color: #92400e; font-size: 1.1rem; margin: 0;">
+                Semua informasi yang anda berikan bersifat rahasia.
             </p>
         </div>
 
-        <!-- Form Section -->
-        <form action="{{ route('payment.store') }}" method="POST" style="background: #f8fafc; padding: 2rem; border-radius: 1rem; border: 1px solid #e2e8f0;">
+        <!-- Payment Form -->
+        <form action="{{ route('payment.store') }}" method="POST" style="margin-bottom: 2rem;">
             @csrf
 
-            <div style="margin-bottom: 2rem;">
-                <label for="nama_pemilik_rekening" style="display: block; font-weight: bold; margin-bottom: 0.75rem; color: #374151; font-size: 1.125rem;">
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <label for="nama_pemilik_rekening" style="display: block; font-weight: 700; margin-bottom: 1rem; font-size: 1.25rem; color: #1e40af;">
                     Nama Pemilik Rekening
                 </label>
-                <div style="position: relative;">
+                <div style="position: relative; display: inline-block;">
                     <input 
                         type="text" 
                         id="nama_pemilik_rekening" 
@@ -83,33 +84,35 @@
                         placeholder="Masukkan nama pemilik rekening"
                         value="{{ old('nama_pemilik_rekening') }}"
                         required
-                        style="width: 100%; padding: 1rem 1.5rem; border: 2px solid #e5e7eb; border-radius: 0.75rem; font-size: 1rem; transition: all 0.3s ease; background: white;"
-                        onfocus="this.style.borderColor='#3b82f6'; this.style.boxShadow='0 0 0 3px rgba(59, 130, 246, 0.1)'"
-                        onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'"
+                        style="padding: 1rem 1.5rem; border: 2px solid #3b82f6; border-radius: 9999px; width: 350px; font-size: 1.1rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); transition: all 0.2s ease; background: white;"
+                        onFocus="this.style.borderColor='#1d4ed8'; this.style.boxShadow='0 0 0 3px rgba(59, 130, 246, 0.1)'"
+                        onBlur="this.style.borderColor='#3b82f6'; this.style.boxShadow='0 4px 6px -1px rgba(0, 0, 0, 0.1)'"
                     >
                 </div>
             </div>
 
             <div style="text-align: center;">
                 <button type="submit" 
-                    style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; padding: 1rem 2.5rem; border-radius: 0.75rem; font-weight: bold; font-size: 1.125rem; border: none; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);"
-                    onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(59, 130, 246, 0.6)'"
-                    onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(59, 130, 246, 0.4)'"
+                    style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; padding: 1rem 2.5rem; border-radius: 0.75rem; font-weight: 700; font-size: 1.1rem; border: none; cursor: pointer; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); transition: all 0.2s ease; position: relative; overflow: hidden;"
+                    onMouseOver="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 20px 25px -5px rgba(0, 0, 0, 0.1)'"
+                    onMouseOut="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 15px -3px rgba(0, 0, 0, 0.1)'"
                 >
-                    Kirim Informasi Pembayaran
+                    <span style="position: relative; z-index: 1;">📧 Kirim Informasi Pembayaran</span>
                 </button>
             </div>
 
             @if($errors->any())
-                <div style="margin-top: 1.5rem; padding: 1rem; background: #fef2f2; border: 1px solid #fecaca; border-radius: 0.5rem; text-align: center;">
-                    <p style="color: #dc2626; font-weight: 500;">{{ $errors->first() }}</p>
+                <div style="margin-top: 1.5rem; text-align: center; padding: 1rem; background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%); border-radius: 0.75rem; border-left: 4px solid #dc2626;">
+                    <p style="color: #dc2626; font-weight: 600; margin: 0;">
+                        ❌ {{ $errors->first() }}
+                    </p>
                 </div>
             @endif
         </form>
 
-        <!-- Footer -->
-        <div style="text-align: center; margin-top: 2rem; padding: 1.5rem; background: linear-gradient(135deg, #f3f4f6, #e5e7eb); border-radius: 1rem;">
-            <p style="font-weight: bold; color: #374151; font-size: 1.125rem;">
+        <!-- Footer Message -->
+        <div style="text-align: center; padding: 1.5rem; background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border-radius: 1rem; border-left: 4px solid #16a34a;">
+            <p style="font-weight: 700; color: #15803d; font-size: 1.2rem; margin: 0;">
                 Terima kasih telah berbelanja di Locomotif Online Store
             </p>
         </div>
