@@ -123,6 +123,17 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'providers' => [
+        Illuminate\Filesystem\FilesystemServiceProvider::class,
+        CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider::class,
+    ],
+
+    'aliases' => [
+        'Storage' => Illuminate\Support\Facades\Storage::class,
+        'Cloudinary' => CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::class,
+    ],
+
+
     
 
 ];
