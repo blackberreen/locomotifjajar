@@ -1,23 +1,45 @@
-<!-- Ganti bagian ini -->
-<p style="font-weight: bold; margin-top: 20px;">
-    Semua informasi yang anda kirimkan bersifat rahasia
-</p>
+@extends('layouts.app')
 
-<form action="{{ route('payment.submit') }}" method="POST" style="margin-top: 20px;">
-    @csrf
+@section('title', 'Payment • Locomotif Jajar')
 
-    <label for="account_name" style="display: block; margin-bottom: 8px; font-weight: bold;">
-        Nama Pemilik Rekening
-    </label>
-    <input type="text" name="account_name" id="account_name" 
-        style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 15px;">
+@section('content')
 
-    <button type="submit"
-        style="background-color: #167DD3; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
-        Kirim Nama Pemilik Rekening
-    </button>
+    <h1>Proses Pembayaran</h1>
 
-    @if($errors->any())
-        <p style="color: red; margin-top: 10px;">{{ $errors->first() }}</p>
-    @endif
-</form>
+    <p>Pembayaran hanya dapat dilakukan dengan metode Transfer ke</p>
+
+    <div>
+        <h3>Bank BCA</h3>
+        <p>7651430961</p>
+        <p>A/N Ghieta Maureen</p>
+    </div>
+
+    <div>
+        <p>Dengan Total Belanjaan anda, yaitu:</p>
+        <h2>Rp. {{ number_format($total, 0, ',', '.') }}</h2>
+    </div>
+
+    <p>Pembayaran dilakukan maksimal 1 hari setelah proses pembelian</p>
+
+    <p>Pesanan otomatis gagal jika pembeli membayar lewat dari tanggal yang ditentukan.</p>
+
+    <h3>PERHATIAN!!</h3>
+
+    <p>Semua informasi yang anda kirimkan bersifat rahasia</p>
+
+    <form action="{{ route('payment.submit') }}" method="POST">
+        @csrf
+
+        <label for="account_name">Nama Pemilik Rekening</label><br>
+        <input type="text" id="account_name" name="account_name" required><br><br>
+
+        <button type="submit">Kirim Bukti Pembayaran</button>
+
+        @if($errors->any())
+            <p>{{ $errors->first() }}</p>
+        @endif
+    </form>
+
+    <p>Terima kasih telah berbelanja di Locomotif Online Store.</p>
+
+@endsection
