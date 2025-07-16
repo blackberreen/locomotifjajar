@@ -1,204 +1,98 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('title', 'Payment • Locomotif Jajar')
 
 @section('content')
-<div style="width: 986px; height: 750px; background-color: white; margin: auto; border: 1px solid #D1D5DB; border-radius: 1rem; padding: 1.5rem; overflow: auto;">
-    <h1 style="font-size: 45px; font-weight: bold; text-align: center; margin-bottom: 1.5rem;">Payment</h1>
 
-    @if(session('success'))
-        <div style="color: #16A34A; font-size: 1.125rem; margin-bottom: 1rem;">
-            {{ session('success') }}
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-2xl mx-auto">
+        <h1 class="text-2xl font-bold text-center mb-8">Proses Pembayaran</h1>
+
+        <div class="bg-white p-6 rounded-lg shadow mb-6">
+            <p class="text-lg mb-4">
+                Pembayaran hanya dapat dilakukan dengan metode Transfer ke
+            </p>
+
+            <div class="bg-blue-50 p-4 rounded-lg mb-6">
+                <div class="flex items-center">
+                    <div class="bg-blue-600 text-white px-3 py-1 rounded mr-4">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold">Bank BCA</h3>
+                        <p class="text-xl font-bold">7651430961</p>
+                        <p class="text-gray-600">A/N Ghieta Maureen</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-yellow-50 p-4 rounded-lg">
+                <p class="font-semibold mb-2">Dengan Total Belanjaan anda, yaitu:</p>
+                <div class="text-2xl font-bold text-green-600">
+                    Rp. {{ number_format($total, 0, ',', '.') }}
+                </div>
+            </div>
         </div>
-    @endif
 
-    @if(session('error'))
-        <div style="color: #DC2626; font-size: 1.125rem; margin-bottom: 1rem;">
-            {{ session('error') }}
+        <div class="bg-white p-6 rounded-lg shadow mb-6">
+            <div class="bg-orange-50 border-l-4 border-orange-400 p-4 mb-4">
+                <p class="text-orange-700">
+                    Pembayaran dilakukan maksimal 1 hari setelah proses pembelian
+                </p>
+            </div>
+
+            <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-6">
+                <p class="text-red-700">
+                    Pesanan otomatis gagal jika pembeli membayar lewat dari tanggal yang ditentukan.
+                </p>
+            </div>
+
+            <div class="bg-red-600 text-white p-4 rounded-lg">
+                <h3 class="text-xl font-bold mb-2">PERHATIAN!!</h3>
+                <p>Semua informasi yang anda kirimkan bersifat rahasia</p>
+            </div>
         </div>
-    @endif
 
-    <!-- Tab Navigation -->
-    <div style="display: flex; border-bottom: 1px solid #D1D5DB; margin-bottom: 1.5rem;">
-        <button onclick="showTab('belum-verifikasi')" id="tab-belum-verifikasi" 
-            style="padding: 0.5rem 1rem; font-weight: 600; color: #4B5563; border-bottom: 2px solid transparent; cursor: pointer;">
-            Belum Diverifikasi 
-            <span style="background-color: #F59E0B; color: white; font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: 9999px; margin-left: 0.25rem;">
-                {{ $belumDiverifikasi->count() }}
-            </span>
-        </button>
-        <button onclick="showTab('terverifikasi')" id="tab-terverifikasi" 
-            style="padding: 0.5rem 1rem; font-weight: 600; color: #4B5563; border-bottom: 2px solid transparent; cursor: pointer;">
-            Terverifikasi 
-            <span style="background-color: #10B981; color: white; font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: 9999px; margin-left: 0.25rem;">
-                {{ $terverifikasi->count() }}
-            </span>
-        </button>
-        <button onclick="showTab('ditolak')" id="tab-ditolak" 
-            style="padding: 0.5rem 1rem; font-weight: 600; color: #4B5563; border-bottom: 2px solid transparent; cursor: pointer;">
-            Ditolak 
-            <span style="background-color: #EF4444; color: white; font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: 9999px; margin-left: 0.25rem;">
-                {{ $ditolak->count() }}
-            </span>
-        </button>
-    </div>
+        <div class="bg-white p-6 rounded-lg shadow">
+            <form action="{{ route('payment.store') }}" method="POST">
+                @csrf
+                
+                <div class="mb-6">
+                    <label for="nama_pemilik_rekening" class="block text-lg font-medium mb-2">
+                        Nama Pemilik Rekening
+                    </label>
+                    <input 
+                        type="text" 
+                        id="nama_pemilik_rekening" 
+                        name="nama_pemilik_rekening" 
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-lg"
+                        placeholder="Masukkan nama pemilik rekening"
+                        value="{{ old('nama_pemilik_rekening') }}"
+                        required
+                    >
+                </div>
 
-    <!-- Belum Diverifikasi -->
-    <div id="content-belum-verifikasi" class="tab-content">
-        <table style="width: 100%; text-align: left; border: 1px solid #D1D5DB;">
-            <thead style="background-color: #E2EAF4;">
-                <tr style="font-size: 1.125rem;">
-                    <th style="padding: 0.75rem;">Informasi</th>
-                    <th style="padding: 0.75rem;">Total Belanja</th>
-                    <th style="padding: 0.75rem;">Nama Pemilik Rekening</th>
-                    <th style="padding: 0.75rem;">Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($belumDiverifikasi as $data)
-                <tr style="border-top: 1px solid #E5E7EB;">
-                    <td style="padding: 0.75rem;">
-                        <p><strong>Nama:</strong> {{ $data->shipping->nama ?? '-' }}</p>
-                        <p><strong>Telp:</strong> {{ $data->shipping->telepon ?? '-' }}</p>
-                    </td>
-                    <td style="padding: 0.75rem;">Rp. {{ number_format($data->total_belanja, 0, ',', '.') }}</td>
-                    <td style="padding: 0.75rem;">
-                        <div style="background-color: #F3F4F6; padding: 0.75rem; border-radius: 0.5rem; color: #1F2937;">
-                            {{ $data->bukti_transfer ?? '-' }}
-                        </div>
-                    </td>
-                    <td style="padding: 0.75rem;">
-                        <form action="{{ route('admin.payment.update', $data->id) }}" method="POST">
-                            @csrf
-                            <div style="display: flex; gap: 0.5rem;">
-                                <button type="submit" name="status_verifikasi" value="Terverifikasi" 
-                                    style="background-color: #10B981; color: white; padding: 0.5rem 0.75rem; border: none; border-radius: 0.375rem; cursor: pointer;">
-                                    Verifikasi
-                                </button>
-                                <button type="submit" name="status_verifikasi" value="Ditolak" 
-                                    style="background-color: #EF4444; color: white; padding: 0.5rem 0.75rem; border: none; border-radius: 0.375rem; cursor: pointer;">
-                                    Tolak
-                                </button>
-                            </div>
-                        </form>
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="4" style="padding: 1.5rem; text-align: center; color: #6B7280;">
-                        Tidak ada pembayaran yang menunggu verifikasi
-                    </td>
-                </tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
+                <button 
+                    type="submit" 
+                    class="w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors text-lg font-semibold"
+                >
+                    Kirim Informasi Pembayaran
+                </button>
 
-    <!-- Terverifikasi -->
-    <div id="content-terverifikasi" class="tab-content" style="display: none;">
-        <table style="width: 100%; text-align: left; border: 1px solid #D1D5DB;">
-            <thead style="background-color: #E2EAF4;">
-                <tr style="font-size: 1.125rem;">
-                    <th style="padding: 0.75rem;">Informasi</th>
-                    <th style="padding: 0.75rem;">Total Belanja</th>
-                    <th style="padding: 0.75rem;">Nama Pemilik Rekening</th>
-                    <th style="padding: 0.75rem;">Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($terverifikasi as $data)
-                <tr style="border-top: 1px solid #E5E7EB;">
-                    <td style="padding: 0.75rem;">
-                        <p><strong>Nama:</strong> {{ $data->shipping->nama ?? '-' }}</p>
-                        <p><strong>Telp:</strong> {{ $data->shipping->telepon ?? '-' }}</p>
-                    </td>
-                    <td style="padding: 0.75rem;">Rp. {{ number_format($data->total_belanja, 0, ',', '.') }}</td>
-                    <td style="padding: 0.75rem;">
-                        <div style="background-color: #F3F4F6; padding: 0.75rem; border-radius: 0.5rem; color: #1F2937;">
-                            {{ $data->bukti_transfer ?? '-' }}
-                        </div>
-                    </td>
-                    <td style="padding: 0.75rem;">
-                        <span style="background-color: #16A34A; color: white; padding: 0.5rem 1rem; border-radius: 0.375rem;">
-                            Terverifikasi
-                        </span>
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="4" style="padding: 1.5rem; text-align: center; color: #6B7280;">
-                        Belum ada pembayaran yang terverifikasi
-                    </td>
-                </tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
+                @if($errors->any())
+                    <div class="mt-4 bg-red-50 border border-red-200 rounded-lg p-4">
+                        <p class="text-red-600">{{ $errors->first() }}</p>
+                    </div>
+                @endif
+            </form>
+        </div>
 
-    <!-- Ditolak -->
-    <div id="content-ditolak" class="tab-content" style="display: none;">
-        <table style="width: 100%; text-align: left; border: 1px solid #D1D5DB;">
-            <thead style="background-color: #E2EAF4;">
-                <tr style="font-size: 1.125rem;">
-                    <th style="padding: 0.75rem;">Informasi</th>
-                    <th style="padding: 0.75rem;">Total Belanja</th>
-                    <th style="padding: 0.75rem;">Nama Pemilik Rekening</th>
-                    <th style="padding: 0.75rem;">Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($ditolak as $data)
-                <tr style="border-top: 1px solid #E5E7EB;">
-                    <td style="padding: 0.75rem;">
-                        <p><strong>Nama:</strong> {{ $data->shipping->nama ?? '-' }}</p>
-                        <p><strong>Telp:</strong> {{ $data->shipping->telepon ?? '-' }}</p>
-                    </td>
-                    <td style="padding: 0.75rem;">Rp. {{ number_format($data->total_belanja, 0, ',', '.') }}</td>
-                    <td style="padding: 0.75rem;">
-                        <div style="background-color: #F3F4F6; padding: 0.75rem; border-radius: 0.5rem; color: #1F2937;">
-                            {{ $data->bukti_transfer ?? '-' }}
-                        </div>
-                    </td>
-                    <td style="padding: 0.75rem;">
-                        <span style="background-color: #DC2626; color: white; padding: 0.5rem 1rem; border-radius: 0.375rem;">
-                            Ditolak
-                        </span>
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="4" style="padding: 1.5rem; text-align: center; color: #6B7280;">
-                        Belum ada pembayaran yang ditolak
-                    </td>
-                </tr>
-                @endforelse
-            </tbody>
-        </table>
+        <div class="mt-6 text-center">
+            <p class="text-gray-600">
+                Terima kasih telah berbelanja di Locomotif Online Store.
+            </p>
+        </div>
     </div>
 </div>
 
-<!-- Script Tabs -->
-<script>
-    function showTab(tabName) {
-        const tabs = ['belum-verifikasi', 'terverifikasi', 'ditolak'];
-        tabs.forEach(tab => {
-            const tabContent = document.getElementById('content-' + tab);
-            const tabButton = document.getElementById('tab-' + tab);
-
-            if (tab === tabName) {
-                tabContent.style.display = 'block';
-                tabButton.style.color = '#2563EB';
-                tabButton.style.borderBottom = '2px solid #2563EB';
-            } else {
-                tabContent.style.display = 'none';
-                tabButton.style.color = '#4B5563';
-                tabButton.style.borderBottom = '2px solid transparent';
-            }
-        });
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-        showTab('belum-verifikasi');
-    });
-</script>
 @endsection
