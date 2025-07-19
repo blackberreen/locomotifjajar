@@ -23,14 +23,14 @@
       Mulai mengobrol
     </a>
 
-    <div class="stats-container" style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-      <div class="stats-card" style="background-color: #E2EAF4; padding: 24px; border-radius: 16px; width: 100%; max-width: 300px; min-height: 140px; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
-        <p style="margin: 0; font-size: clamp(18px, 2.5vw, 24px); font-weight: 600; text-align: center;">
+    <div class="stats-container" style="display: flex; justify-content: center; gap: 20px; width: 100%;">
+      <div class="stats-card" style="background-color: #E2EAF4; padding: 24px; border-radius: 16px; flex: 1; min-height: 140px; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
+        <p style="margin: 0; font-size: clamp(16px, 2.5vw, 24px); font-weight: 600; text-align: center;">
           Aman, Cepat, dan<br>Terpercaya sejak 2005
         </p>
       </div>
-      <div class="stats-card" style="background-color: #E2EAF4; padding: 24px; border-radius: 16px; width: 100%; max-width: 300px; min-height: 140px; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
-        <p style="margin: 0; font-size: clamp(18px, 2.5vw, 24px); font-weight: 600; text-align: center;">
+      <div class="stats-card" style="background-color: #E2EAF4; padding: 24px; border-radius: 16px; flex: 1; min-height: 140px; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
+        <p style="margin: 0; font-size: clamp(16px, 2.5vw, 24px); font-weight: 600; text-align: center;">
           Sudah menangani<br>1000+ motor
         </p>
       </div>
@@ -74,15 +74,11 @@
     }
 
     .stats-container {
-      flex-direction: row !important;
-      justify-content: center !important;
-      gap: 20px !important;
+      gap: 15px !important;
     }
 
     .stats-card {
-      flex: 1 !important;
-      min-width: 250px !important;
-      max-width: 300px !important;
+      min-height: 120px !important;
     }
   }
 
@@ -104,13 +100,12 @@
     }
 
     .stats-container {
-      flex-direction: column !important;
-      gap: 15px !important;
+      gap: 12px !important;
     }
 
     .stats-card {
-      max-width: 100% !important;
-      min-width: auto !important;
+      padding: 18px !important;
+      min-height: 110px !important;
     }
 
     .home-image {
@@ -133,13 +128,25 @@
       line-height: 50px !important;
     }
 
+    .stats-container {
+      gap: 10px !important;
+    }
+
     .stats-card {
-      padding: 20px !important;
-      min-height: 120px !important;
+      padding: 16px !important;
+      min-height: 100px !important;
     }
 
     .home-image {
       max-height: 300px !important;
+    }
+  }
+
+  /* Extra Mobile Kecil */
+  @media (max-width: 360px) {
+    .stats-card {
+      padding: 12px !important;
+      min-height: 90px !important;
     }
   }
 
