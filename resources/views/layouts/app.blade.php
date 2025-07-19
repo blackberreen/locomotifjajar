@@ -92,11 +92,11 @@
             </button>
 
             {{-- Dropdown Menu --}}
-            <div style="position: absolute; right: 0; top: 100%; margin-top: 0.5rem; width: 192px; background: white; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); opacity: 0; visibility: hidden; z-index: 50; transition: opacity 0.2s, visibility 0.2s;" class="dropdown-menu">
+            <div style="position: absolute; right: 0; top: 100%; margin-top: 0.5rem; width: 220px; background: white; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); opacity: 0; visibility: hidden; z-index: 50; transition: opacity 0.2s, visibility 0.2s;" class="dropdown-menu">
               <div style="padding: 0.5rem 0;">
                 <div style="padding: 0.5rem 1rem; border-bottom: 1px solid #f3f4f6;">
-                  <p style="font-size: 14px; font-weight: 600; color: #1f2937; margin: 0;">{{ auth()->user()->name }}</p>
-                  <p style="font-size: 12px; color: #6b7280; margin: 0;">{{ auth()->user()->email }}</p>
+                  <p style="font-size: 14px; font-weight: 600; color: #1f2937; margin: 0; word-wrap: break-word; overflow-wrap: break-word;">{{ auth()->user()->name }}</p>
+                  <p style="font-size: 12px; color: #6b7280; margin: 0; word-wrap: break-word; overflow-wrap: break-word;">{{ auth()->user()->email }}</p>
                 </div>
                 <a href="{{ route('user.profile') }}" style="display: block; padding: 0.5rem 1rem; font-size: 14px; color: #374151; text-decoration: none;">
                   <svg style="width: 16px; height: 16px; display: inline; margin-right: 0.5rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -219,7 +219,7 @@
       .dropdown-menu {
         right: auto !important;
         left: 0 !important;
-        width: 180px !important;
+        width: 240px !important;
         margin-left: 0 !important;
       }
 
@@ -228,29 +228,38 @@
         width: 100% !important;
       }
 
-      /* Ensure dropdown doesn't go off-screen */
+      /* Ensure dropdown doesn't go off-screen on smaller screens */
       @media (max-width: 480px) {
         .dropdown-menu {
-          width: 160px !important;
+          width: 220px !important;
         }
       }
     }
 
     /* Small mobile screens */
+    @media (max-width: 360px) {
+      .dropdown-menu {
+        width: 200px !important;
+      }
+    }
+
+    /* Extra small screens */
     @media (max-width: 320px) {
       .dropdown-menu {
-        width: 140px !important;
+        width: 180px !important;
+      }
+      
+      .dropdown-menu p {
         font-size: 12px !important;
+        word-break: break-all !important;
       }
       
       .dropdown-menu a {
-        font-size: 12px !important;
-        padding: 0.4rem 0.8rem !important;
+        font-size: 13px !important;
       }
       
       .dropdown-menu button {
-        font-size: 12px !important;
-        padding: 0.4rem 0.8rem !important;
+        font-size: 13px !important;
       }
     }
 
